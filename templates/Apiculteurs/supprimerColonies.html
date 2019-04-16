@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruches</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'ProjetRuches/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<ul class="navbarMenu">
+    <li class="liNavBar"><a href="home">Accueil</a></li>
+    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    {% if user.is_authenticated %}
+    <li class="dropdown2">
+        <a href="afficherRuchers" class="dropbtn">Gestion Ruchers</a>
+        <div class="dropdown-content">
+            <a href="afficherRuchers">Afficher Ruchers</a>
+            <a href="ajouterRucher">Ajouter Rucher</a>
+            <a href="modifierRuchers">Modifier Rucher</a>
+            <a href="supprimerRuchers">Supprimer Rucher</a>
+        </div>
+    </li>
+    <li class="dropdown2">
+        <a href="afficherColonies" class="dropbtn active">Gestion Colonies</a>
+        <div class="dropdown-content">
+            <a href="afficherColonies">Afficher Colonies</a>
+            <a href="ajouterColonie">Ajouter Colonie</a>
+            <a href="modifierColonies">Modifier Colonie</a>
+            <a class="active" href="supprimerColonies">Supprimer Colonie</a>
+        </div>
+    </li>
+    <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
+    {% if user.is_superuser %}
+    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar">Bonjour {{ user.username }} (superuser)</li>
+    {% else %}
+    <li class="right liNavBar">Bonjour {{ user.username }}</li>
+    {% endif %}
+    {% else %}
+    <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
+    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    {% endif %}
+</ul>
+<div>
+    <h2>Colonies</h2>
+    {% if user.is_authenticated %}
+    <div class="table-responsive" style="padding-right: 20%">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <th>Identification</th>
+                <th>Rucher</th>
+                <th>Type de Ruche</th>
+                <th>Nombre de cadres</th>
+                <th>Date Création</th>
+                <th>Dernière Remarque</th>
+            </tr>
+            {% for colonie in colonies %}
+
+            <tr>
+                <td style="vertical-align: middle">{{ colonie.nom }}</td>
+                <td style="vertical-align: middle">{{ colonie.rucher }}</td>
+                <td style="vertical-align: middle">{{ colonie.type }}</td>
+                <td style="vertical-align: middle">{{ colonie.nombre_de_cadres }}</td>
+                <td style="vertical-align: middle">{{ colonie.date }}</td>
+                <td style="vertical-align: middle; width: 550px">{{ colonie.remarque }}</td>
+                <td style="vertical-align: middle; width: 150px">
+                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
+                          action="#">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <p>You are not logged</p>
+    {% endif %}
+</div>
+
+<script type="text/javascript">
+    function validateRucher(form, rucher) {
+        if (confirm("Voulez vous supprimer "+rucher+" ?") === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</body>
+</html>

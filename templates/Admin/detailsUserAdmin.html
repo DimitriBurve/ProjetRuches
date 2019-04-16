@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruches</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'ProjetRuches/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<ul>
+    <li><a href="home">Accueil</a></li>
+    <li><a href="camerasUser">Caméras</a></li>
+    <li><a href="informationsUser">Informations</a></li>
+    {% if user.is_authenticated %}
+    <li class="dropdown2">
+        <a href="afficherRuchers" class="dropbtn">Gestion Ruchers</a>
+        <div class="dropdown-content">
+            <a href="afficherRuchers">Afficher Ruchers</a>
+            <a href="ajouterRucher">Ajouter Rucher</a>
+            <a href="modifierRuchers">Modifier Rucher</a>
+            <a href="supprimerRuchers">Supprimer Rucher</a>
+        </div>
+    </li>
+    <li class="dropdown2">
+        <a href="afficherColonies" class="dropbtn">Gestion Colonies</a>
+        <div class="dropdown-content">
+            <a href="afficherColonies">Afficher Colonies</a>
+            <a href="ajouterColonie">Ajouter Colonie</a>
+            <a href="modifierColonies">Modifier Colonie</a>
+            <a href="supprimerColonies">Supprimer Colonie</a>
+        </div>
+    </li>
+    <li class="right"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="right"><a href="/monCompte">Mon Compte</a></li>
+    {% if user.is_superuser %}
+    <li class="right"><a class="active" href="showUsersAdmin">Administration</a></li>
+    <li class="right">Bonjour {{ user.username }} (superuser)</li>
+    {% else %}
+    <li class="right">Bonjour {{ user.username }}</li>
+    {% endif %}
+    {% else %}
+    <li class="right"><a href="{% url 'login' %}">Connexion</a></li>
+    <li class="right"><a href="inscription">Inscription</a></li>
+    {% endif %}
+</ul>
+<div>
+    <p>Détails user {{ userEdit }}</p>
+    <div class="table-responsive" style="padding-right: 25%">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <th>Username</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Mail</th>
+            </tr>
+            <tr>
+                <td>{{ userEdit.username }}</td>
+                <td>{{ userEdit.last_name }}</td>
+                <td>{{ userEdit.first_name }}</td>
+                <td>{{ userEdit.email }}</td>
+                <td>
+                    <form method="post" onsubmit="return validateUser(this,'{{userEdit.username}}')" style="display: inline-block"
+                          action="{% url 'deleteUserAdmin' userEdit.username %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <p>Colonies de l'apiculteur</p>
+    <div class="table-responsive" style="padding-right: 25%">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <th>Colonies N°</th>
+                <th>Dernière Température (°C)</th>
+                <th>Dernière Humidité (%)</th>
+                <th>Dernier Poids (kg)</th>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td>24</td>
+                <td>76</td>
+                <td>17</td>
+                <td style="vertical-align: middle; width: 250px">
+                    <form method="get" style="display: inline-block"
+                          action="#">
+                        <button type="submit" class="btn btn-warning btn-lg m-0">Détails</button>
+                    </form>
+
+                    <form method="post" onsubmit="return validateRuche(this)" style="display: inline-block"
+                          action="#">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function validateUser(form, user) {
+        if (confirm("Voulez vous supprimer "+user+" ?") === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    function validateRuche(form) {
+        if (confirm("Voulez vous supprimer cette ruche?") === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    # vues communes
+    path('', views.home, name='home'),
+    path('home', views.home, name='homeUser'),
+    path('informationsUser', views.informationsUser, name='infosUser'),
+    path('detailCapteurUser/<str:nameCapteur>', views.capteurUser, name='detailsUser'),
+    path('camerasUser', views.camerasUser, name='camerasUser'),
+    path('videoCameraUser/<str:nameCapteur>', views.videoCamerasUser, name='videoCameraUser'),
+    # vues apiculteurs
+    path('afficherColonies', views.afficherColonies, name='afficherColonies'),
+    path('afficherRuchers', views.afficherRuchers, name='afficherRuchers'),
+    path('ajouterRucher', views.ajouterRucher, name='ajouterRucher'),
+    path('ajouterColonie', views.ajouterColonie, name='ajouterColonie'),
+    path('modifierColonies', views.modifierColonies, name='modifierColonies'),
+    path('modifierRuchers', views.modifierRuchers, name='modifierRuchers'),
+    path('supprimerColonies', views.supprimerColonies, name='supprimerColonies'),
+    path('supprimerRuchers', views.supprimerRuchers, name='supprimerRuchers'),
+    # vues inscription et mon compte
+    path('inscription', views.inscription, name='inscription'),
+    path('monCompte', views.monCompte, name='monComte'),
+    path('modifierMonCompte', views.modifierMonCompte, name='modifierMonCompte'),
+    # vues admin
+    path('showUsersAdmin', views.showUsersAdmin, name='showUsersAdmin'),
+    path('deleteUserAdmin/<str:username>', views.deleteUserAdmin, name='deleteUserAdmin'),
+    path('detailsUserAdmin/<str:username>', views.detailsUserAdmin, name='detailsUserAdmin'),
+]

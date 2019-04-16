@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruches</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'ProjetRuches/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<ul class="navbarMenu">
+    <li class="liNavBar"><a href="home">Accueil</a></li>
+    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    {% if user.is_authenticated %}
+    <li class="dropdown2">
+        <a href="afficherRuchers" class="dropbtn">Gestion Ruchers</a>
+        <div class="dropdown-content">
+            <a href="afficherRuchers">Afficher Ruchers</a>
+            <a href="ajouterRucher">Ajouter Rucher</a>
+            <a href="modifierRuchers">Modifier Rucher</a>
+            <a href="supprimerRuchers">Supprimer Rucher</a>
+        </div>
+    </li>
+    <li class="dropdown2">
+        <a href="afficherColonies" class="dropbtn">Gestion Colonies</a>
+        <div class="dropdown-content">
+            <a href="afficherColonies">Afficher Colonies</a>
+            <a href="ajouterColonie">Ajouter Colonie</a>
+            <a href="modifierColonies">Modifier Colonie</a>
+            <a href="supprimerColonies">Supprimer Colonie</a>
+        </div>
+    </li>
+    <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
+    {% if user.is_superuser %}
+    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar">Bonjour {{ user.username }} (superuser)</li>
+    {% else %}
+    <li class="right liNavBar">Bonjour {{ user.username }}</li>
+    {% endif %}
+    {% else %}
+    <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
+    <li class="right liNavBar"><a class="active" href="inscription">Inscription</a></li>
+    {% endif %}
+</ul>
+<div>
+    <h2>Inscription</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        {% if errorsForm%}
+            {% for error in errorsForm %}
+
+                <strong>{{ error }}</strong>
+
+            {% endfor %}
+        {% endif %}
+        <br>
+        Username {{ form.username }}
+        <br>
+        Prenom {{ form.first_name }}
+        <br>
+        Nom {{ form.last_name }}
+        <br>
+        mail {{ form.email }}
+        <br>
+        mot de passe {{ form.password1 }}
+        {{ form.password1.errors }}
+        <br>
+        répéter mot de passe {{ form.password2 }}
+        {{ form.pasword2.errors }}
+        <br>
+        <button type="submit">Inscription</button>
+    </form>
+</div>
+</body>
+</html>
