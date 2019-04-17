@@ -25,8 +25,8 @@
             <a href="modifierRuchers">Modifier Rucher</a>
             <a href="supprimerRuchers">Supprimer Rucher</a>
         </div>
-    </li>
-    <li class="dropdown2">
+    </li><!--
+    --><li class="dropdown2">
         <a href="afficherColonies" class="dropbtn">Gestion Colonies</a>
         <div class="dropdown-content">
             <a href="afficherColonies">Afficher Colonies</a>
@@ -59,14 +59,14 @@
                 <th>Propriétaire</th>
             </tr>
             {% for rucher in ruchers %}
-
+            {% if rucher.user == user or user.is_staff%}
             <tr>
                 <td style="vertical-align: middle">{{ rucher.nom }}</td>
                 <td style="vertical-align: middle">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
                 <td style="vertical-align: middle">{{ rucher.user }}</td>
                 <td style="vertical-align: middle; width: 350px">
                     <form id="formDetails" method="get" style="display: inline-block"
-                          action="#">
+                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
                     </form>
 
@@ -75,12 +75,13 @@
                     </form>
 
                     <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="#">
+                          action="{% url 'validSupprimerRucher' rucher.nom %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>
                 </td>
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
     </div>

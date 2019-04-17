@@ -12,13 +12,16 @@ urlpatterns = [
     path('videoCameraUser/<str:nameCapteur>', views.videoCamerasUser, name='videoCameraUser'),
     # vues apiculteurs
     path('afficherColonies', views.afficherColonies, name='afficherColonies'),
+    path('afficherColoniesRucher/<str:rucher>', views.affichercoloniesRucher, name='afficherColoniesRucher'),
     path('afficherRuchers', views.afficherRuchers, name='afficherRuchers'),
     path('ajouterRucher', views.ajouterRucher, name='ajouterRucher'),
     path('ajouterColonie', views.ajouterColonie, name='ajouterColonie'),
     path('modifierColonies', views.modifierColonies, name='modifierColonies'),
     path('modifierRuchers', views.modifierRuchers, name='modifierRuchers'),
     path('supprimerColonies', views.supprimerColonies, name='supprimerColonies'),
+    path('validSupprimerColonie/<str:colonie>/<str:rucher>', views.validSupprimerColonie, name='validSupprimerColonie'),
     path('supprimerRuchers', views.supprimerRuchers, name='supprimerRuchers'),
+    path('validSupprimerRucher/<str:rucher>', views.validSupprimerRucher, name='validSupprimerRucher'),
     # vues inscription et mon compte
     path('inscription', views.inscription, name='inscription'),
     path('monCompte', views.monCompte, name='monComte'),

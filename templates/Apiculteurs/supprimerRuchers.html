@@ -66,7 +66,7 @@
                 <td style="vertical-align: middle">{{ rucher }}</td>
                 <td style="vertical-align: middle; width: 350px">
                     <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="#">
+                          action="{% url 'validSupprimerRucher' rucher.nom %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>

@@ -25,8 +25,8 @@
             <a href="modifierRuchers">Modifier Rucher</a>
             <a href="supprimerRuchers">Supprimer Rucher</a>
         </div>
-    </li>
-    <li class="dropdown2">
+    </li><!--
+ --><li class="dropdown2">
         <a href="afficherColonies" class="dropbtn active">Gestion Colonies</a>
         <div class="dropdown-content">
             <a class="active" href="afficherColonies">Afficher Colonies</a>
@@ -62,7 +62,7 @@
                 <th>Dernière Remarque</th>
             </tr>
             {% for colonie in colonies %}
-
+            {% if colonie.rucher.user == user or user.is_staff%}
             <tr>
                 <td style="vertical-align: middle">{{ colonie.nom }}</td>
                 <td style="vertical-align: middle">{{ colonie.rucher }}</td>
@@ -81,13 +81,14 @@
                         <button type="submit" class="btn btn-warning m-0">modifier</button>
                     </form>
 
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="#">
+                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                          action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>
                 </td>
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
     </div>

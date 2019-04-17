@@ -56,6 +56,9 @@
         <form method="post">
             {% csrf_token %}
             <p style="display: inline-block">nom : </p>{{ form.nom }}
+            {% if form.nom.errors %}
+            <p style="display: inline-block; color: red">Un rucher de ce nom existe déjà</p>
+            {% endif %}
             <br>
             <b style="display: inline-block">localisation</b>
             <br>
@@ -64,6 +67,9 @@
             <p style="display: inline-block">adresse 2 : </p>{{ form.adresseS }}
             <br>
             <p style="display: inline-block">Code Postal : </p>{{ form.codePostal }}
+            {% if form.codePostal.errors%}
+            <p style="display: inline-block; color: red">Code postal doit être composé de 5 chiffres</p>
+            {% endif %}
             <br>
             <p style="display: inline-block">Ville : </p>{{ form.ville }}
             <br>

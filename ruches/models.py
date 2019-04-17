@@ -11,7 +11,7 @@ class Capteurs(models.Model):
 
 
 class Rucher(models.Model):
-    nom = models.CharField(max_length=200)
+    nom = models.CharField(max_length=200, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     adresseP = models.CharField(max_length=200, default='')
     adresseS = models.CharField(max_length=200, null=True, default='')

@@ -1,5 +1,5 @@
 from django import forms
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -23,7 +23,7 @@ class UserForm(UserCreationForm):
 
 class RucherForm(ModelForm):
     adresseS = forms.CharField(max_length=200, required=False)
-    codePostal = forms.CharField(max_length=6, validators=[MinLengthValidator(6)])
+    codePostal = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
 
     class Meta:
         model = Rucher

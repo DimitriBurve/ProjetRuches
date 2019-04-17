@@ -173,6 +173,11 @@ def afficherColonies(request):
     return render(request, 'Apiculteurs/afficherColonies.html', {'colonies': colonies})
 
 
+def affichercoloniesRucher(request, rucher):
+    colonies = Colonie.objects.all()
+    return render(request, 'Apiculteurs/afficherColoniesRucher.html', {'colonies': colonies, 'rucher': rucher})
+
+
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/afficherRuchers.html', {'ruchers': ruchers})
@@ -187,7 +192,7 @@ def ajouterColonie(request):
         if rucheForm.is_valid():
             print("true valid")
             rucheForm.save()
-            return redirect('home')
+            return redirect('afficherColonies')
         else:
             print("else valid")
             form_errors = rucheForm.errors
@@ -207,6 +212,7 @@ def ajouterRucher(request):
             return redirect('afficherRuchers')
         else:
             print(form.errors)
+            return render(request, 'Apiculteurs/createRucher.html', {'form': form})
 
     else:
         form = RucherForm()
@@ -229,9 +235,48 @@ def supprimerColonies(request):
     return render(request, 'Apiculteurs/supprimerColonies.html', {'colonies': colonies})
 
 
+def validSupprimerColonie(request, colonie, rucher):
+    if request.method == 'POST':
+        print(rucher)
+        try:
+            u = Colonie.objects.filter(nom=colonie)
+            # u = u.filter(rucher=rucher)
+            for colonie in u:
+                print("colonie : ", colonie.rucher)
+                if colonie.rucher.nom == rucher:
+                    print("test")
+                    colonie.delete()
+                    break
+            # u.delete()
+        except Rucher.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print("exception : ", e)
+
+        # return render(request, 'Admin/showsUsersAdmin.html', {'users': users})
+
+    return redirect('afficherColonies')
+
+
 def supprimerRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/supprimerRuchers.html', {'ruchers': ruchers})
+
+
+def validSupprimerRucher(request, rucher):
+    if request.method == 'POST':
+        try:
+            u = Rucher.objects.get(nom=rucher)
+            print("rucher : ", u)
+            u.delete()
+        except Rucher.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print("exception : ", e)
+
+        # return render(request, 'Admin/showsUsersAdmin.html', {'users': users})
+
+    return redirect('afficherRuchers')
 
 
 # partie inscription et mon compte
