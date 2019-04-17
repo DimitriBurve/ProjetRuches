@@ -315,6 +315,12 @@ def monCompte(request):
     return render(request, 'registration/myAccount.html')
 
 
+def detailsMonCompte(request, user_id):
+    user = User.objects.get(pk=user_id)
+    print(user)
+    return render(request, 'registration/detailsAccount.html', {'user': user})
+
+
 def modifierMonCompte(request):
     return render(request, 'registration/modifyAccount.html')
 

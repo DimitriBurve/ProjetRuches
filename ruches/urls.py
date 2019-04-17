@@ -25,6 +25,7 @@ urlpatterns = [
     # vues inscription et mon compte
     path('inscription', views.inscription, name='inscription'),
     path('monCompte', views.monCompte, name='monComte'),
+    path('detailsMonCompte/<str:user_id>', views.detailsMonCompte, name="detailsMonCompte"),
     path('modifierMonCompte', views.modifierMonCompte, name='modifierMonCompte'),
     # vues admin
     path('showUsersAdmin', views.showUsersAdmin, name='showUsersAdmin'),

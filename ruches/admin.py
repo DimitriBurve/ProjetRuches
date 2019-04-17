@@ -5,3 +5,5 @@ from . import models
 
 admin.site.register(models.Rucher)
 admin.site.register(models.Colonie)
+admin.site.register(models.Apiculteur)
+

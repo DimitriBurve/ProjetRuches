@@ -65,13 +65,15 @@
                 <td>{{ user.first_name }}</td>
                 <td>{{ user.email }}</td>
                 <td style="vertical-align: middle; width: 250px">
-                    <form method="get" style="display: inline-block">
+                    <form method="get" style="display: inline-block"
+                        action="{% url 'detailsMonCompte' user.id %}">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Details</button>
                     </form>
                     <form id="formModifier" method="get" style="display: inline-block"
                           action="/modifierMonCompte">
                         <button type="submit" class="btn btn-warning m-0">Modifier</button>
                     </form>
+                </td>
             </tr>
         </table>
     </div>
