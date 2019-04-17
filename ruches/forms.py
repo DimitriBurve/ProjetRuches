@@ -3,7 +3,7 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite
+from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur
 
 
 class UserForm(UserCreationForm):
@@ -19,6 +19,26 @@ class UserForm(UserCreationForm):
             'password1': None,
             'password2': None,
         }
+
+
+class ApiForm(forms.ModelForm):
+    adresseSApi = forms.CharField(max_length=200, required=False)
+    adresseSGDSA = forms.CharField(max_length=200, required=False)
+    adresseSVeterinaire = forms.CharField(max_length=200, required=False)
+    adresseSAgentSanitaire = forms.CharField(max_length=200, required=False)
+
+    codePostalApi = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
+    codePostalGDSA = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
+    codePostalVeterinaire = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
+    codePostalAgentSanitaire = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
+
+    class Meta:
+        model = Apiculteur
+        fields = ['adressePApi', 'adresseSApi', 'codePostalApi', 'villeApi', 'telephoneApi', 'numeroApi',
+                  'numeroSiretAgrit', 'adressePGDSA', 'adresseSGDSA', 'codePostalGDSA', 'villeGDSA', 'PSEGDSA',
+                  'adressePVeterinaire', 'adresseSVeterinaire', 'codePostalVeterinaire', 'villeVeterinaire',
+                  'telephoneVeterinaire', 'adressePAgentSanitaire', 'adresseSAgentSanitaire',
+                  'codePostalAgentSanitaire', 'villeAgentSanitaire', 'telephoneAgentSanitaire']
 
 
 class RucherForm(ModelForm):

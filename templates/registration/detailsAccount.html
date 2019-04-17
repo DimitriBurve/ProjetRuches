@@ -51,6 +51,27 @@
 </ul>
 <div>
     <h2>Mon Compte</h2>
+    <div class="table-responsive" style="padding-right: 20%">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <th>Username</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Mail</th>
+            </tr>
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.email }}</td>
+                <td style="vertical-align: middle; width: 250px">
+                    <form id="formModifier" method="get" style="display: inline-block"
+                          action="/modifierMonCompte">
+                        <button type="submit" class="btn btn-warning m-0">Modifier</button>
+                    </form>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>

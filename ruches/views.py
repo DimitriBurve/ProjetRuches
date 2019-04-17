@@ -31,9 +31,9 @@ def header(apikey):
 def informationsUser(request):
     apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
 
-    r = requests.get("https://api.hl2.com/panorama/v1/organizations/591b3eb750e1ff001b65e816/members",
-                     headers=header(apikey))
-    print(r.status_code)
+    r = requests.get("https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/alerts/5cb43b5e10cd010020e908c6",
+                     headers=header(apikey)).text
+    print(r)
     # response = requete.urlopen("https://github.com/timeline.json")
     # data_test = json.load(response)
 
@@ -283,17 +283,19 @@ def validSupprimerRucher(request, rucher):
 
 def inscription(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+        user_form = UserForm(request.POST)
+        api_form = ApiForm(request.POST)
+        if user_form.is_valid() and api_form.is_valid():
+            user_form.save()
+            api_form.save()
+            username = user_form.cleaned_data.get('username')
+            raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('home')
         else:
             print("test invalid form")
-            form_errors = form.errors
+            form_errors = user_form.errors
             print(form_errors)
             erreurs = []
             for error in form_errors:
@@ -301,11 +303,12 @@ def inscription(request):
                     erreurs.append("Erreur mot de passe")
                 if error == "username":
                     erreurs.append("Erreur Username")
-            return render(request, 'registration/inscription.html', {'form': form, 'errorsForm': erreurs})
+            return render(request, 'registration/inscription.html', {'user_form': user_form, 'api_form':api_form,'errorsForm': erreurs})
     else:
         print("test error post")
-        form = UserForm()
-    return render(request, 'registration/inscription.html', {'form': form})
+        user_form = UserForm()
+        api_form = ApiForm()
+    return render(request, 'registration/inscription.html', {'user_form': user_form, 'api_form': api_form})
 
 
 def monCompte(request):
