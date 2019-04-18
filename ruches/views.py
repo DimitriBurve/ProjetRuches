@@ -11,7 +11,7 @@ from static.fusioncharts import FusionCharts
 from static.fusioncharts import FusionTable
 from static.fusioncharts import TimeSeries
 
-from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, FeuilleVisite
+from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, FeuilleVisite, TypeAliment, TypeNourrissement, Nourrissement
 
 
 # ensemble des vues
@@ -178,6 +178,17 @@ def affichercoloniesRucher(request, rucher):
     return render(request, 'Apiculteurs/afficherColoniesRucher.html', {'colonies': colonies, 'rucher': rucher})
 
 
+def afficherNourrissement(request):
+    nourrissementsObj = Nourrissement.objects.all()
+    nourrissements = []
+    for n in nourrissementsObj:
+        if n.typeNourrissement is None:
+            n.delete()
+        else:
+            nourrissements.append(n)
+    return render(request, 'Apiculteurs/afficherNourrissements.html', {'nourrissements': nourrissements})
+
+
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/afficherRuchers.html', {'ruchers': ruchers})
@@ -202,6 +213,25 @@ def ajouterColonie(request):
         rucheForm = RucheForm()
     return render(request, 'Apiculteurs/createColonie.html',
                   {'form': rucheForm, 'listeRuchers': listeRuchers, 'listeTypesRuche': listeTypesRuche})
+
+
+def ajouterNourrissement(request, rucher, colonie):
+    rucherObj = Rucher.objects.get(nom=rucher)
+    colonieObj = Colonie.objects.get(rucher=rucherObj, nom=colonie)
+    listeTypeNourrissement = TypeNourrissement.objects.all()
+    listeTypeAliment = TypeAliment.objects.all()
+
+    if request.method == 'POST':
+        obj = Nourrissement.objects.create(colonie=colonieObj)
+        nourrissementForm = NourrissementForm(request.POST, instance=obj)
+        if nourrissementForm.is_valid():
+            nourrissementForm.save()
+            return redirect('afficherNourrissement')
+    else:
+        obj = Nourrissement.objects.create(colonie=colonieObj)
+        nourrissementForm = NourrissementForm(instance=obj)
+    return render(request, 'Apiculteurs/createNourrissement.html',
+                  {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement, 'listeTypeAliment': listeTypeAliment})
 
 
 def ajouterRucher(request):

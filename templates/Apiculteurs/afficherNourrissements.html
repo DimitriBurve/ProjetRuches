@@ -27,7 +27,7 @@
         </div>
     </li><!--
  --><li class="dropdown2">
-        <a href="afficherColonies" class="dropbtn active">Gestion Colonies</a>
+        <a href="afficherColonies" class="dropbtn">Gestion Colonies</a>
         <div class="dropdown-content">
             <a class="active" href="afficherColonies">Afficher Colonies</a>
             <a href="ajouterColonie">Ajouter Colonie</a>
@@ -36,9 +36,9 @@
         </div>
     </li><!--
     --><li class="dropdown2">
-        <a href="#" class="dropbtn">Gestion Nourrissements</a>
+        <a href="#" class="dropbtn active">Gestion Nourrissements</a>
         <div class="dropdown-content">
-            <a href="/afficherNourrissements">Afficher Nourrissements</a>
+            <a href="#">Afficher Nourrissements</a>
             <a href="#">Supprimer Nourrissement</a>
         </div>
     </li>
@@ -56,42 +56,32 @@
     {% endif %}
 </ul>
 <div>
-    <h2>Colonies</h2>
+    <h2>Nourrissements</h2>
     {% if user.is_authenticated %}
     <div class="table-responsive" style="padding-right: 15%">
         <table class="table table-hover" style="text-align: center">
             <tr>
-                <th>Identification</th>
-                <th>Rucher</th>
-                <th>Type de Ruche</th>
-                <th>Nombre de cadres</th>
-                <th>Date Création</th>
-                <th>Dernière Remarque</th>
+                <th>Colonie</th>
+                <th>Date</th>
+                <th>Type de nourrissement</th>
+                <th>Type d'aliment</th>
+                <th>Produit</th>
+                <th>Quantite</th>
+                <th>Dernière Note</th>
             </tr>
-            {% for colonie in colonies %}
-            {% if colonie.rucher.user == user or user.is_staff%}
+            {% for nourrissement in nourrissements %}
+            {% if nourrissement.colonie.rucher.user == user or user.is_staff%}
             <tr>
-                <td style="vertical-align: middle">{{ colonie.nom }}</td>
-                <td style="vertical-align: middle">{{ colonie.rucher }}</td>
-                <td style="vertical-align: middle">{{ colonie.type }}</td>
-                <td style="vertical-align: middle">{{ colonie.nombre_de_cadres }}</td>
-                <td style="vertical-align: middle">{{ colonie.date }}</td>
-                <td style="vertical-align: middle; width: 550px">{{ colonie.remarque }}</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form method="get" style="display: inline-block" action="{% url 'ajouterNourrissement' colonie.rucher colonie.nom %}">
-                        <button type="submit" class="btn btn-warning m-0">ajouter Nourrissement</button>
-                    </form>
-                    <form id="formDetails" method="get" style="display: inline-block"
-                          action="#">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
-                    </form>
-
-                    <form id="formModif" method="get" style="display: inline-block">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
-                    </form>
-
+                <td style="vertical-align: middle">{{ nourrissement.colonie.nom }}</td>
+                <td style="vertical-align: middle">{{ nourrissement.date }}</td>
+                <td style="vertical-align: middle">{{ nourrissement.typeNourrissement }}</td>
+                <td style="vertical-align: middle">{{ nourrissement.typeAliment }}</td>
+                <td style="vertical-align: middle">{{ nourrissement.produit }}</td>
+                <td style="vertical-align: middle">{{ nourrissement.quantite }}</td>
+                <td style="vertical-align: middle; width: 350px">{{ nourrissement.note }}</td>
+                <td style="vertical-align: middle; width: 150px">
                     <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
+                          action="#">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>

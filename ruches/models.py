@@ -77,6 +77,30 @@ class Colonie(models.Model):
         return self.nom
 
 
+class TypeNourrissement(models.Model):
+    nom = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nom
+
+
+class TypeAliment(models.Model):
+    nom = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nom
+
+
+class Nourrissement(models.Model):
+    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    typeNourrissement = models.ForeignKey(TypeNourrissement, on_delete=models.CASCADE, null=True)
+    typeAliment = models.ForeignKey(TypeAliment, on_delete=models.CASCADE, null=True)
+    produit = models.CharField(max_length=200, null=True)
+    quantite = models.DecimalField(max_digits=12, decimal_places=3, null=True)
+    note = models.CharField(max_length=1024, null=True)
+
+
 class FeuilleVisite(models.Model):
     date = models.DateField()
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
