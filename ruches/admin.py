@@ -10,4 +10,5 @@ admin.site.register(models.TypeRuche)
 admin.site.register(models.Nourrissement)
 admin.site.register(models.TypeNourrissement)
 admin.site.register(models.TypeAliment)
+admin.site.register(models.Traitement)
 

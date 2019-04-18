@@ -194,6 +194,17 @@ def afficherRuchers(request):
     return render(request, 'Apiculteurs/afficherRuchers.html', {'ruchers': ruchers})
 
 
+def afficherTraitement(request):
+    traitementsObj = Traitement.objects.all()
+    traitements = []
+    for t in traitementsObj:
+        if t.maladie is None:
+            t.delete()
+        else:
+            traitements.append(t)
+    return render(request, 'Apiculteurs/afficherTraitements.html', {'traitements': traitements})
+
+
 def ajouterColonie(request):
     listeRuchers = Rucher.objects.all()
     listeTypesRuche = TypeRuche.objects.all()
@@ -250,6 +261,21 @@ def ajouterRucher(request):
                   {'form': form})
 
 
+def ajouterTraitement(request, rucher, colonie):
+    rucherObj = Rucher.objects.get(nom=rucher)
+    colonieObj = Colonie.objects.get(rucher=rucherObj, nom=colonie)
+    if request.method == 'POST':
+        obj = Traitement.objects.create(colonie=colonieObj)
+        traitementForm = TraitementForm(request.POST, instance=obj)
+        if traitementForm.is_valid():
+            traitementForm.save()
+            return redirect('afficherTraitements')
+    else:
+        obj = Traitement.objects.create(colonie=colonieObj)
+        traitementForm = TraitementForm(instance=obj)
+    return render(request, 'Apiculteurs/createTraitement.html', {'form': traitementForm})
+
+
 def modifierColonies(request):
     colonies = Colonie.objects.all()
     return render(request, 'Apiculteurs/modifierColonies.html', {'colonies': colonies})
@@ -286,6 +312,19 @@ def validSupprimerColonie(request, colonie, rucher):
         # return render(request, 'Admin/showsUsersAdmin.html', {'users': users})
 
     return redirect('afficherColonies')
+
+
+def validSupprimerNourrissement(request, n_id):
+    if request.method == 'POST':
+        try:
+            n = Nourrissement.objects.get(pk=n_id)
+            n.delete()
+        except Nourrissement.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print(e)
+
+    return redirect('afficherNourrissements')
 
 
 def supprimerRuchers(request):

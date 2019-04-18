@@ -53,7 +53,7 @@
     {% endif %}
 </ul>
 <div>
-    <h2>Nourrissements</h2>
+    <h2>Traitements</h2>
     {% if user.is_authenticated %}
     <div class="table-responsive" style="padding-right: 15%">
         <table class="table table-hover" style="text-align: center">
@@ -61,26 +61,26 @@
                 <th>Rucher</th>
                 <th>Colonie</th>
                 <th>Date</th>
-                <th>Type de nourrissement</th>
-                <th>Type d'aliment</th>
-                <th>Produit</th>
-                <th>Quantite</th>
-                <th>Dernière Note</th>
+                <th>Maladie</th>
+                <th>Methode</th>
+                <th>Posologie</th>
+                <th>Personne ayant administré le traitement</th>
+                <th>Dernière Remarque</th>
             </tr>
-            {% for nourrissement in nourrissements %}
-            {% if nourrissement.colonie.rucher.user == user or user.is_staff%}
+            {% for t in traitements %}
+            {% if t.colonie.rucher.user == user or user.is_staff%}
             <tr>
-                <td style="vertical-align: middle">{{ nourrissement.colonie.rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ nourrissement.colonie.nom }}</td>
-                <td style="vertical-align: middle">{{ nourrissement.date }}</td>
-                <td style="vertical-align: middle">{{ nourrissement.typeNourrissement }}</td>
-                <td style="vertical-align: middle">{{ nourrissement.typeAliment }}</td>
-                <td style="vertical-align: middle">{{ nourrissement.produit }}</td>
-                <td style="vertical-align: middle">{{ nourrissement.quantite }}</td>
-                <td style="vertical-align: middle; width: 350px">{{ nourrissement.note }}</td>
+                <td style="vertical-align: middle">{{ t.colonie.rucher.nom }}</td>
+                <td style="vertical-align: middle">{{ t.colonie.nom }}</td>
+                <td style="vertical-align: middle">{{ t.date }}</td>
+                <td style="vertical-align: middle">{{ t.maladie }}</td>
+                <td style="vertical-align: middle">{{ t.methode }}</td>
+                <td style="vertical-align: middle">{{ t.posologie }}</td>
+                <td style="vertical-align: middle">{{ t.api }}</td>
+                <td style="vertical-align: middle; width: 350px">{{ t.remarques }}</td>
                 <td style="vertical-align: middle; width: 150px">
                     <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{nourrissement.id}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerNourrissement' nourrissement.id %}">
+                          action="#">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>

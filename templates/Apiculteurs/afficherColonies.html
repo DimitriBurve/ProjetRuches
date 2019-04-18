@@ -36,11 +36,7 @@
         </div>
     </li><!--
     --><li class="dropdown2">
-        <a href="#" class="dropbtn">Gestion Nourrissements</a>
-        <div class="dropdown-content">
-            <a href="/afficherNourrissements">Afficher Nourrissements</a>
-            <a href="#">Supprimer Nourrissement</a>
-        </div>
+        <a href="/afficherNourrissements" class="dropbtn">Gestion Nourrissements</a>
     </li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
@@ -80,6 +76,9 @@
                 <td style="vertical-align: middle; width: 350px">
                     <form method="get" style="display: inline-block" action="{% url 'ajouterNourrissement' colonie.rucher colonie.nom %}">
                         <button type="submit" class="btn btn-warning m-0">ajouter Nourrissement</button>
+                    </form>
+                    <form method="get" style="display: inline-block" action="{% url 'ajouterTraitement' colonie.rucher colonie.nom %}">
+                        <button type="submit" class="btn btn-warning m-0">ajouter Traitement</button>
                     </form>
                     <form id="formDetails" method="get" style="display: inline-block"
                           action="#">

@@ -68,11 +68,12 @@
     {% endif %}
 </ul>
 <div>
-    <h2>Ajouter Nourrissement</h2>
-
+    <h2>Ajouter Traitement</h2>
     <div>
         <form method="post">
             {% csrf_token %}
+            <p style="display: inline-block">Apiculteur ayant administré le traitement : </p>{{ form.api }}
+            <br>
             <p style="display: inline-block">Colonie : </p>{{ form.colonie }}
             <br>
             <p style="display: inline-block">Date : </p>
@@ -83,15 +84,13 @@
                 </div>
             </div>
             <br>
-            <p style="display: inline-block">type : </p>{{ form.typeNourrissement }}
+            <p style="display: inline-block">Maladie : </p>{{ form.maladie }}
             <br>
-            <p style="display: inline-block">type Aliment : </p>{{ form.typeAliment }}
+            <p style="display: inline-block">Methode : </p>{{ form.methode }}
             <br>
-            <p style="display: inline-block">Produit : </p>{{ form.produit }}
+            <p style="display: inline-block">Posologie : </p>{{ form.posologie }}
             <br>
-            <p style="display: inline-block">Quantite : </p>{{ form.quantite }}
-            <br>
-            <p>Note : </p>{{ form.note }}
+            <p>Remarques : </p>{{ form.remarques }}
             <br>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>

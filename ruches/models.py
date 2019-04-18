@@ -101,6 +101,16 @@ class Nourrissement(models.Model):
     note = models.CharField(max_length=1024, null=True)
 
 
+class Traitement(models.Model):
+    api = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    maladie = models.CharField(max_length=200, null=True)
+    methode = models.CharField(max_length=200, null=True)
+    posologie = models.CharField(max_length=200, null=True)
+    remarques = models.CharField(max_length=200, null=True)
+
+
 class FeuilleVisite(models.Model):
     date = models.DateField()
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
