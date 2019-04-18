@@ -284,15 +284,17 @@ def validSupprimerRucher(request, rucher):
 def inscription(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        api_form = ApiForm(request.POST)
-        if user_form.is_valid() and api_form.is_valid():
+        if user_form.is_valid():
             user_form.save()
-            api_form.save()
             username = user_form.cleaned_data.get('username')
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
+            obj = Apiculteur.objects.create(user=user)
+            api_form = ApiForm(request.POST, instance=obj)
+            if api_form.is_valid():
+                api_form.save()
+                login(request, user)
+                return redirect('home')
         else:
             print("test invalid form")
             form_errors = user_form.errors

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Apiculteur(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
     adressePApi = models.CharField(max_length=200, default='')
     adresseSApi = models.CharField(max_length=200, default='', null=True)
