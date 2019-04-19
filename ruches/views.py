@@ -11,7 +11,7 @@ from static.fusioncharts import FusionCharts
 from static.fusioncharts import FusionTable
 from static.fusioncharts import TimeSeries
 
-from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, FeuilleVisite, TypeAliment, TypeNourrissement, Nourrissement
+from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, FeuilleVisiteRuche, TypeAliment, TypeNourrissement, Nourrissement
 
 
 # ensemble des vues

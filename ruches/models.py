@@ -148,8 +148,88 @@ class Pesee(models.Model):
         return str("Pesée sur {} le {}".format(self.colonie, self.date))
 
 
-class FeuilleVisite(models.Model):
-    date = models.DateField()
+class FeuilleVisiteDebut(models.Model):
+    date = models.DateTimeField(default=datetime.datetime.now)
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
     colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
     typeRuche = models.ForeignKey(TypeRuche, on_delete=models.CASCADE)
+    conditionClimatique = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return str("Visite sur {} {} {} le {}".format(self.rucher, self.colonie, self.typeRuche, self.date))
+
+
+class FeuilleVisiteAvant(models.Model):
+    feuilleVisiteDebut = models.OneToOneField(FeuilleVisiteDebut, on_delete=models.CASCADE)
+    traficEntreeRuche = models.CharField(max_length=200, null=True)
+    abeillesRentrantPollent = models.BooleanField(null=True)
+    abeillesMortesExterieur = models.BooleanField(null=True)
+
+
+class FeuilleVisiteApres(models.Model):
+    feuilleVisiteAvant = models.ForeignKey(FeuilleVisiteAvant, on_delete=models.CASCADE)
+    attitudeAbeilles = models.CharField(max_length=200, null=True)
+
+    partition = models.BooleanField(null=True)
+    nombreCadresColonie = models.IntegerField(null=True)
+    nombreRuellesOccupees = models.IntegerField(null=True)
+    nombreCadresCouvain = models.IntegerField(null=True)
+    nombreCadreCireGauffreeIntroduit = models.IntegerField(null=True)
+    nombreHausse = models.IntegerField(null=True)
+
+    couvainCompact = models.BooleanField(null=True)
+    couvainMosaique = models.BooleanField(null=True)
+    couvainchauve = models.BooleanField(null=True)
+    presenceOeuf = models.BooleanField(null=True)
+    nombreCadresOeuf = models.IntegerField(null=True)
+    cadreCouvain = models.BooleanField(null=True)
+    nombreCadresCouvain2 = models.IntegerField(null=True)
+
+    origineReine = models.CharField(max_length=200, null=True)
+    reinePresente = models.CharField(max_length=200, null=True)
+    reineMarquee = models.BooleanField(null=True)
+    couleurReineMarque = models.CharField(max_length=200, null=True)
+    presenceCelluleRoyale = models.BooleanField(null=True)
+    presenceCelluleRoyaleOrigine = models.CharField(max_length=200, null=True)
+
+    celluleFauxBourdons = models.BooleanField(null=True)
+    presenceFauxBourdons = models.BooleanField(null=True)
+
+    maladieTraitement = models.CharField(max_length=200, null=True)
+    methodeUtilisee = models.CharField(max_length=1024, null=True)
+
+    nuisible = models.CharField(max_length=200, null=True)
+
+    recoltePropolise = models.BooleanField(null=True)
+    recoltePollen = models.BooleanField(null=True)
+
+    typeAlimentNourrissement = models.CharField(max_length=200, null=True)
+    quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True)
+
+    apport = models.CharField(max_length=200, null=True)
+    provenceApport = models.CharField(max_length=200, null=True)
+
+    ponction = models.CharField(max_length=200, null=True)
+    destinationPonction = models.CharField(max_length=200, null=True)
+
+    reineMarqueeManipulation = models.CharField(max_length=200, null=True)
+    colonieDeplacee = models.DateTimeField(null=True)
+    essaimageNaturel = models.DateTimeField(null=True)
+    remerage = models.DateTimeField(null=True)
+    origineRemerage = models.CharField(max_length=200, null=True)
+    divisionColonie = models.DateTimeField(null=True)
+    creationRuche = models.CharField(max_length=200, null=True)
+    reunionColonie = models.DateTimeField(null=True)
+    liberationRuche = models.CharField(max_length=200, null=True)
+
+    nombreHausseRecolte = models.IntegerField(null=True)
+
+    notes = models.CharField(max_length=1024, null=True)
+
+
+class FeuilleVisiteRuche(models.Model):
+    feuilleVisiteDebut = models.ForeignKey(FeuilleVisiteDebut, on_delete=models.CASCADE)
+    nom = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.nom

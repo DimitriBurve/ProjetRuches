@@ -3,8 +3,7 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur, Nourrissement, Traitement, Recolte, \
-    Pesee
+from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisiteRuche, Apiculteur, Nourrissement, Traitement, Recolte, Pesee
 
 
 class UserForm(UserCreationForm):
