@@ -34,8 +34,8 @@
     <li class="liNavBar"><a href="informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown2">
-        <a href="afficherRuchers" class="dropbtn">Gestion Ruchers</a>
-        <div class="dropdown-content">
+        <div class="dropbtn">Gestion Ruchers &#9662</div><!--
+        --><div class="dropdown-content">
             <a href="afficherRuchers">Afficher Ruchers</a>
             <a href="ajouterRucher">Ajouter Rucher</a>
             <a href="modifierRuchers">Modifier Rucher</a>
@@ -50,9 +50,6 @@
             <a href="modifierColonies">Modifier Colonie</a>
             <a href="supprimerColonies">Supprimer Colonie</a>
         </div>
-    </li><!--
-    --><li class="dropdown2">
-        <a href="/afficherNourrissements" class="dropbtn active">Gestion Nourrissements</a>
     </li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>

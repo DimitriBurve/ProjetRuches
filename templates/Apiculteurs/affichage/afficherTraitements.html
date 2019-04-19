@@ -18,8 +18,8 @@
     <li class="liNavBar"><a href="informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown2">
-        <a href="afficherRuchers" class="dropbtn">Gestion Ruchers</a>
-        <div class="dropdown-content">
+        <div class="dropbtn">Gestion Ruchers &#9662</div><!--
+        --><div class="dropdown-content">
             <a href="afficherRuchers">Afficher Ruchers</a>
             <a href="ajouterRucher">Ajouter Rucher</a>
             <a href="modifierRuchers">Modifier Rucher</a>
@@ -27,17 +27,12 @@
         </div>
     </li><!--
  --><li class="dropdown2">
-        <a href="afficherColonies" class="dropbtn">Gestion Colonies</a>
-        <div class="dropdown-content">
+        <div class="dropbtn">Gestion Colonies &#9662</div><!--
+        --><div class="dropdown-content">
             <a class="active" href="afficherColonies">Afficher Colonies</a>
             <a href="ajouterColonie">Ajouter Colonie</a>
             <a href="modifierColonies">Modifier Colonie</a>
             <a href="supprimerColonies">Supprimer Colonie</a>
-        </div>
-    </li><!--
-    --><li class="dropdown2">
-        <a href="/afficherNourrissements" class="dropbtn active">Gestion Nourrissements</a>
-        <div class="dropdown-content">
         </div>
     </li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
