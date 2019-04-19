@@ -170,12 +170,12 @@ def videoCamerasUser(request, nameCapteur):
 
 def afficherColonies(request):
     colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/afficherColonies.html', {'colonies': colonies})
+    return render(request, 'Apiculteurs/affichage/afficherColonies.html', {'colonies': colonies})
 
 
 def affichercoloniesRucher(request, rucher):
     colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/afficherColoniesRucher.html', {'colonies': colonies, 'rucher': rucher})
+    return render(request, 'Apiculteurs/affichage/afficherColoniesRucher.html', {'colonies': colonies, 'rucher': rucher})
 
 
 def afficherNourrissement(request):
@@ -186,7 +186,7 @@ def afficherNourrissement(request):
             n.delete()
         else:
             nourrissements.append(n)
-    return render(request, 'Apiculteurs/afficherNourrissements.html', {'nourrissements': nourrissements})
+    return render(request, 'Apiculteurs/affichage/afficherNourrissements.html', {'nourrissements': nourrissements})
 
 
 def afficherPesees(request):
@@ -197,7 +197,7 @@ def afficherPesees(request):
             p.delete()
         else:
             pesees.append(p)
-    return render(request, 'Apiculteurs/afficherPesees.html', {'pesees': pesees})
+    return render(request, 'Apiculteurs/affichage/afficherPesees.html', {'pesees': pesees})
 
 
 def afficherRecoltes(request):
@@ -208,12 +208,12 @@ def afficherRecoltes(request):
             r.delete()
         else:
             recoltes.append(r)
-    return render(request, 'Apiculteurs/afficherRecoltes.html', {'recoltes': recoltes})
+    return render(request, 'Apiculteurs/affichage/afficherRecoltes.html', {'recoltes': recoltes})
 
 
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
-    return render(request, 'Apiculteurs/afficherRuchers.html', {'ruchers': ruchers})
+    return render(request, 'Apiculteurs/affichage/afficherRuchers.html', {'ruchers': ruchers})
 
 
 def afficherTraitement(request):
@@ -224,7 +224,7 @@ def afficherTraitement(request):
             t.delete()
         else:
             traitements.append(t)
-    return render(request, 'Apiculteurs/afficherTraitements.html', {'traitements': traitements})
+    return render(request, 'Apiculteurs/affichage/afficherTraitements.html', {'traitements': traitements})
 
 
 def ajouterColonie(request):
@@ -244,7 +244,7 @@ def ajouterColonie(request):
     else:
         print("else post")
         rucheForm = RucheForm()
-    return render(request, 'Apiculteurs/createColonie.html',
+    return render(request, 'Apiculteurs/creation/createColonie.html',
                   {'form': rucheForm, 'listeRuchers': listeRuchers, 'listeTypesRuche': listeTypesRuche})
 
 
@@ -263,7 +263,7 @@ def ajouterNourrissement(request, rucher, colonie):
     else:
         obj = Nourrissement.objects.create(colonie=colonieObj)
         nourrissementForm = NourrissementForm(instance=obj)
-    return render(request, 'Apiculteurs/createNourrissement.html',
+    return render(request, 'Apiculteurs/creation/createNourrissement.html',
                   {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement, 'listeTypeAliment': listeTypeAliment})
 
 
@@ -280,7 +280,7 @@ def ajouterPesee(request, rucher, colonie):
     else:
         obj = Pesee.objects.create(colonie=colonieObj)
         peseeForm = PeseeForm(instance=obj)
-    return render(request, 'Apiculteurs/createPesee.html', {'form': peseeForm})
+    return render(request, 'Apiculteurs/creation/createPesee.html', {'form': peseeForm})
 
 
 def ajouterRecolte(request, rucher, colonie):
@@ -296,7 +296,7 @@ def ajouterRecolte(request, rucher, colonie):
     else:
         obj = Recolte.objects.create(colonie=colonieObj)
         recolteForm = RecolteForm(instance=obj)
-    return render(request, 'Apiculteurs/createRecolte.html', {'form': recolteForm})
+    return render(request, 'Apiculteurs/creation/createRecolte.html', {'form': recolteForm})
 
 
 def ajouterRucher(request):
@@ -307,11 +307,11 @@ def ajouterRucher(request):
             return redirect('afficherRuchers')
         else:
             print(form.errors)
-            return render(request, 'Apiculteurs/createRucher.html', {'form': form})
+            return render(request, 'Apiculteurs/creation/createRucher.html', {'form': form})
 
     else:
         form = RucherForm()
-    return render(request, 'Apiculteurs/createRucher.html',
+    return render(request, 'Apiculteurs/creation/createRucher.html',
                   {'form': form})
 
 
@@ -327,22 +327,22 @@ def ajouterTraitement(request, rucher, colonie):
     else:
         obj = Traitement.objects.create(colonie=colonieObj)
         traitementForm = TraitementForm(instance=obj)
-    return render(request, 'Apiculteurs/createTraitement.html', {'form': traitementForm})
+    return render(request, 'Apiculteurs/creation/createTraitement.html', {'form': traitementForm})
 
 
 def modifierColonies(request):
     colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/modifierColonies.html', {'colonies': colonies})
+    return render(request, 'Apiculteurs/modification/modifierColonies.html', {'colonies': colonies})
 
 
 def modifierRuchers(request):
     ruchers = Rucher.objects.all()
-    return render(request, 'Apiculteurs/modifierRuchers.html', {'ruchers': ruchers})
+    return render(request, 'Apiculteurs/modification/modifierRuchers.html', {'ruchers': ruchers})
 
 
 def supprimerColonies(request):
     colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/supprimerColonies.html', {'colonies': colonies})
+    return render(request, 'Apiculteurs/suppression/supprimerColonies.html', {'colonies': colonies})
 
 
 def validSupprimerColonie(request, colonie, rucher):
@@ -407,7 +407,7 @@ def validSupprimerRecolte(request, r_id):
 
 def supprimerRuchers(request):
     ruchers = Rucher.objects.all()
-    return render(request, 'Apiculteurs/supprimerRuchers.html', {'ruchers': ruchers})
+    return render(request, 'Apiculteurs/suppression/supprimerRuchers.html', {'ruchers': ruchers})
 
 
 def validSupprimerRucher(request, rucher):
