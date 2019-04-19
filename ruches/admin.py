@@ -13,4 +13,5 @@ admin.site.register(models.TypeAliment)
 admin.site.register(models.Traitement)
 admin.site.register(models.ProduitRecolte)
 admin.site.register(models.Recolte)
+admin.site.register(models.Pesee)
 

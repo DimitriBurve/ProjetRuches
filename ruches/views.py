@@ -189,6 +189,17 @@ def afficherNourrissement(request):
     return render(request, 'Apiculteurs/afficherNourrissements.html', {'nourrissements': nourrissements})
 
 
+def afficherPesees(request):
+    peseesObj = Pesee.objects.all()
+    pesees = []
+    for p in peseesObj:
+        if p.poids is None:
+            p.delete()
+        else:
+            pesees.append(p)
+    return render(request, 'Apiculteurs/afficherPesees.html', {'pesees': pesees})
+
+
 def afficherRecoltes(request):
     recoltesObj = Recolte.objects.all()
     recoltes = []
@@ -254,6 +265,22 @@ def ajouterNourrissement(request, rucher, colonie):
         nourrissementForm = NourrissementForm(instance=obj)
     return render(request, 'Apiculteurs/createNourrissement.html',
                   {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement, 'listeTypeAliment': listeTypeAliment})
+
+
+def ajouterPesee(request, rucher, colonie):
+    rucherObj = Rucher.objects.get(nom=rucher)
+    colonieObj = Colonie.objects.get(rucher=rucherObj, nom=colonie)
+
+    if request.method == 'POST':
+        obj = Pesee.objects.create(colonie=colonieObj)
+        peseeForm = PeseeForm(request.POST, instance=obj)
+        if peseeForm.is_valid():
+            peseeForm.save()
+            return redirect('afficherPesees')
+    else:
+        obj = Pesee.objects.create(colonie=colonieObj)
+        peseeForm = PeseeForm(instance=obj)
+    return render(request, 'Apiculteurs/createPesee.html', {'form': peseeForm})
 
 
 def ajouterRecolte(request, rucher, colonie):
@@ -352,6 +379,18 @@ def validSupprimerNourrissement(request, n_id):
             print(e)
 
     return redirect('afficherNourrissements')
+
+
+def validSupprimerPesee(request, p_id):
+    if request.method == 'POST':
+        try:
+            p = Pesee.objects.get(pk=p_id)
+            p.delete()
+        except Pesee.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print(e)
+    return redirect('afficherPesees')
 
 
 def validSupprimerRecolte(request, r_id):

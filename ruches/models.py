@@ -138,6 +138,16 @@ class Recolte(models.Model):
         return str("Récolte sur {} le {}".format(self.colonie, self.date))
 
 
+class Pesee(models.Model):
+    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    poids = models.DecimalField(max_digits=12, decimal_places=3, null=True)
+    note = models.CharField(max_length=1024, null=True)
+
+    def __str__(self):
+        return str("Pesée sur {} le {}".format(self.colonie, self.date))
+
+
 class FeuilleVisite(models.Model):
     date = models.DateField()
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)

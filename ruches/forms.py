@@ -3,7 +3,8 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur, Nourrissement, Traitement, Recolte
+from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur, Nourrissement, Traitement, Recolte, \
+    Pesee
 
 
 class UserForm(UserCreationForm):
@@ -108,3 +109,18 @@ class RecolteForm(ModelForm):
     class Meta:
         model = Recolte
         fields = ['colonie', 'date', 'produitRecolte', 'quantite', 'note']
+
+
+class PeseeForm(ModelForm):
+    note = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
+    date = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=forms.DateTimeInput(attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        })
+    )
+
+    class Meta:
+        model = Pesee
+        fields = ['colonie', 'date', 'poids', 'note']
