@@ -36,9 +36,7 @@
         </div>
     </li><!--
     --><li class="dropdown2">
-        <a href="/afficherNourrissements" class="dropbtn active">Gestion Nourrissements</a>
-        <div class="dropdown-content">
-        </div>
+        <a href="/afficherNourrissements" class="dropbtn">Gestion Nourrissements</a>
     </li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
@@ -54,7 +52,7 @@
     {% endif %}
 </ul>
 <div>
-    <h2>Traitements</h2>
+    <h2>Récoltes</h2>
     {% if user.is_authenticated %}
     <div class="table-responsive" style="padding-right: 15%">
         <table class="table table-hover" style="text-align: center">
@@ -62,26 +60,22 @@
                 <th>Rucher</th>
                 <th>Colonie</th>
                 <th>Date</th>
-                <th>Maladie</th>
-                <th>Methode</th>
-                <th>Posologie</th>
-                <th>Personne ayant administré le traitement</th>
-                <th>Dernière Remarque</th>
+                <th>Produit Récolté</th>
+                <th>Quantite</th>
+                <th>Dernière Note</th>
             </tr>
-            {% for t in traitements %}
-            {% if t.colonie.rucher.user == user or user.is_staff%}
+            {% for r in recoltes %}
+            {% if r.colonie.rucher.user == user or user.is_staff%}
             <tr>
-                <td style="vertical-align: middle">{{ t.colonie.rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ t.colonie.nom }}</td>
-                <td style="vertical-align: middle">{{ t.date }}</td>
-                <td style="vertical-align: middle">{{ t.maladie }}</td>
-                <td style="vertical-align: middle">{{ t.methode }}</td>
-                <td style="vertical-align: middle">{{ t.posologie }}</td>
-                <td style="vertical-align: middle">{{ t.api }}</td>
-                <td style="vertical-align: middle; width: 350px">{{ t.remarques }}</td>
+                <td style="vertical-align: middle">{{ r.colonie.rucher.nom }}</td>
+                <td style="vertical-align: middle">{{ r.colonie.nom }}</td>
+                <td style="vertical-align: middle">{{ r.date }}</td>
+                <td style="vertical-align: middle">{{ r.produitRecolte }}</td>
+                <td style="vertical-align: middle">{{ r.quantite }}</td>
+                <td style="vertical-align: middle; width: 350px">{{ r.note }}</td>
                 <td style="vertical-align: middle; width: 150px">
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{nourrissement.id}}')" style="display: inline-block"
-                          action="#">
+                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{r.id}}')" style="display: inline-block"
+                          action="{% url 'validSupprimerRecolte' r.id %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>
@@ -97,8 +91,8 @@
 </div>
 
 <script type="text/javascript">
-    function validateRucher(form, rucher) {
-        if (confirm("Voulez vous supprimer "+rucher+" ?") === false) {
+    function validateRucher(form, recolte) {
+        if (confirm("Voulez vous supprimer ?") === false) {
             return false;
         } else {
             return true;

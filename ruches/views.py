@@ -189,6 +189,17 @@ def afficherNourrissement(request):
     return render(request, 'Apiculteurs/afficherNourrissements.html', {'nourrissements': nourrissements})
 
 
+def afficherRecoltes(request):
+    recoltesObj = Recolte.objects.all()
+    recoltes = []
+    for r in recoltesObj:
+        if r.produitRecolte is None:
+            r.delete()
+        else:
+            recoltes.append(r)
+    return render(request, 'Apiculteurs/afficherRecoltes.html', {'recoltes': recoltes})
+
+
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/afficherRuchers.html', {'ruchers': ruchers})
@@ -243,6 +254,22 @@ def ajouterNourrissement(request, rucher, colonie):
         nourrissementForm = NourrissementForm(instance=obj)
     return render(request, 'Apiculteurs/createNourrissement.html',
                   {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement, 'listeTypeAliment': listeTypeAliment})
+
+
+def ajouterRecolte(request, rucher, colonie):
+    rucherObj = Rucher.objects.get(nom=rucher)
+    colonieObj = Colonie.objects.get(rucher=rucherObj, nom=colonie)
+
+    if request.method == 'POST':
+        obj = Recolte.objects.create(colonie=colonieObj)
+        recolteForm = RecolteForm(request.POST, instance=obj)
+        if recolteForm.is_valid():
+            recolteForm.save()
+            return redirect('afficherRecoltes')
+    else:
+        obj = Recolte.objects.create(colonie=colonieObj)
+        recolteForm = RecolteForm(instance=obj)
+    return render(request, 'Apiculteurs/createRecolte.html', {'form': recolteForm})
 
 
 def ajouterRucher(request):
@@ -327,6 +354,18 @@ def validSupprimerNourrissement(request, n_id):
     return redirect('afficherNourrissements')
 
 
+def validSupprimerRecolte(request, r_id):
+    if request.method == 'POST':
+        try:
+            r = Recolte.objects.get(pk=r_id)
+            r.delete()
+        except Recolte.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print(e)
+    return redirect('afficherRecoltes')
+
+
 def supprimerRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/supprimerRuchers.html', {'ruchers': ruchers})
@@ -346,6 +385,19 @@ def validSupprimerRucher(request, rucher):
         # return render(request, 'Admin/showsUsersAdmin.html', {'users': users})
 
     return redirect('afficherRuchers')
+
+
+def validSupprimerTraitement(request, t_id):
+    if request.method == 'POST':
+        try:
+            t = Traitement.objects.get(pk=t_id)
+            t.delete()
+        except Traitement.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print(e)
+
+    return redirect('afficherTraitements')
 
 
 # partie inscription et mon compte

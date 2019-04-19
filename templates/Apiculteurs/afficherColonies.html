@@ -80,6 +80,9 @@
                     <form method="get" style="display: inline-block" action="{% url 'ajouterTraitement' colonie.rucher colonie.nom %}">
                         <button type="submit" class="btn btn-warning m-0">ajouter Traitement</button>
                     </form>
+                    <form method="get", style="display: inline-block" action="{% url 'ajouterRecolte' colonie.rucher colonie.nom %}">
+                        <button type="submit" class="btn btn-warning m-0">nouvelle Récolte</button>
+                    </form>
                     <form id="formDetails" method="get" style="display: inline-block"
                           action="#">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>

@@ -13,12 +13,14 @@ urlpatterns = [
     # vues apiculteurs
     path('afficherColonies', views.afficherColonies, name='afficherColonies'),
     path('afficherColoniesRucher/<str:rucher>', views.affichercoloniesRucher, name='afficherColoniesRucher'),
-    path('afficherRuchers', views.afficherRuchers, name='afficherRuchers'),
     path('afficherNourrissements', views.afficherNourrissement, name='afficherNourrissements'),
+    path('afficherRecoltes', views.afficherRecoltes, name='afficherRecoltes'),
+    path('afficherRuchers', views.afficherRuchers, name='afficherRuchers'),
     path('afficherTraitements', views.afficherTraitement, name='afficherTraitements'),
-    path('ajouterRucher', views.ajouterRucher, name='ajouterRucher'),
     path('ajouterColonie', views.ajouterColonie, name='ajouterColonie'),
     path('ajouterNourrissement/<str:rucher>/<str:colonie>', views.ajouterNourrissement, name='ajouterNourrissement'),
+    path('ajouterRecolte/<str:rucher>/<str:colonie>', views.ajouterRecolte, name='ajouterRecolte'),
+    path('ajouterRucher', views.ajouterRucher, name='ajouterRucher'),
     path('ajouterTraitement/<str:rucher>/<str:colonie>', views.ajouterTraitement, name='ajouterTraitement'),
     path('modifierColonies', views.modifierColonies, name='modifierColonies'),
     path('modifierRuchers', views.modifierRuchers, name='modifierRuchers'),
@@ -27,6 +29,7 @@ urlpatterns = [
     path('supprimerRuchers', views.supprimerRuchers, name='supprimerRuchers'),
     path('validSupprimerRucher/<str:rucher>', views.validSupprimerRucher, name='validSupprimerRucher'),
     path('validSupprimerNourrissement/<int:n_id>', views.validSupprimerNourrissement, name='validSupprimerNourrissement'),
+    path('validSupprimerRecolte/<int:r_id>', views.validSupprimerRecolte, name='validSupprimerRecolte'),
     # vues inscription et mon compte
     path('inscription', views.inscription, name='inscription'),
     path('monCompte', views.monCompte, name='monComte'),
@@ -37,5 +40,3 @@ urlpatterns = [
     path('deleteUserAdmin/<str:username>', views.deleteUserAdmin, name='deleteUserAdmin'),
     path('detailsUserAdmin/<str:username>', views.detailsUserAdmin, name='detailsUserAdmin'),
 ]
-
-

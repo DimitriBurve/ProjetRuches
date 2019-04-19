@@ -41,6 +41,9 @@ class Apiculteur(models.Model):
 
     telephoneAgentSanitaire = models.CharField(max_length=10, default='')
 
+    def __str__(self):
+        return self.user
+
 
 class Capteurs(models.Model):
     localisation = models.CharField(max_length=200)
@@ -100,6 +103,9 @@ class Nourrissement(models.Model):
     quantite = models.DecimalField(max_digits=12, decimal_places=3, null=True)
     note = models.CharField(max_length=1024, null=True)
 
+    def __str__(self):
+        return str("{} le {}".format(self.typeNourrissement, self.date))
+
 
 class Traitement(models.Model):
     api = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -110,10 +116,30 @@ class Traitement(models.Model):
     posologie = models.CharField(max_length=200, null=True)
     remarques = models.CharField(max_length=200, null=True)
 
+    def __str__(self):
+        return str("Traitement sur {} par {}".format(self.colonie, self.api))
+
+
+class ProduitRecolte(models.Model):
+    nom = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nom
+
+
+class Recolte(models.Model):
+    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    produitRecolte = models.ForeignKey(ProduitRecolte, on_delete=models.CASCADE, null=True)
+    quantite = models.DecimalField(max_digits=12, decimal_places=3, null=True)
+    note = models.CharField(max_length=1024, null=True)
+
+    def __str__(self):
+        return str("Récolte sur {} le {}".format(self.colonie, self.date))
+
 
 class FeuilleVisite(models.Model):
     date = models.DateField()
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
     colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
     typeRuche = models.ForeignKey(TypeRuche, on_delete=models.CASCADE)
-
