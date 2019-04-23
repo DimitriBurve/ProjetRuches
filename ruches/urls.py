@@ -34,8 +34,7 @@ urlpatterns = [
     path('validSupprimerRecolte/<int:r_id>', views.validSupprimerRecolte, name='validSupprimerRecolte'),
     path('validSupprimerRucher/<str:rucher>', views.validSupprimerRucher, name='validSupprimerRucher'),
     # vues feuille de visite
-    path('createFeuilleVisiteDebut/<str:rucher>/<str:colonie>', views.createFeuillevisiteDebut, name='createFeuilleVisiteDebut'),
-    path('createFeuilleVisiteAvant/<int:feuillePredec_id>', views.createFeuilleVisiteAvant, name='createFeuilleVisiteAvant'),
+    path('createFeuilleVisite/<str:rucher>/<str:colonie>/<int:etape>', views.createFeuillevisite, name='createFeuilleVisite'),
     # vues inscription et mon compte
     path('inscription', views.inscription, name='inscription'),
     path('monCompte', views.monCompte, name='monComte'),

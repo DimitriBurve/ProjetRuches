@@ -11,7 +11,8 @@ from static.fusioncharts import FusionCharts
 from static.fusioncharts import FusionTable
 from static.fusioncharts import TimeSeries
 
-from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, FeuilleVisiteRuche, TypeAliment, TypeNourrissement, Nourrissement
+from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, TypeAliment, TypeNourrissement, \
+    Nourrissement, FeuilleVisite
 
 
 # ensemble des vues
@@ -31,8 +32,9 @@ def header(apikey):
 def informationsUser(request):
     apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
 
-    r = requests.get("https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/alerts/5cb43b5e10cd010020e908c6",
-                     headers=header(apikey)).text
+    r = requests.get(
+        "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/alerts/5cb43b5e10cd010020e908c6",
+        headers=header(apikey)).text
     print(r)
     # response = requete.urlopen("https://github.com/timeline.json")
     # data_test = json.load(response)
@@ -175,7 +177,8 @@ def afficherColonies(request):
 
 def affichercoloniesRucher(request, rucher):
     colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/affichage/afficherColoniesRucher.html', {'colonies': colonies, 'rucher': rucher})
+    return render(request, 'Apiculteurs/affichage/afficherColoniesRucher.html',
+                  {'colonies': colonies, 'rucher': rucher})
 
 
 def afficherNourrissement(request):
@@ -264,7 +267,8 @@ def ajouterNourrissement(request, rucher, colonie):
         obj = Nourrissement.objects.create(colonie=colonieObj)
         nourrissementForm = NourrissementForm(instance=obj)
     return render(request, 'Apiculteurs/creation/createNourrissement.html',
-                  {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement, 'listeTypeAliment': listeTypeAliment})
+                  {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement,
+                   'listeTypeAliment': listeTypeAliment})
 
 
 def ajouterPesee(request, rucher, colonie):
@@ -440,40 +444,64 @@ def validSupprimerTraitement(request, t_id):
 
 
 # partie feuille visite
-def createFeuillevisiteDebut(request, rucher, colonie):
+def createFeuillevisite(request, rucher, colonie, etape):
     rucherObj = Rucher.objects.get(nom=rucher)
     colonieObj = Colonie.objects.get(nom=colonie, rucher=rucherObj)
+
+    feuille = FeuilleVisite.objects.all()
     if request.method == 'POST':
-        obj = FeuilleVisiteDebut.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
-        form = FeuilleVisiteDebutForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
-            dateForm = form.cleaned_data.get('date')
-            feuille = FeuilleVisiteDebut.objects.get(date=dateForm, rucher=rucher, colonie=colonie)
-            obj.delete()
-            return redirect('createFeuilleVisiteAvant', feuille.id)
+        if etape == 1:
+            obj = FeuilleVisite.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
+            form = FeuilleVisiteDebutForm(request.POST, instance=obj)
+            if form.is_valid():
+                form.save()
+                dateForm = form.cleaned_data.get('date')
+                feuille = FeuilleVisite.objects.get(date=dateForm, rucher=rucher, colonie=colonie)
+                obj.delete()
+                etape += 1
+                return redirect('createFeuilleVisite', rucher, colonie, etape)
+        elif etape == 2:
+            if feuille.conditionClimatique is not None:
+                form = FeuilleVisiteAvantForm(request.POST, instance=feuille)
     else:
-        obj = FeuilleVisiteDebut.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
-        form = FeuilleVisiteDebutForm(instance=obj)
-        obj.delete()
-    return render(request, 'Apiculteurs/creation/createFeuilleVisiteDebut.html', {'form': form, 'rucher': rucher, 'colonie': colonie})
-
-
-def createFeuilleVisiteAvant(request, feuillePredec_id):
-    feuillePredecObj = FeuilleVisiteDebut.objects.get(pk=feuillePredec_id)
-
-    if request.method == 'POST':
-        obj = FeuilleVisiteAvant.objects.create(feuilleVisiteDebut=feuillePredecObj)
-        form = FeuilleVisiteAvantForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
+        form = FeuilleVisiteDebutForm()
+        if etape == 1:
+            obj = FeuilleVisite.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
+            form = FeuilleVisiteDebutForm(instance=obj)
             obj.delete()
-            return redirect('afficherColonies')
-    else:
-        obj = FeuilleVisiteAvant.objects.create(feuilleVisiteDebut=feuillePredecObj)
-        form = FeuilleVisiteAvantForm(instance=obj)
-        obj.delete()
-    return render(request, 'Apiculteurs/creation/createFeuilleVisiteAvant.html', {'form': form})
+        elif etape == 2:
+            if feuille or len(feuille == 1) or feuille.conditionClimatique is not None:
+                form = FeuilleVisiteAvantForm()
+        elif etape == 3:
+            form = FeuilleVisiteApresAttitudeForm()
+        elif etape == 4:
+            form = FeuilleVisiteApresCadresForm()
+        elif etape == 5:
+            form = FeuilleVisiteApresCouvainForm()
+        elif etape == 6:
+            form = FeuilleVisiteApresReineForm()
+        elif etape == 7:
+            form = FeuilleVisiteApresFauxBourdonsForm()
+        elif etape == 8:
+            form = FeuilleVisiteApresMaladieTraitementForm()
+        elif etape == 9:
+            form = FeuilleVisiteApresNuisibleForm()
+        elif etape == 10:
+            form = FeuilleVisiteApresAutreForm()
+        elif etape == 11:
+            form = FeuilleVisiteApresNourrissementForm()
+        elif etape == 12:
+            form = FeuilleVisiteApresApportForm()
+        elif etape == 13:
+            form = FeuilleVisiteApresPonctionForm()
+        elif etape == 14:
+            form = FeuilleVisiteApresManipulationForm()
+        elif etape == 15:
+            form = FeuilleVisiteApresRecolteForm()
+        elif etape == 16:
+            form = FeuilleVisiteApresNotesForm()
+        return render(request, 'Apiculteurs/creation/createFeuilleVisite.html',
+                      {'form': form, 'rucher': rucher, 'colonie': colonie})
 
 
 # partie inscription et mon compte
@@ -502,7 +530,8 @@ def inscription(request):
                     erreurs.append("Erreur mot de passe")
                 if error == "username":
                     erreurs.append("Erreur Username")
-            return render(request, 'registration/inscription.html', {'user_form': user_form, 'api_form':api_form,'errorsForm': erreurs})
+            return render(request, 'registration/inscription.html',
+                          {'user_form': user_form, 'errorsForm': erreurs})
     else:
         print("test error post")
         user_form = UserForm()

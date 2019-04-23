@@ -3,12 +3,8 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisiteRuche, Apiculteur, Nourrissement, Traitement, \
-    Recolte, Pesee, FeuilleVisiteDebut, FeuilleVisiteAvant, FeuilleVisiteApresAttitude, FeuilleVisiteApresCadres, \
-    FeuilleVisiteApresCouvain, FeuilleVisiteApresReine, FeuilleVisiteApresFauxBourdons, \
-    FeuilleVisiteApresMaladieTraitement, FeuilleVisiteApresNuisible, FeuilleVisiteApresAutre, \
-    FeuilleVisiteApresNourrissement, FeuilleVisiteApresApport, FeuilleVisiteApresPonction, \
-    FeuilleVisiteApresManipulation, FeuilleVisiteApresRecolte, FeuilleVisiteApresNotes
+from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur, Nourrissement, Traitement, \
+    Recolte, Pesee
 
 
 class UserForm(UserCreationForm):
@@ -150,7 +146,7 @@ class FeuilleVisiteDebutForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteDebut
+        model = FeuilleVisite
         fields = ['date', 'rucher', 'colonie', 'typeRuche', 'conditionClimatique']
 
 
@@ -188,7 +184,7 @@ class FeuilleVisiteAvantForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteAvant
+        model = FeuilleVisite
         fields = ['traficEntreeRuche', 'abeillesRentrantPollen', 'abeillesMortesExterieur']
 
 
@@ -205,7 +201,7 @@ class FeuilleVisiteApresAttitudeForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteApresAttitude
+        model = FeuilleVisite
         fields = ['attitudeAbeilles']
 
 
@@ -221,7 +217,7 @@ class FeuilleVisiteApresCadresForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteApresCadres
+        model = FeuilleVisite
         fields = ['partition', 'nombreCadresColonie', 'nombreRuellesOccupees', 'nombreCadresCouvain', 'nombreCadreCireGauffreeIntroduit', 'nombreHausse']
 
 
@@ -260,7 +256,7 @@ class FeuilleVisiteApresCouvainForm(ModelForm):
     nombreCadresCouvain2 = forms.IntegerField(required=False)
 
     class Meta:
-        model = FeuilleVisiteApresCouvain
+        model = FeuilleVisite
         fields = ['couvainCompact', 'couvainMosaique', 'couvainChauve', 'presenceOeuf', 'nombreCadresOeuf', 'cadreCouvain', 'nombreCadresCouvain2']
 
 
@@ -329,7 +325,7 @@ class FeuilleVisiteApresReineForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteApresReine
+        model = FeuilleVisite
         fields = ['origineReine', 'reinePresente', 'reineMarquee', 'couleurReineMarque', 'presenceCelluleRoyale', 'presenceCelluleRoyaleOrigine']
 
 
@@ -350,7 +346,7 @@ class FeuilleVisiteApresFauxBourdonsForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteApresFauxBourdons
+        model = FeuilleVisite
         fields = ['celluleFauxBourdons', 'presenceFauxBourdons']
 
 
@@ -373,7 +369,7 @@ class FeuilleVisiteApresMaladieTraitementForm(ModelForm):
     methodeUtilisee = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
 
     class Meta:
-        model = FeuilleVisiteApresMaladieTraitement
+        model = FeuilleVisite
         fields = ['maladieTraitement', 'methodeUtilisee']
 
 
@@ -388,7 +384,7 @@ class FeuilleVisiteApresNuisibleForm(ModelForm):
     ]
 
     class Meta:
-        model = FeuilleVisiteApresNuisible
+        model = FeuilleVisite
         fields = ['nuisible']
 
 
@@ -409,7 +405,7 @@ class FeuilleVisiteApresAutreForm(ModelForm):
     )
 
     class Meta:
-        model = FeuilleVisiteApresAutre
+        model = FeuilleVisite
         fields = ['recoltePropolis', 'recoltePollen']
 
 
@@ -430,7 +426,7 @@ class FeuilleVisiteApresNourrissementForm(ModelForm):
     quantiteAlimentNourrissement = forms.IntegerField(required=False)
 
     class Meta:
-        model = FeuilleVisiteApresNourrissement
+        model = FeuilleVisite
         fields = ['typeAlimentNourrissement', 'quantiteAlimentNourrissement']
 
 
@@ -452,7 +448,7 @@ class FeuilleVisiteApresApportForm(ModelForm):
     provenanceApport = forms.CharField(required=False)
 
     class Meta:
-        model = FeuilleVisiteApresApport
+        model = FeuilleVisite
         fields = ['apport', 'provenanceApport']
 
 
@@ -474,7 +470,7 @@ class FeuilleVisiteApresPonctionForm(ModelForm):
     destinationPonction = forms.CharField(required=False)
 
     class Meta:
-        model = FeuilleVisiteApresPonction
+        model = FeuilleVisite
         fields = ['ponction', 'destinationPonction']
 
 
@@ -545,7 +541,7 @@ class FeuilleVisiteApresManipulationForm(ModelForm):
     liberationRuche = forms.CharField(required=False)
 
     class Meta:
-        model = FeuilleVisiteApresManipulation
+        model = FeuilleVisite
         fields = ['reineMarqueeManipulation', 'colonieDeplacee', 'essaimageNaturel', 'remerage', 'origineRemerage', 'divisionColonie', 'creationRuche', 'reunionColonie', 'liberationRuche']
 
 
@@ -553,7 +549,7 @@ class FeuilleVisiteApresRecolteForm(ModelForm):
     nombreHausseRecolte = forms.IntegerField(required=False)
 
     class Meta:
-        model = FeuilleVisiteApresRecolte
+        model = FeuilleVisite
         fields = ['nombreHausseRecolte']
 
 
@@ -561,5 +557,5 @@ class FeuilleVisiteApresNotesForm(ModelForm):
     notes = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
 
     class Meta:
-        model = FeuilleVisiteApresNotes
+        model = FeuilleVisite
         fields = ['notes']

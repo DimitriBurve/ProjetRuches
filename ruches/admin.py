@@ -14,5 +14,5 @@ admin.site.register(models.Traitement)
 admin.site.register(models.ProduitRecolte)
 admin.site.register(models.Recolte)
 admin.site.register(models.Pesee)
-admin.site.register(models.FeuilleVisiteDebut)
+admin.site.register(models.FeuilleVisite)
 
