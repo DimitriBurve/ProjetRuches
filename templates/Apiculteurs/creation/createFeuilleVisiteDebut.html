@@ -2,6 +2,27 @@
 
 {% block content %}
 <div>
-    <p>test Debut</p>
+    <p style="display: inline-block">Rucher : </p>  {{ rucher }}
+    <br>
+    <p style="display: inline-block">colonie : </p> {{ colonie }}
+    <br>
+    <p style="display: inline-block">Date : </p>
+    <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+        {{ form.date }}
+        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+    </div>
+    <br>
+    <p style="display: inline-block">Condition Climatique :</p>{{ form.conditionClimatique }}
+    <br>
+    <button type="submit" class="btn btn-primary">Suivant</button>
 </div>
+<script>
+    $(function () {
+        $("#datetimepicker1").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+    });
+</script>
 {% endblock %}

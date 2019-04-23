@@ -439,6 +439,24 @@ def validSupprimerTraitement(request, t_id):
     return redirect('afficherTraitements')
 
 
+# partie feuille visite
+def createFeuillevisiteDebut(request, rucher, colonie):
+    rucherObj = Rucher.objects.get(nom=rucher)
+    colonieObj = Colonie.objects.get(nom=colonie, rucher=rucherObj)
+    if request.method == 'POST':
+        obj = FeuilleVisiteDebut.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
+        form = FeuilleVisiteDebutForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect('afficherColonies')
+    else:
+        obj = FeuilleVisiteDebut.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
+        form = FeuilleVisiteDebutForm(instance=obj)
+        obj.delete()
+    return render(request, 'Apiculteurs/creation/createFeuilleVisiteDebut.html', {'form': form, 'rucher': rucher, 'colonie': colonie})
+
+
+
 # partie inscription et mon compte
 
 def inscription(request):

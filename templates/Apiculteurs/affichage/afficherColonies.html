@@ -83,6 +83,9 @@
                     <form method="get" style="display: inline-block" action="{% url 'ajouterPesee' colonie.rucher colonie.nom %}">
                         <button type="submit" class="btn btn-warning m-0">nouvelle Pesée</button>
                     </form>
+                    <form method="get" style="display: inline-block" action="{% url 'createFeuilleVisiteDebut' colonie.rucher colonie.nom %}">
+                        <button type="submit" class="btn btn-warning m-0">nouvelle Visite</button>
+                    </form>
                     <form id="formDetails" method="get" style="display: inline-block"
                           action="#">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>

@@ -135,7 +135,7 @@ class FeuilleVisiteDebutForm(ModelForm):
         input_formats=['%d/%m/%Y %H:%M'],
         widget=forms.DateTimeInput(attrs={
             'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
+            'data-target': '#datetimepicker1',
         })
     )
     CONDITION_CLIMA_CHOICES = [
@@ -146,7 +146,7 @@ class FeuilleVisiteDebutForm(ModelForm):
 
     conditionClimatique = forms.CharField(
         label='Condition climatique : ',
-        widget=forms.RadioSelect(choices=CONDITION_CLIMA_CHOICES)
+        widget=forms.RadioSelect(choices=CONDITION_CLIMA_CHOICES, attrs={'display': 'inline-block'})
     )
 
     class Meta:
