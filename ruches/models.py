@@ -148,31 +148,19 @@ class Pesee(models.Model):
         return str("Pesée sur {} le {}".format(self.colonie, self.date))
 
 
-class FeuilleVisiteDebut(models.Model):
+class FeuilleVisite(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now)
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
     colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
     typeRuche = models.ForeignKey(TypeRuche, on_delete=models.CASCADE)
     conditionClimatique = models.CharField(max_length=200, null=True)
 
-    def __str__(self):
-        return str("Visite sur {} {} {} le {}".format(self.rucher, self.colonie, self.typeRuche, self.date))
-
-
-class FeuilleVisiteAvant(models.Model):
-    feuilleVisiteDebut = models.OneToOneField(FeuilleVisiteDebut, on_delete=models.CASCADE)
     traficEntreeRuche = models.CharField(max_length=200, null=True)
     abeillesRentrantPollen = models.BooleanField(null=True)
     abeillesMortesExterieur = models.BooleanField(null=True)
 
-
-class FeuilleVisiteApresAttitude(models.Model):
-    feuilleVisiteAvant = models.ForeignKey(FeuilleVisiteAvant, on_delete=models.CASCADE)
     attitudeAbeilles = models.CharField(max_length=200, null=True)
 
-
-class FeuilleVisiteApresCadres(models.Model):
-    feuilleVisiteApresAttitude = models.OneToOneField(FeuilleVisiteApresAttitude, on_delete=models.CASCADE)
     partition = models.BooleanField(null=True)
     nombreCadresColonie = models.IntegerField(null=True)
     nombreRuellesOccupees = models.IntegerField(null=True)
@@ -180,9 +168,6 @@ class FeuilleVisiteApresCadres(models.Model):
     nombreCadreCireGauffreeIntroduit = models.IntegerField(null=True)
     nombreHausse = models.IntegerField(null=True)
 
-
-class FeuilleVisiteApresCouvain(models.Model):
-    feuilleVisiteApresCadres = models.OneToOneField(FeuilleVisiteApresCadres, on_delete=models.CASCADE)
     couvainCompact = models.BooleanField(null=True)
     couvainMosaique = models.BooleanField(null=True)
     couvainChauve = models.BooleanField(null=True)
@@ -191,9 +176,6 @@ class FeuilleVisiteApresCouvain(models.Model):
     cadreCouvain = models.BooleanField(null=True)
     nombreCadresCouvain2 = models.IntegerField(null=True)
 
-
-class FeuilleVisiteApresReine(models.Model):
-    feuilleVisiteApresCouvain = models.OneToOneField(FeuilleVisiteApresCouvain, on_delete=models.CASCADE)
     origineReine = models.CharField(max_length=200, null=True)
     reinePresente = models.CharField(max_length=200, null=True)
     reineMarquee = models.BooleanField(null=True)
@@ -201,50 +183,26 @@ class FeuilleVisiteApresReine(models.Model):
     presenceCelluleRoyale = models.BooleanField(null=True)
     presenceCelluleRoyaleOrigine = models.CharField(max_length=200, null=True)
 
-
-class FeuilleVisiteApresFauxBourdons(models.Model):
-    feuilleVisiteApresReine = models.OneToOneField(FeuilleVisiteApresReine, on_delete=models.CASCADE)
     celluleFauxBourdons = models.BooleanField(null=True)
     presenceFauxBourdons = models.BooleanField(null=True)
 
-
-class FeuilleVisiteApresMaladieTraitement(models.Model):
-    feuilleVisiteApresFauxBourdons = models.OneToOneField(FeuilleVisiteApresFauxBourdons, on_delete=models.CASCADE)
     maladieTraitement = models.CharField(max_length=200, null=True)
     methodeUtilisee = models.CharField(max_length=1024, null=True)
 
-
-class FeuilleVisiteApresNuisible(models.Model):
-    feuilleVisiteApresMaladieTraitement = models.OneToOneField(FeuilleVisiteApresMaladieTraitement, on_delete=models.CASCADE)
     nuisible = models.CharField(max_length=200, null=True)
 
-
-class FeuilleVisiteApresAutre(models.Model):
-    feuilleVisiteApresNuisible = models.OneToOneField(FeuilleVisiteApresNuisible, on_delete=models.CASCADE)
     recoltePropolis = models.BooleanField(null=True)
     recoltePollen = models.BooleanField(null=True)
 
-
-class FeuilleVisiteApresNourrissement(models.Model):
-    feuilleVisiteApresAutre = models.OneToOneField(FeuilleVisiteApresAutre, on_delete=models.CASCADE)
     typeAlimentNourrissement = models.CharField(max_length=200, null=True)
     quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True)
 
-
-class FeuilleVisiteApresApport(models.Model):
-    feuilleVisiteApresNourrissement = models.OneToOneField(FeuilleVisiteApresNourrissement, on_delete=models.CASCADE)
     apport = models.CharField(max_length=200, null=True)
     provenanceApport = models.CharField(max_length=200, null=True)
 
-
-class FeuilleVisiteApresPonction(models.Model):
-    feuilleVisiteApresApport = models.OneToOneField(FeuilleVisiteApresApport, on_delete=models.CASCADE)
     ponction = models.CharField(max_length=200, null=True)
     destinationPonction = models.CharField(max_length=200, null=True)
 
-
-class FeuilleVisiteApresManipulation(models.Model):
-    feuilleVisiteApresPonction = models.OneToOneField(FeuilleVisiteApresPonction, on_delete=models.CASCADE)
     reineMarqueeManipulation = models.CharField(max_length=200, null=True)
     colonieDeplacee = models.DateTimeField(null=True)
     essaimageNaturel = models.DateTimeField(null=True)
@@ -255,20 +213,9 @@ class FeuilleVisiteApresManipulation(models.Model):
     reunionColonie = models.DateTimeField(null=True)
     liberationRuche = models.CharField(max_length=200, null=True)
 
-
-class FeuilleVisiteApresRecolte(models.Model):
-    feuilleVisiteApresManipulation = models.OneToOneField(FeuilleVisiteApresManipulation, on_delete=models.CASCADE)
     nombreHausseRecolte = models.IntegerField(null=True)
 
-
-class FeuilleVisiteApresNotes(models.Model):
-    feuilleVisiteApresRecolte = models.OneToOneField(FeuilleVisiteApresRecolte, on_delete=models.CASCADE)
     notes = models.CharField(max_length=1024, null=True)
 
-
-class FeuilleVisiteRuche(models.Model):
-    feuilleVisiteDebut = models.ForeignKey(FeuilleVisiteDebut, on_delete=models.CASCADE)
-    nom = models.CharField(max_length=200, null=True)
-
     def __str__(self):
-        return self.nom
+        return str("Visite sur {} {} {} le {}".format(self.rucher, self.colonie, self.typeRuche, self.date))

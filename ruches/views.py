@@ -448,13 +448,32 @@ def createFeuillevisiteDebut(request, rucher, colonie):
         form = FeuilleVisiteDebutForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('afficherColonies')
+            dateForm = form.cleaned_data.get('date')
+            feuille = FeuilleVisiteDebut.objects.get(date=dateForm, rucher=rucher, colonie=colonie)
+            obj.delete()
+            return redirect('createFeuilleVisiteAvant', feuille.id)
     else:
         obj = FeuilleVisiteDebut.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
         form = FeuilleVisiteDebutForm(instance=obj)
         obj.delete()
     return render(request, 'Apiculteurs/creation/createFeuilleVisiteDebut.html', {'form': form, 'rucher': rucher, 'colonie': colonie})
 
+
+def createFeuilleVisiteAvant(request, feuillePredec_id):
+    feuillePredecObj = FeuilleVisiteDebut.objects.get(pk=feuillePredec_id)
+
+    if request.method == 'POST':
+        obj = FeuilleVisiteAvant.objects.create(feuilleVisiteDebut=feuillePredecObj)
+        form = FeuilleVisiteAvantForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            obj.delete()
+            return redirect('afficherColonies')
+    else:
+        obj = FeuilleVisiteAvant.objects.create(feuilleVisiteDebut=feuillePredecObj)
+        form = FeuilleVisiteAvantForm(instance=obj)
+        obj.delete()
+    return render(request, 'Apiculteurs/creation/createFeuilleVisiteAvant.html', {'form': form})
 
 
 # partie inscription et mon compte
