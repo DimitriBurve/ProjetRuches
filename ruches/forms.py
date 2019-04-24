@@ -147,7 +147,7 @@ class FeuilleVisiteDebutForm(ModelForm):
 
     class Meta:
         model = FeuilleVisite
-        fields = ['date', 'rucher', 'colonie', 'typeRuche', 'conditionClimatique']
+        fields = ['date', 'conditionClimatique']
 
 
 class FeuilleVisiteAvantForm(ModelForm):
@@ -159,13 +159,13 @@ class FeuilleVisiteAvantForm(ModelForm):
     ]
 
     RENTRANT_POLLEN_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
+        ("Oui", 'Oui'),
+        ("Non", 'Non'),
     ]
 
     MORTES_EXTERIEUR_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
+        ("Oui", 'Oui'),
+        ("Non", 'Non'),
     ]
 
     traficEntreeRuche = forms.CharField(
@@ -173,12 +173,12 @@ class FeuilleVisiteAvantForm(ModelForm):
         widget=forms.RadioSelect(choices=TRAFIC_CHOICES)
     )
 
-    abeillesRentrantPollen = forms.BooleanField(
+    abeillesRentrantPollen = forms.CharField (
         label="Abeilles rentrant avec du pollen ",
         widget=forms.RadioSelect(choices=RENTRANT_POLLEN_CHOICES)
     )
 
-    abeillesMortesExterieur = forms.BooleanField(
+    abeillesMortesExterieur = forms.CharField (
         label="Abeilles mortes à l'extérieur ",
         widget=forms.RadioSelect(choices=MORTES_EXTERIEUR_CHOICES)
     )
@@ -188,11 +188,16 @@ class FeuilleVisiteAvantForm(ModelForm):
         fields = ['traficEntreeRuche', 'abeillesRentrantPollen', 'abeillesMortesExterieur']
 
 
-class FeuilleVisiteApresAttitudeForm(ModelForm):
+class FeuilleVisiteApresAttitudeCadresCouvainForm(ModelForm):
     ATTITUDE_CHOICES = [
         ('Calmes', 'Calmes'),
         ('Nerveuses', 'Nerveuses'),
         ('Agressives', 'Agressives'),
+    ]
+
+    BOOLEAN_CHOICES = [
+        ("Oui", 'Oui'),
+        ("Non", 'Non'),
     ]
 
     attitudeAbeilles = forms.CharField(
@@ -200,54 +205,32 @@ class FeuilleVisiteApresAttitudeForm(ModelForm):
         widget=forms.RadioSelect(choices=ATTITUDE_CHOICES)
     )
 
-    class Meta:
-        model = FeuilleVisite
-        fields = ['attitudeAbeilles']
-
-
-class FeuilleVisiteApresCadresForm(ModelForm):
-    PARTITION_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
-    ]
-
-    partitiion = forms.BooleanField(
+    partition = forms.CharField(
         label="Partition ",
-        widget=forms.RadioSelect(choices=PARTITION_CHOICES)
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
 
-    class Meta:
-        model = FeuilleVisite
-        fields = ['partition', 'nombreCadresColonie', 'nombreRuellesOccupees', 'nombreCadresCouvain', 'nombreCadreCireGauffreeIntroduit', 'nombreHausse']
-
-
-class FeuilleVisiteApresCouvainForm(ModelForm):
-    BOOLEAN_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
-    ]
-
-    couvainCompact = forms.BooleanField(
+    couvainCompact = forms.CharField(
         label="Compact",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
 
-    couvainMosaique = forms.BooleanField(
+    couvainMosaique = forms.CharField(
         label="Mosaïque",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
 
-    couvainChauve = forms.BooleanField(
+    couvainChauve = forms.CharField(
         label="Chauve",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
 
-    presenceOeuf = forms.BooleanField(
+    presenceOeuf = forms.CharField(
         label="Présence d'oeufs",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
 
-    cadreCouvain = forms.BooleanField(
+    cadreCouvain = forms.CharField(
         label="Cadre de Couvain",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
@@ -257,10 +240,13 @@ class FeuilleVisiteApresCouvainForm(ModelForm):
 
     class Meta:
         model = FeuilleVisite
-        fields = ['couvainCompact', 'couvainMosaique', 'couvainChauve', 'presenceOeuf', 'nombreCadresOeuf', 'cadreCouvain', 'nombreCadresCouvain2']
+        fields = ['attitudeAbeilles', 'partition', 'nombreCadresColonie',
+                  'nombreRuellesOccupees', 'nombreCadresCouvain', 'nombreCadreCireGauffreeIntroduit',
+                  'nombreHausse', 'couvainCompact', 'couvainMosaique', 'couvainChauve', 'presenceOeuf',
+                  'nombreCadresOeuf', 'cadreCouvain', 'nombreCadresCouvain2']
 
 
-class FeuilleVisiteApresReineForm(ModelForm):
+class FeuilleVisiteApresReineBourdonsMaladieForm(ModelForm):
     ORIGINE_CHOICES = [
         ('Elevage', 'Elevage'),
         ('Essaimage', 'Essaimage'),
@@ -274,8 +260,8 @@ class FeuilleVisiteApresReineForm(ModelForm):
     ]
 
     BOOLEAN_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
+        ("Oui", 'Oui'),
+        ("Non", 'Non'),
     ]
 
     COULEUR_REINE_MARQUEE_CHOICES = [
@@ -292,65 +278,6 @@ class FeuilleVisiteApresReineForm(ModelForm):
         ('Elevage', 'Elevage'),
     ]
 
-    origineReine = forms.CharField(
-        label="Origine reine ",
-        widget=forms.RadioSelect(choices=ORIGINE_CHOICES)
-    )
-
-    reinePresente = forms.CharField(
-        label="Reine présente ",
-        widget=forms.RadioSelect(choices=REINE_PRESENTE_CHOICES)
-    )
-
-    reineMarquee = forms.BooleanField(
-        label="Reine marquée ",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
-    )
-
-    couleurReineMarquee = forms.CharField(
-        label="Couleur ",
-        widget=forms.RadioSelect(choices=COULEUR_REINE_MARQUEE_CHOICES),
-        required=False,
-    )
-
-    presenceCelluleRoyale = forms.BooleanField(
-        label="Présence cellule Royale ",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
-    )
-
-    presenceCelluleRoyaleOrigine = forms.CharField(
-        label="Oirigine cellule royale",
-        widget=forms.RadioSelect(choices=CELLULE_ROYALE_CHOICES),
-        required=False
-    )
-
-    class Meta:
-        model = FeuilleVisite
-        fields = ['origineReine', 'reinePresente', 'reineMarquee', 'couleurReineMarque', 'presenceCelluleRoyale', 'presenceCelluleRoyaleOrigine']
-
-
-class FeuilleVisiteApresFauxBourdonsForm(ModelForm):
-    BOOLEAN_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
-    ]
-
-    celluleFauxBourdons = forms.BooleanField(
-        label="Cellule Faux-Bourdons ",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
-    )
-
-    presenceFauxBourdons = forms.BooleanField(
-        label="Présence Faux-Bourdons",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
-    )
-
-    class Meta:
-        model = FeuilleVisite
-        fields = ['celluleFauxBourdons', 'presenceFauxBourdons']
-
-
-class FeuilleVisiteApresMaladieTraitementForm(ModelForm):
     MALADIE_CHOICES = [
         ('Rien', 'Rien'),
         ('Nosema', 'Nosema'),
@@ -361,6 +288,48 @@ class FeuilleVisiteApresMaladieTraitementForm(ModelForm):
         ('Autre', 'Autre'),
     ]
 
+    origineReine = forms.CharField(
+        label="Origine reine ",
+        widget=forms.RadioSelect(choices=ORIGINE_CHOICES)
+    )
+
+    reinePresente = forms.CharField(
+        label="Reine présente ",
+        widget=forms.RadioSelect(choices=REINE_PRESENTE_CHOICES)
+    )
+
+    reineMarquee = forms.CharField (
+        label="Reine marquée ",
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+    )
+
+    couleurReineMarque = forms.CharField(
+        label="Couleur ",
+        widget=forms.RadioSelect(choices=COULEUR_REINE_MARQUEE_CHOICES),
+        required=False,
+    )
+
+    presenceCelluleRoyale = forms.CharField (
+        label="Présence cellule Royale ",
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+    )
+
+    presenceCelluleRoyaleOrigine = forms.CharField(
+        label="Oirigine cellule royale",
+        widget=forms.RadioSelect(choices=CELLULE_ROYALE_CHOICES),
+        required=False
+    )
+
+    celluleFauxBourdons = forms.CharField(
+        label="Cellule Faux-Bourdons ",
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+    )
+
+    presenceFauxBourdons = forms.CharField(
+        label="Présence Faux-Bourdons",
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+    )
+
     maladieTraitement = forms.CharField(
         label="Maladie ",
         widget=forms.RadioSelect(choices=MALADIE_CHOICES)
@@ -370,10 +339,12 @@ class FeuilleVisiteApresMaladieTraitementForm(ModelForm):
 
     class Meta:
         model = FeuilleVisite
-        fields = ['maladieTraitement', 'methodeUtilisee']
+        fields = ['origineReine', 'reinePresente', 'reineMarquee', 'couleurReineMarque',
+                  'presenceCelluleRoyale', 'presenceCelluleRoyaleOrigine', 'celluleFauxBourdons',
+                  'presenceFauxBourdons', 'maladieTraitement', 'methodeUtilisee']
 
 
-class FeuilleVisiteApresNuisibleForm(ModelForm):
+class FeuilleVisiteApresNuisibleAutreNourriApportPonctionForm(ModelForm):
     NUISIBLE_CHOICES = [
         ('Rien', 'Rien'),
         ('Teigne', 'Teigne'),
@@ -383,33 +354,11 @@ class FeuilleVisiteApresNuisibleForm(ModelForm):
         ('Autre', 'Autre'),
     ]
 
-    class Meta:
-        model = FeuilleVisite
-        fields = ['nuisible']
-
-
-class FeuilleVisiteApresAutreForm(ModelForm):
     BOOLEAN_CHOICES = [
-        (True, 'Oui'),
-        (False, 'Non'),
+        ("Oui", 'Oui'),
+        ("Non", 'Non'),
     ]
 
-    recoltePropolis = forms.BooleanField(
-        label="Récolte Propolis",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
-    )
-
-    recoltePollen = forms.BooleanField(
-        label="Récolte Pollen",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
-    )
-
-    class Meta:
-        model = FeuilleVisite
-        fields = ['recoltePropolis', 'recoltePollen']
-
-
-class FeuilleVisiteApresNourrissementForm(ModelForm):
     ALIMENTS_CHOICES = [
         ('Rien', 'Rien'),
         ('Sirop', 'Sirop'),
@@ -418,19 +367,6 @@ class FeuilleVisiteApresNourrissementForm(ModelForm):
         ('Autre', 'Autre'),
     ]
 
-    typeAlimentNourrissement = forms.CharField(
-        label="Type Aliment",
-        widget=forms.RadioSelect(choices=ALIMENTS_CHOICES)
-    )
-
-    quantiteAlimentNourrissement = forms.IntegerField(required=False)
-
-    class Meta:
-        model = FeuilleVisite
-        fields = ['typeAlimentNourrissement', 'quantiteAlimentNourrissement']
-
-
-class FeuilleVisiteApresApportForm(ModelForm):
     APPORT_CHOICES = [
         ('Rien', 'Rien'),
         ('Miel', 'Miel'),
@@ -440,19 +376,6 @@ class FeuilleVisiteApresApportForm(ModelForm):
         ('Reine', 'Reine'),
     ]
 
-    apport = forms.CharField(
-        label="Apport",
-        widget=forms.RadioSelect(choices=APPORT_CHOICES)
-    )
-
-    provenanceApport = forms.CharField(required=False)
-
-    class Meta:
-        model = FeuilleVisite
-        fields = ['apport', 'provenanceApport']
-
-
-class FeuilleVisiteApresPonctionForm(ModelForm):
     PONCTION_CHOICES = [
         ('Rien', 'Rien'),
         ('Miel', 'Miel'),
@@ -461,6 +384,35 @@ class FeuilleVisiteApresPonctionForm(ModelForm):
         ('Essaim nu ou sur cadre', 'Essaim nu ou sur cadre'),
         ('Reine', 'Reine'),
     ]
+
+    nuisible = forms.CharField(
+        label="Nuisible",
+        widget=forms.RadioSelect(choices=NUISIBLE_CHOICES)
+    )
+
+    recoltePropolis = forms.CharField(
+        label="Récolte Propolis",
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+    )
+
+    recoltePollen = forms.CharField(
+        label="Récolte Pollen",
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+    )
+
+    typeAlimentNourrissement = forms.CharField(
+        label="Type Aliment",
+        widget=forms.RadioSelect(choices=ALIMENTS_CHOICES)
+    )
+
+    quantiteAlimentNourrissement = forms.IntegerField(required=False)
+
+    apport = forms.CharField(
+        label="Apport",
+        widget=forms.RadioSelect(choices=APPORT_CHOICES)
+    )
+
+    provenanceApport = forms.CharField(required=False)
 
     ponction = forms.CharField(
         label="Apport",
@@ -471,10 +423,12 @@ class FeuilleVisiteApresPonctionForm(ModelForm):
 
     class Meta:
         model = FeuilleVisite
-        fields = ['ponction', 'destinationPonction']
+        fields = ['nuisible', 'recoltePropolis', 'recoltePollen', 'typeAlimentNourrissement',
+                  'quantiteAlimentNourrissement', 'apport', 'provenanceApport', 'ponction',
+                  'destinationPonction']
 
 
-class FeuilleVisiteApresManipulationForm(ModelForm):
+class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
     COULEUR_REINE_MARQUEE_CHOICES = [
         ('Bleu', 'Bleu'),
         ('Blanc', 'Blanc'),
@@ -540,17 +494,13 @@ class FeuilleVisiteApresManipulationForm(ModelForm):
 
     liberationRuche = forms.CharField(required=False)
 
-    class Meta:
-        model = FeuilleVisite
-        fields = ['reineMarqueeManipulation', 'colonieDeplacee', 'essaimageNaturel', 'remerage', 'origineRemerage', 'divisionColonie', 'creationRuche', 'reunionColonie', 'liberationRuche']
-
-
-class FeuilleVisiteApresRecolteForm(ModelForm):
     nombreHausseRecolte = forms.IntegerField(required=False)
 
     class Meta:
         model = FeuilleVisite
-        fields = ['nombreHausseRecolte']
+        fields = ['reineMarqueeManipulation', 'colonieDeplacee', 'essaimageNaturel', 'remerage',
+                  'origineRemerage', 'divisionColonie', 'creationRuche', 'reunionColonie',
+                  'liberationRuche', 'nombreHausseRecolte']
 
 
 class FeuilleVisiteApresNotesForm(ModelForm):

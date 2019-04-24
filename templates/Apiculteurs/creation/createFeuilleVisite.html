@@ -30,26 +30,26 @@
 </head>
 <body>
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
-    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown2">
         <div class="dropbtn">Gestion Ruchers &#9662</div><!--
         --><div class="dropdown-content">
-            <a href="afficherRuchers">Afficher Ruchers</a>
-            <a href="ajouterRucher">Ajouter Rucher</a>
-            <a href="modifierRuchers">Modifier Rucher</a>
-            <a href="supprimerRuchers">Supprimer Rucher</a>
+            <a href="/afficherRuchers">Afficher Ruchers</a>
+            <a href="/ajouterRucher">Ajouter Rucher</a>
+            <a href="/modifierRuchers">Modifier Rucher</a>
+            <a href="/supprimerRuchers">Supprimer Rucher</a>
         </div>
     </li><!--
  --><li class="dropdown2">
         <div class="dropbtn active">Gestion Colonies &#9662</div><!--
         --><div class="dropdown-content">
-            <a class="active" href="afficherColonies">Afficher Colonies</a>
-            <a href="ajouterColonie">Ajouter Colonie</a>
-            <a href="modifierColonies">Modifier Colonie</a>
-            <a href="supprimerColonies">Supprimer Colonie</a>
+            <a class="active" href="/afficherColonies">Afficher Colonies</a>
+            <a href="/ajouterColonie">Ajouter Colonie</a>
+            <a href="/modifierColonies">Modifier Colonie</a>
+            <a href="/supprimerColonies">Supprimer Colonie</a>
         </div>
     </li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
@@ -67,7 +67,42 @@
 </ul>
 <div>
     <h2>Feuille visite</h2>
-    {{ form.as_p }}
+    <form class="formVisite" method="post">
+        {% csrf_token %}
+
+        {% if etape == 1 %}
+        <p>Rucher : </p> {{ rucher }}
+        <br>
+        <p>Colonie : </p> {{ colonie }}
+        <br>
+        <p style="display: inline-block">Date : </p>
+            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                {{ form.date }}
+                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        <br>
+        <p>Condition climatique :</p>{{ form.conditionClimatique }}
+        <br>
+        <button type="submit" class="btn btn-primary">Suivant</button>
+        {% else %}
+        {% if etape < 16 %}
+        {{ form.as_p }}
+        <button type="button" class="btn btn-warning">Précédent</button>
+        <button type="submit" class="btn btn-primary">Suivant</button>
+        {% else %}
+        <button type="submit" class="btn btn-warning">Précédent</button>
+        {% endif %}
+        {% endif %}
+    </form>
 </div>
+<script>
+    $(function () {
+        $("#datetimepicker1").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+    });
+</script>
 </body>
 </html>

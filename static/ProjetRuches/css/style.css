@@ -77,6 +77,10 @@ li.dropdown2 {
 
 /*feuille visite*/
 
+form.formVisite p{
+    display: block;
+}
+
 ul#id_conditionClimatique{
     display: inline-block;
 }

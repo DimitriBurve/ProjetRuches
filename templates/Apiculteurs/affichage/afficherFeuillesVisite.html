@@ -49,25 +49,28 @@
     {% endif %}
 </ul>
 <div>
-    <h2>Ruchers</h2>
+    <h2>Feuilles de visites</h2>
     {% if user.is_authenticated %}
     <div class="table-responsive" style="padding-right: 20%">
         <table class="table table-hover" style="text-align: center">
             <tr>
-                <th>Nom</th>
-                <th>localisation</th>
-                <th>Propriétaire</th>
+                <th>Rucher</th>
+                <th>Colonie</th>
+                <th>Date</th>
+                <th>Actions</th>
+                <th>Telecharger</th>
             </tr>
-            {% for rucher in ruchers %}
-            {% for u in rucher.user.all %}
+            {% for f in feuilles %}
+            {% for u in f.rucher.user.all %}
             {% if u == user %}
+
             <tr>
-                <td style="vertical-align: middle">{{ rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
-                <td style="vertical-align: middle">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
-                <td style="vertical-align: middle; width: 350px">
+                <td style="vertical-align: middle">{{ f.colonie }}</td>
+                <td style="vertical-align: middle">{{ f.rucher }}</td>
+                <td style="vertical-align: middle">{{ f.date }}</td>
+                <td style="vertical-align: middle">
                     <form id="formDetails" method="get" style="display: inline-block"
-                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
+                          action="#">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
                     </form>
 
@@ -75,24 +78,25 @@
                         <button type="submit" class="btn btn-warning m-0">modifier</button>
                     </form>
 
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerRucher' rucher.nom %}">
+                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                          action="#">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>
                 </td>
+                <td style="vertical-align: middle"> pdf </td>
             </tr>
             {% endif %}
             {% endfor %}
 
             {% if user.is_staff%}
             <tr>
-                <td style="vertical-align: middle">{{ rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
-                <td style="vertical-align: middle">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
-                <td style="vertical-align: middle; width: 350px">
+                <td style="vertical-align: middle">{{ f.colonie }}</td>
+                <td style="vertical-align: middle">{{ f.rucher }}</td>
+                <td style="vertical-align: middle">{{ f.date }}</td>
+                <td style="vertical-align: middle">
                     <form id="formDetailsA" method="get" style="display: inline-block"
-                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
+                          action="#">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
                     </form>
 
@@ -100,12 +104,13 @@
                         <button type="submit" class="btn btn-warning m-0">modifier</button>
                     </form>
 
-                    <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerRucher' rucher.nom %}">
+                    <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                          action="#">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>
                 </td>
+                <td style="vertical-align: middle"> pdf </td>
             </tr>
             {% endif %}
             {% endfor %}

@@ -51,7 +51,7 @@ class Capteurs(models.Model):
 
 class Rucher(models.Model):
     nom = models.CharField(max_length=200, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ManyToManyField(User, null=True)
     adresseP = models.CharField(max_length=200, default='')
     adresseS = models.CharField(max_length=200, null=True, default='')
     codePostal = models.CharField(max_length=5, default='')
@@ -156,43 +156,44 @@ class FeuilleVisite(models.Model):
     conditionClimatique = models.CharField(max_length=200, null=True)
 
     traficEntreeRuche = models.CharField(max_length=200, null=True)
-    abeillesRentrantPollen = models.BooleanField(null=True)
-    abeillesMortesExterieur = models.BooleanField(null=True)
+    abeillesRentrantPollen = models.CharField(max_length=200, null=True)
+    abeillesMortesExterieur = models.CharField(max_length=200, null=True)
 
     attitudeAbeilles = models.CharField(max_length=200, null=True)
 
-    partition = models.BooleanField(null=True)
+    partition = models.CharField(max_length=200, null=True)
+
     nombreCadresColonie = models.IntegerField(null=True)
     nombreRuellesOccupees = models.IntegerField(null=True)
     nombreCadresCouvain = models.IntegerField(null=True)
     nombreCadreCireGauffreeIntroduit = models.IntegerField(null=True)
     nombreHausse = models.IntegerField(null=True)
 
-    couvainCompact = models.BooleanField(null=True)
-    couvainMosaique = models.BooleanField(null=True)
-    couvainChauve = models.BooleanField(null=True)
-    presenceOeuf = models.BooleanField(null=True)
+    couvainCompact = models.CharField(max_length=200, null=True)
+    couvainMosaique = models.CharField(max_length=200, null=True)
+    couvainChauve = models.CharField(max_length=200, null=True)
+    presenceOeuf = models.CharField(max_length=200, null=True)
     nombreCadresOeuf = models.IntegerField(null=True)
-    cadreCouvain = models.BooleanField(null=True)
+    cadreCouvain = models.CharField(max_length=200, null=True)
     nombreCadresCouvain2 = models.IntegerField(null=True)
 
     origineReine = models.CharField(max_length=200, null=True)
     reinePresente = models.CharField(max_length=200, null=True)
-    reineMarquee = models.BooleanField(null=True)
+    reineMarquee = models.CharField(max_length=200, null=True)
     couleurReineMarque = models.CharField(max_length=200, null=True)
-    presenceCelluleRoyale = models.BooleanField(null=True)
+    presenceCelluleRoyale = models.CharField(max_length=200, null=True)
     presenceCelluleRoyaleOrigine = models.CharField(max_length=200, null=True)
 
-    celluleFauxBourdons = models.BooleanField(null=True)
-    presenceFauxBourdons = models.BooleanField(null=True)
+    celluleFauxBourdons = models.CharField(max_length=200, null=True)
+    presenceFauxBourdons = models.CharField(max_length=200, null=True)
 
     maladieTraitement = models.CharField(max_length=200, null=True)
     methodeUtilisee = models.CharField(max_length=1024, null=True)
 
     nuisible = models.CharField(max_length=200, null=True)
 
-    recoltePropolis = models.BooleanField(null=True)
-    recoltePollen = models.BooleanField(null=True)
+    recoltePropolis = models.CharField(max_length=200, null=True)
+    recoltePollen = models.CharField(max_length=200, null=True)
 
     typeAlimentNourrissement = models.CharField(max_length=200, null=True)
     quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True)
