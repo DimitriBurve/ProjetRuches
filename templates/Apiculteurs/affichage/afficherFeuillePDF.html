@@ -1,120 +1,138 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Ruches</title>
+    <style type="text/css">
+            @page{
+                size: A4;
+                margin: 1cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                }
+            }
+    </style>
 </head>
 <body>
 <div>
     <h2 style="text-align: center">VISITE DE RUCHE</h2>
     <div>
         <div>
-            <p style="display: inline-block; margin: auto">Date : </p> {{ f.date }}
+            <p style="display: inline-block; margin: auto">Date: </p>
+            <div style="display: inline-block">{{ f.date }}</div>
         </div>
         <div>
-            <p style="display: inline-block; margin: auto">Rucher : </p> {{ f.rucher}}
+            <p style="display: inline-block; margin: auto">Rucher: </p>
+            <div style="display: inline-block">{{ f.rucher}}</div>
         </div>
         <div>
-            <p style="display: inline-block; margin: auto">Ruche : </p> {{ f.colonie }}
+            <p style="display: inline-block; margin: auto">Ruche: </p>
+            <div style="display: inline-block">{{ f.colonie }}</div>
         </div>
         <div>
-            <p style="display: inline-block; margin: auto">Type de Ruche : </p> {{ f.typeRuche }}
+            <p style="display: inline-block; margin: auto">Type de Ruche: </p>
+            <div style="display: inline-block">{{ f.typeRuche }}</div>
         </div>
         <div>
-            <p style="display: inline-block; margin: auto">Condition climatique :</p>
+            <p style="display: inline-block; margin: auto">Condition climatique: </p>
             <div style="display: inline-block">
                 {% if f.conditionClimatique == "Nuage" %}
-                <input type="checkbox" id="nuage" name="nuage" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="nuage" name="nuage">
+                &#9744;
                 {% endif %}
-                <label for="nuage">Nuage</label>
+                <p style="display: inline-block; margin: auto">Nuage</p>
             </div>
 
             <div style="display: inline-block">
                 {% if f.conditionClimatique == "Soleil" %}
-                <input type="checkbox" id="soleil" name="soleil" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="soleil" name="soleil">
+                &#9744;
                 {% endif %}
-                <label for="soleil">Soleil</label>
+                <p style="display: inline-block; margin: auto">Soleil</p>
             </div>
 
             <div style="display: inline-block">
                 {% if f.conditionClimatique == "Vent" %}
-                <input type="checkbox" id="vent" name="vent" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="vent" name="vent">
+                &#9744;
                 {% endif %}
-                <label for="vent">Vent</label>
+                <p style="display: inline-block; margin: auto">Vent</p>
             </div>
         </div>
     </div>
     <div>
         <h3>Avant d'ouvrir la ruche</h3>
         <div>
-            <p style="display: inline-block; margin: auto">Trafic à l'entrée de la ruche : </p>
+            <p style="display: inline-block; margin: auto">Trafic à l'entrée de la ruche: </p>
             <div style="display: inline-block">
                 {% if f.traficEntreeRuche == "Fort" %}
-                <input type="checkbox" id="fort" name="fort" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="fort" name="fort">
+                &#9744;
                 {% endif %}
-                <label for="fort">Fort</label>
+                <p style="display: inline-block; margin: auto">Fort</p>
             </div>
             <div style="display: inline-block">
                 {% if f.traficEntreeRuche == "Normal" %}
-                <input type="checkbox" id="normal" name="normal" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="normal" name="normal">
+                &#9744;
                 {% endif %}
-                <label for="normal">Normal</label>
+                <p style="display: inline-block; margin: auto">Normal</p>
             </div>
             <div style="display: inline-block">
                 {% if f.traficEntreeRuche == "Faible" %}
-                <input type="checkbox" id="faible" name="faible" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="faible" name="faible">
+                &#9744;
                 {% endif %}
-                <label for="faible">Faible</label>
+                <p style="display: inline-block; margin: auto">Faible</p>
             </div>
         </div>
         <div>
-            <p style="display: inline-block; margin: auto">Abeiles rentrant du Pollen</p>
+            <p style="display: inline-block; margin: auto">Abeiles rentrant du Pollen: </p>
             <div style="display: inline-block">
                 {% if f.abeillesRentrantPollen == "Oui" %}
-                <input type="checkbox" id="oui" name="oui" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="oui" name="oui">
+                &#9744;
                 {% endif %}
-                <label for="oui">Oui</label>
+                <p style="display: inline-block; margin: auto">Oui</p>
             </div>
             <div style="display: inline-block">
                 {% if f.abeillesRentrantPollen == "Non" %}
-                <input type="checkbox" id="non" name="non" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="non" name="non">
+                &#9744;
                 {% endif %}
-                <label for="non">Non</label>
+                <p style="display: inline-block; margin: auto">Non</p>
             </div>
         </div>
         <div>
-            <p style="display: inline-block; margin: auto">Abeiles mortes à l'extérieur</p>
+            <p style="display: inline-block; margin: auto">Abeiles mortes à l'extérieur: </p>
             <div style="display: inline-block">
                 {% if f.abeillesMortesExterieur == "Oui" %}
-                <input type="checkbox" id="oui" name="oui" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="oui" name="oui">
+                &#9744;
                 {% endif %}
-                <label for="oui">Oui</label>
+                <p style="display: inline-block; margin: auto">Oui</p>
             </div>
             <div style="display: inline-block">
                 {% if f.abeillesMortesExterieur == "Non" %}
-                <input type="checkbox" id="non" name="non" checked>
+                &#9745;
                 {% else %}
-                <input type="checkbox" id="non" name="non">
+                &#9744;
                 {% endif %}
-                <label for="non">Non</label>
+                <p style="display: inline-block; margin: auto">Non</p>
             </div>
         </div>
     </div>
@@ -122,79 +140,79 @@
         <h3>Après ouverture de la ruche</h3>
         <div>
             <div>
-                <p style="display: inline-block; margin: auto">Attitude des abeilles</p>
+                <p style="display: inline-block; margin: auto">Attitude des abeilles: </p>
                 <div style="display: inline-block">
                     {% if f.attitudeAbeilles == "Calmes" %}
-                    <input type="checkbox" id="calmes" name="calmes" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="calmes" name="calmes">
+                    &#9744;
                     {% endif %}
-                    <label for="calmes">Calmes</label>
+                    <p style="display: inline-block; margin: auto">Calmes</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.attitudeAbeilles == "Nerveuses" %}
-                    <input type="checkbox" id="nerveuses" name="nerveuses" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="nerveuses" name="nerveuses">
+                    &#9744;
                     {% endif %}
-                    <label for="nerveuses">Nerveuses</label>
+                    <p style="display: inline-block; margin: auto">Nerveuses</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.attitudeAbeilles == "Agressives" %}
-                    <input type="checkbox" id="agressives" name="agressives" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="agressives" name="agressives">
+                    &#9744;
                     {% endif %}
-                    <label for="agressives">Agressives</label>
+                    <p style="display: inline-block; margin: auto">Agressives</p>
                 </div>
             </div>
         </div>
         <div>
             <h4>Cadres</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Nombre de cadres : </p>
+                <p style="display: inline-block; margin: auto">Nombre de cadres: </p>
                 <div style="display: inline-block">
                     {{ f.nombreCadresColonie }}
                 </div>
 
                 <div style="display: inline-block; float: right">
                     {% if f.partition == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 <div style="display: inline-block; float: right">
                     {% if f.partition == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
-                <p style="display: inline-block; margin: auto; float: right">Partition : </p>
+                <p style="display: inline-block; margin: auto; float: right">Partition: </p>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Nombre de ruelles occupées : </p>
+                <p style="display: inline-block; margin: auto">Nombre de ruelles occupées: </p>
                 <div style="display: inline-block">
                     {{ f.nombreRuellesOccupees }}
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Nombre de cadres de couvain : </p>
+                <p style="display: inline-block; margin: auto">Nombre de cadres de couvain: </p>
                 <div style="display: inline-block">
                     {{ f.nombreCadresCouvain }}
                 </div>
             </div>
             <div>
-                <p style="display: inline-block">Nombre de cadre de cire gauffrée introduit : </p>
+                <p style="display: inline-block">Nombre de cadre de cire gauffrée introduit: </p>
                 <div style="display: inline-block">
                     {{ f.nombreCadreCireGauffreeIntroduit }}
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Nombre de Hausse : </p>
+                <p style="display: inline-block; margin: auto">Nombre de Hausse: </p>
                 <div style="display: inline-block">
                     {{ f.nombreHausse }}
                 </div>
@@ -203,186 +221,186 @@
         <div>
             <h4>Couvain</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Compact : </p>
+                <p style="display: inline-block; margin: auto">Compact: </p>
                 <div style="display: inline-block">
                     {% if f.couvainCompact == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.couvainCompact == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 <p style="display: inline-block; margin: auto">(si coché oui, entraine bonne reine)</p>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Mosaïque : </p>
+                <p style="display: inline-block; margin: auto">Mosaïque: </p>
                 <div style="display: inline-block">
                     {% if f.couvainMosaique == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.couvainMosaique == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 <p style="display: inline-block; margin: auto">(si coché oui, risque Loque ou Varroa)</p>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Chauve : </p>
+                <p style="display: inline-block; margin: auto">Chauve: </p>
                 <div style="display: inline-block">
                     {% if f.couvainChauve == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.couvainChauve == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 <p style="display: inline-block; margin: auto">(si coché oui, risque de teigne)</p>
             </div>
             <br>
             <div>
-                <p style="display: inline-block; margin: auto">Présence d'oeufs : </p>
+                <p style="display: inline-block; margin: auto">Présence d'oeufs: </p>
                 <div style="display: inline-block">
                     {% if f.presenceOeuf == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.presenceOeuf == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 <div style="display: inline-block; float: right">
                     {{ f.nombreCadresOeuf }}
                 </div>
-                <p style="display: inline-block; margin: auto; float: right">Nombre de cadres : &nbsp</p>
+                <p style="display: inline-block; margin: auto; float: right">Nombre de cadres: &nbsp</p>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Cadre de Couvain : </p>
+                <p style="display: inline-block; margin: auto">Cadre de Couvain: </p>
                 <div style="display: inline-block">
                     {% if f.cadreCouvain == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.cadreCouvain == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 <div style="display: inline-block; float: right">
                     {{ f.nombreCadresCouvain2 }}
                 </div>
-                <p style="display: inline-block; margin: auto; float: right">Nombre de cadres : &nbsp</p>
+                <p style="display: inline-block; margin: auto; float: right">Nombre de cadres: &nbsp</p>
             </div>
         </div>
         <div>
             <h4>Reine</h4>
             <div>
-                <p style="display: inline-block;margin: auto">Origine reine : </p>
+                <p style="display: inline-block;margin: auto">Origine reine: </p>
                 <div style="display: inline-block">
                     {% if f.origineReine == "Elevage" %}
-                    <input type="checkbox" id="elevage" name="elevage" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="elevage" name="elevage">
+                    &#9744;
                     {% endif %}
-                    <label for="elevage">Elevage</label>
+                    <p style="display: inline-block; margin: auto">Elevage</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.origineReine == "Essaimage" %}
-                    <input type="checkbox" id="essaimage" name="essaimage" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="essaimage" name="essaimage">
+                    &#9744;
                     {% endif %}
-                    <label for="essaimage">Essaimage</label>
+                    <p style="display: inline-block; margin: auto">Essaimage</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.origineReine == "Remerrage" %}
-                    <input type="checkbox" id="remerrage" name="remerrage" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="remerrage" name="remerrage">
+                    &#9744;
                     {% endif %}
-                    <label for="remerrage">Remerrage</label>
+                    <p style="display: inline-block; margin: auto">Remerrage</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block;margin: auto">Reine présente : </p>
+                <p style="display: inline-block;margin: auto">Reine présente: </p>
                 <div style="display: inline-block">
                     {% if f.reinePresente == "Vue" %}
-                    <input type="checkbox" id="vue" name="vue" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="vue" name="vue">
+                    &#9744;
                     {% endif %}
-                    <label for="vue">Vue</label>
+                    <p style="display: inline-block; margin: auto">Vue</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.reinePresente == "Pas vue" %}
-                    <input type="checkbox" id="pasVue" name="pasVue" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="pasVue" name="pasVue">
+                    &#9744;
                     {% endif %}
-                    <label for="pasVue">Pas vue</label>
+                    <p style="display: inline-block; margin: auto">Pas vue</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.reinePresente == "Absente" %}
-                    <input type="checkbox" id="absente" name="absente" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="absente" name="absente">
+                    &#9744;
                     {% endif %}
-                    <label for="absente">Absente</label>
+                    <p style="display: inline-block; margin: auto">Absente</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Reine marquée : </p>
+                <p style="display: inline-block; margin: auto">Reine marquée: </p>
                 <div style="display: inline-block">
                     {% if f.reineMarquee == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.reineMarquee == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 {% if f.couleurReineMarque == "Vert" %}
                 <mark style="background: green; color: black; display: inline-block; margin: auto; float: right">Vert</mark>
@@ -411,88 +429,89 @@
                 {% endif %}
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Présence  cellule royale : </p>
+                <p style="display: inline-block; margin: auto">Présence  cellule royale: </p>
                 <div style="display: inline-block">
                     {% if f.presenceCelluleRoyale == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.presenceCelluleRoyale == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
 
                 <div style="display: inline-block; float: right">
                     {% if f.presenceCelluleRoyaleOrigine == "Elevage" %}
-                    <input type="checkbox" id="elevage" name="elevage" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="elevage" name="elevage">
+                    &#9744;
                     {% endif %}
-                    <label for="elevage">Elevage</label>
+                    <p style="display: inline-block; margin: auto">Elevage</p>
                 </div>
                 <div style="display: inline-block; float: right">
                     {% if f.presenceCelluleRoyaleOrigine == "Sauveté" %}
-                    <input type="checkbox" id="sauvete" name="sauvete" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="sauvete" name="sauvete">
+                    &#9744;
                     {% endif %}
-                    <label for="sauvete">Sauveté</label>
+                    <p style="display: inline-block; margin: auto">Sauveté</p>
                 </div>
                 <div style="display: inline-block; float: right">
                     {% if f.presenceCelluleRoyaleOrigine == "Essaim" %}
-                    <input type="checkbox" id="essaim" name="essaim" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="essaim" name="essaim">
+                    &#9744;
                     {% endif %}
-                    <label for="essaim">Essaim</label>
+                    <p style="display: inline-block; margin: auto">Essaim</p>
                 </div>
             </div>
         </div>
+        <br>
         <div>
             <h4>Faux-Bourdons</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Cellule Faux-Bourdons : </p>
+                <p style="display: inline-block; margin: auto">Cellule Faux-Bourdons: </p>
                 <div style="display: inline-block">
                     {% if f.celluleFauxBourdons == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.celluleFauxBourdons == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Présence Faux-Bourdons : </p>
+                <p style="display: inline-block; margin: auto">Présence Faux-Bourdons: </p>
                 <div style="display: inline-block">
                     {% if f.presenceFauxBourdons == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.presenceFauxBourdons == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
             </div>
         </div>
@@ -501,64 +520,64 @@
             <div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "rien" %}
-                    <input type="checkbox" id="rien" name="rien" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="rien" name="rien">
+                    &#9744;
                     {% endif %}
-                    <label for="rien">Rien</label>
+                    <p style="display: inline-block; margin: auto">Rien</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "Nosema" %}
-                    <input type="checkbox" id="nosema" name="nosema" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="nosema" name="nosema">
+                    &#9744;
                     {% endif %}
-                    <label for="nosema">Nosema</label>
+                    <p style="display: inline-block; margin: auto">Nosema</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "Couvain platré" %}
-                    <input type="checkbox" id="couvainPlatre" name="couvainPlatre" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="couvainPlatre" name="couvainPlatre">
+                    &#9744;
                     {% endif %}
-                    <label for="couvainPlatre">Couvain platré</label>
+                    <p style="display: inline-block; margin: auto">Couvain platré</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "Loque Européenne" %}
-                    <input type="checkbox" id="loqueEuro" name="loqueEuro" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="loqueEuro" name="loqueEuro">
+                    &#9744;
                     {% endif %}
-                    <label for="loqueEuro">Loque Européenne</label>
+                    <p style="display: inline-block; margin: auto">Loque Européenne</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "Loque Américaine" %}
-                    <input type="checkbox" id="loqueAme" name="loqueAme" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="loqueAme" name="loqueAme">
+                    &#9744;
                     {% endif %}
-                    <label for="loqueAme">Loque Américaine</label>
+                    <p style="display: inline-block; margin: auto">Loque Américaine</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "Varroa" %}
-                    <input type="checkbox" id="varroa" name="varroa" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="varroa" name="varroa">
+                    &#9744;
                     {% endif %}
-                    <label for="varroa">Varroa</label>
+                    <p style="display: inline-block; margin: auto">Varroa</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.maladieTraitement == "Autre" %}
-                    <input type="checkbox" id="autre" name="autre" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="autre" name="autre">
+                    &#9744;
                     {% endif %}
-                    <label for="autre">Autre</label>
+                    <p style="display: inline-block; margin: auto">Autre</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin-bottom: auto">Methode utilisée : </p>
-                &nbsp {{ f.methodeUtilisee }}
+                <p style="display: inline-block; margin-bottom: auto">Methode utilisée: </p>
+                <div style="display: inline-block">&nbsp {{ f.methodeUtilisee }}</div>
             </div>
         </div>
         <div>
@@ -566,142 +585,143 @@
             <div>
                 <div style="display: inline-block">
                     {% if f.nuisible == "rien" %}
-                    <input type="checkbox" id="rien" name="rien" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="rien" name="rien">
+                    &#9744;
                     {% endif %}
-                    <label for="rien">Rien</label>
+                    <p style="display:inline-block; margin: auto">Rien</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.nuisible == "Teigne" %}
-                    <input type="checkbox" id="teigne" name="teigne" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="teigne" name="teigne">
+                    &#9744;
                     {% endif %}
-                    <label for="teigne">Teigne</label>
+                    <p style="display: inline-block; margin: auto">Teigne</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.nuisible == "Scarabé" %}
-                    <input type="checkbox" id="scarabe" name="scarabe" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="scarabe" name="scarabe">
+                    &#9744;
                     {% endif %}
-                    <label for="scarabe">Scarabé</label>
+                    <p style="display: inline-block; margin: auto">Scarabé</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.nuisible == "Frelon Asiatique" %}
-                    <input type="checkbox" id="FrelonAsia" name="FrelonAsia" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="FrelonAsia" name="FrelonAsia">
+                    &#9744;
                     {% endif %}
-                    <label for="FrelonAsia">Frelon Asiatique</label>
+                    <p style="display: inline-block; margin: auto">Frelon Asiatique</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.nuisible == "Guêpe" %}
-                    <input type="checkbox" id="guepe" name="guepe" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="guepe" name="guepe">
+                    &#9744;
                     {% endif %}
-                    <label for="guepe">Guêpe</label>
+                    <p style="display: inline-block; margin: auto">Guêpe</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.nuisible == "Autre" %}
-                    <input type="checkbox" id="autre" name="autre" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="autre" name="autre">
+                    &#9744;
                     {% endif %}
-                    <label for="autre">Autre</label>
+                    <p style="display: inline-block; margin: auto">Autre</p>
                 </div>
             </div>
         </div>
         <div>
             <h4>Autre</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Récolte Propolis : </p>
+                <p style="display: inline-block; margin: auto">Récolte Propolis: </p>
                 <div style="display: inline-block">
                     {% if f.recoltePropolis == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.recoltePropolis == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Récolte de pollen : </p>
+                <p style="display: inline-block; margin: auto">Récolte de pollen: </p>
                 <div style="display: inline-block">
                     {% if f.recoltePollen == "Oui" %}
-                    <input type="checkbox" id="oui" name="oui" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="oui" name="oui">
+                    &#9744;
                     {% endif %}
-                    <label for="oui">Oui</label>
+                    <p style="display: inline-block; margin: auto">Oui</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.recoltePollen == "Non" %}
-                    <input type="checkbox" id="non" name="non" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="non" name="non">
+                    &#9744;
                     {% endif %}
-                    <label for="non">Non</label>
+                    <p style="display: inline-block; margin: auto">Non</p>
                 </div>
             </div>
         </div>
         <div>
             <h4>Nourrissement</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Type aliment : </p>
+                <p style="display: inline-block; margin: auto">Type aliment: </p>
                 <div style="display: inline-block">
                     {% if f.typeAlimentNourrissement == "rien" %}
-                    <input type="checkbox" id="rien" name="rien" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="rien" name="rien">
+                    &#9744;
                     {% endif %}
-                    <label for="rien">Rien</label>
+                    <p style="display: inline-block; margin: auto">Rien</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.typeAlimentNourrissement == "Sirop" %}
-                    <input type="checkbox" id="sirop" name="sirop" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="sirop" name="sirop">
+                    &#9744;
                     {% endif %}
-                    <label for="sirop">Sirop</label>
+                    <p style="display: inline-block; margin: auto">Sirop</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.typeAlimentNourrissement == "Sirop 50/50" %}
-                    <input type="checkbox" id="sirop50" name="sirop50" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="sirop50" name="sirop50">
+                    &#9744;
                     {% endif %}
-                    <label for="sirop50">Sirop 50/50</label>
+                    <p style="display: inline-block; margin: auto">Sirop 50/50</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.typeAlimentNourrissement == "Candy" %}
-                    <input type="checkbox" id="candy" name="candy" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="candy" name="candy">
+                    &#9744;
                     {% endif %}
-                    <label for="candy">Candy</label>
+                    <p style="display: inline-block; margin: auto">Candy</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.typeAlimentNourrissement == "Autre" %}
-                    <input type="checkbox" id="autre" name="autre" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="autre" name="autre">
+                    &#9744;
                     {% endif %}
-                    <label for="autre">Autre</label>
+                    <p style="display: inline-block; margin: auto">Autre</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Quantité (Gramme ou litre) : </p> {{ f.quantiteAlimentNourrissement }}
+                <p style="display: inline-block; margin: auto">Quantité (Gramme ou litre): </p>
+                <div style="display: inline-block">{{ f.quantiteAlimentNourrissement }}</div>
             </div>
         </div>
         <div>
@@ -709,55 +729,56 @@
             <div>
                 <div style="display: inline-block">
                     {% if f.apport == "Rien" %}
-                    <input type="checkbox" id="rien" name="rien" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="rien" name="rien">
+                    &#9744;
                     {% endif %}
-                    <label for="rien">Rien</label>
+                    <p style="display: inline-block; margin: auto">Rien</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.apport == "Miel" %}
-                    <input type="checkbox" id="miel" name="miel" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="miel" name="miel">
+                    &#9744;
                     {% endif %}
-                    <label for="miel">Miel</label>
+                    <p style="display: inline-block; margin: auto">Miel</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.apport == "Couvain" %}
-                    <input type="checkbox" id="couvain" name="couvain" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="couvain" name="couvain">
+                    &#9744;
                     {% endif %}
-                    <label for="couvain">Couvain</label>
+                    <p style="display: inline-block; margin: auto">Couvain</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.apport == "Abeilles" %}
-                    <input type="checkbox" id="abeilles" name="abeilles" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="abeilles" name="abeilles">
+                    &#9744;
                     {% endif %}
-                    <label for="abeilles">Abeilles</label>
+                    <p style="display: inline-block; margin: auto">Abeilles</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.apport == "Essaim nu ou sur cadre" %}
-                    <input type="checkbox" id="essaimNu" name="essaimNu" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="essaimNu" name="essaimNu">
+                    &#9744;
                     {% endif %}
-                    <label for="essaimNu">Essaim nu ou sur cadre</label>
+                    <p style="display: inline-block; margin: auto">Essaim nu ou sur cadre</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.apport == "Reine" %}
-                    <input type="checkbox" id="reine" name="reine" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="reine" name="reine">
+                    &#9744;
                     {% endif %}
-                    <label for="reine">Reine</label>
+                    <p style="display: inline-block; margin: auto">Reine</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Provenance : </p>{{ f.provenanceApport }}
+                <p style="display: inline-block; margin: auto">Provenance: </p>
+                <div style="display: inline-block">{{ f.provenanceApport }}</div>
             </div>
         </div>
         <div>
@@ -765,100 +786,103 @@
             <div>
                 <div style="display: inline-block">
                     {% if f.ponction == "Rien" %}
-                    <input type="checkbox" id="rien" name="rien" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="rien" name="rien">
+                    &#9744;
                     {% endif %}
-                    <label for="rien">Rien</label>
+                    <p style="display: inline-block; margin: auto">Rien</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.ponction == "Miel" %}
-                    <input type="checkbox" id="miel" name="miel" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="miel" name="miel">
+                    &#9744;
                     {% endif %}
-                    <label for="miel">Miel</label>
+                    <p style="display: inline-block; margin: auto">Miel</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.ponction == "Couvain" %}
-                    <input type="checkbox" id="couvain" name="couvain" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="couvain" name="couvain">
+                    &#9744;
                     {% endif %}
-                    <label for="couvain">Couvain</label>
+                    <p style="display: inline-block; margin: auto">Couvain</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.ponction == "Abeilles" %}
-                    <input type="checkbox" id="abeilles" name="abeilles" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="abeilles" name="abeilles">
+                    &#9744;
                     {% endif %}
-                    <label for="abeilles">Abeilles</label>
+                    <p style="display: inline-block; margin: auto">Abeilles</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.ponction == "Essaim nu ou sur cadre" %}
-                    <input type="checkbox" id="essaimNu" name="essaimNu" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="essaimNu" name="essaimNu">
+                    &#9744;
                     {% endif %}
-                    <label for="essaimNu">Essaim nu ou sur cadre</label>
+                    <p style="display: inline-block; margin: auto">Essaim nu ou sur cadre</p>
                 </div>
                 <div style="display: inline-block">
                     {% if f.ponction == "Reine" %}
-                    <input type="checkbox" id="reine" name="reine" checked>
+                    &#9745;
                     {% else %}
-                    <input type="checkbox" id="reine" name="reine">
+                    &#9744;
                     {% endif %}
-                    <label for="reine">Reine</label>
+                    <p style="display: inline-block; margin: auto">Reine</p>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Destination : </p>{{ f.destinationPonction }}
+                <p style="display: inline-block; margin: auto">Destination: </p>
+                <div>{{ f.destinationPonction }}</div>
             </div>
         </div>
         <div>
             <h4>Manipulation</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Reine marquée : </p>
-                {% if f.couleurReineMarque == "Vert" %}
+                <p style="display: inline-block; margin: auto">Reine marquée: </p>
+                {% if f.reineMarqueeManipulation == "Vert" %}
                 <mark style="background: green; color: black; display: inline-block; margin: auto;">Vert</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto;">&nbsp Vert &nbsp</p>
                 {% endif %}
-                {% if f.couleurReineMarque == "Rouge" %}
+                {% if f.reineMarqueeManipulation == "Rouge" %}
                 <mark style="background: red; color: black; display: inline-block; margin: auto;">Rouge</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto;">&nbsp Rouge &nbsp</p>
                 {% endif %}
-                {% if f.couleurReineMarque == "Jaune" %}
+                {% if f.reineMarqueeManipulation == "Jaune" %}
                 <mark style="background: yellow; color: black; display: inline-block; margin: auto;">Jaune</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto;">&nbsp Jaune &nbsp</p>
                 {% endif %}
-                {% if f.couleurReineMarque == "Blanc" %}
+                {% if f.reineMarqueeManipulation == "Blanc" %}
                 <mark style="background: grey; color: black; display: inline-block; margin: auto;">Blanc</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto;">&nbsp Blanc &nbsp</p>
                 {% endif %}
-                {% if f.couleurReineMarque == "Bleu" %}
+                {% if f.reineMarqueeManipulation == "Bleu" %}
                 <mark style="background: cornflowerblue; color: black; display: inline-block; margin: auto;">Bleu</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto;">&nbsp Bleu &nbsp</p>
                 {% endif %}
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Colonie déplacée : </p>
+                <p style="display: inline-block; margin: auto">Colonie déplacée: </p>
                 <div style="display: inline-block">
                     <p style="display: inline-block; margin: auto">Le </p>
+                    <div style="display: inline-block">
                     {% if f.colonieDeplacee %}
                     {{ f.colonieDeplacee }}
                     {% else %}
                     ..............
                     {% endif %}
+                    </div>
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Essaimage Naturel : </p>
+                <p style="display: inline-block; margin: auto">Essaimage Naturel: </p>
                 <div style="display: inline-block">
                     <p style="display: inline-block; margin: auto">Le </p>
                     {% if f.essaimageNaturel %}
@@ -869,16 +893,18 @@
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Remerage : </p>
+                <p style="display: inline-block; margin: auto">Remerage: </p>
                 <div style="display: inline-block">
                     <p style="display: inline-block; margin: auto">Le </p>
+                    <div style="display: inline-block">
                     {% if f.remerage %}
                     {{ f.remerage }}
                     {% else %}
                     ..............
                     {% endif %}
+                    </div>
                 </div>
-                <p style="display: inline-block; margin: auto">&nbsp Origine : </p>
+                <p style="display: inline-block; margin: auto">&nbsp Origine: </p>
                 <div style="display: inline-block">
                     {% if f.origineRemerage %}
                     {{ f.origineRemerage }}
@@ -888,16 +914,18 @@
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Division Colonie : </p>
+                <p style="display: inline-block; margin: auto">Division Colonie: </p>
                 <div style="display: inline-block">
                     <p style="display: inline-block; margin: auto">Le </p>
+                    <div style="display: inline-block">
                     {% if f.divisionColonie %}
                     {{ f.divisionColonie }}
                     {% else %}
                     ..............
                     {% endif %}
+                    </div>
                 </div>
-                <p style="display: inline-block; margin: auto">&nbsp Création ruche : </p>
+                <p style="display: inline-block; margin: auto">&nbsp Création ruche: </p>
                 <div style="display: inline-block">
                     {% if f.creationRuche %}
                     {{ f.creationRuche }}
@@ -907,16 +935,18 @@
                 </div>
             </div>
             <div>
-                <p style="display: inline-block; margin: auto">Réunion Colonie : </p>
+                <p style="display: inline-block; margin: auto">Réunion Colonie: </p>
                 <div style="display: inline-block">
                     <p style="display: inline-block; margin: auto">Le </p>
+                    <div style="display: inline-block">
                     {% if f.reunionColonie %}
                     {{ f.reunionColonie }}
                     {% else %}
                     ..............
                     {% endif %}
+                    </div>
                 </div>
-                <p style="display: inline-block; margin: auto">&nbsp Libération ruche : </p>
+                <p style="display: inline-block; margin: auto">&nbsp Libération ruche: </p>
                 <div style="display: inline-block">
                     {% if f.liberationRuche %}
                     {{ f.liberationRuche }}
@@ -926,10 +956,13 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
         <div>
             <h4>Récolte</h4>
             <div>
-                <p style="display: inline-block; margin: auto">Nombre de hausse : </p> {{ f.nombreHausseRecolte }}
+                <p style="display: inline-block; margin: auto">Nombre de hausse: </p>
+                <div style="display: inline-block">{{ f.nombreHausseRecolte }}</div>
             </div>
         </div>
         <div>

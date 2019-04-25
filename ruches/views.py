@@ -17,6 +17,16 @@ from static.fusioncharts import TimeSeries
 from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, TypeAliment, TypeNourrissement, \
     Nourrissement, FeuilleVisite
 
+from io import StringIO, BytesIO
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.http import HttpResponse
+from cgi import escape
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+from weasyprint import HTML
 
 # ensemble des vues
 
@@ -559,6 +569,40 @@ def afficherFeuilles(request):
 def feuillePDF(request, f_id):
     fPDF = FeuilleVisite.objects.get(pk=f_id)
     return render(request, 'Apiculteurs/affichage/afficherFeuillePDF.html', {'f': fPDF})
+
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
+
+
+def export_pdf_Feuille(request, f_id):
+    fPDF = FeuilleVisite.objects.get(pk=f_id)
+    # return render_to_pdf(
+    #     'Apiculteurs/affichage/afficherFeuillePDF.html',
+    #     {
+    #         'f': fPDF,
+    #     }
+    # )
+
+    html_string = render_to_string('Apiculteurs/affichage/afficherFeuillePDF.html', {'f': fPDF})
+
+    html = HTML(string=html_string)
+    html.write_pdf(target='/tmp/mypdf.pdf')
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('mypdf.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+        return response
+
+    return response
 
 
 # partie inscription et mon compte
