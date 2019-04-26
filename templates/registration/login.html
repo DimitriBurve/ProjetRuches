@@ -13,39 +13,39 @@
 </head>
 <body>
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
-    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown2">
         <div class="dropbtn">Gestion Ruchers &#9662</div><!--
         --><div class="dropdown-content">
-            <a href="afficherRuchers">Afficher Ruchers</a>
-            <a href="ajouterRucher">Ajouter Rucher</a>
-            <a href="modifierRuchers">Modifier Rucher</a>
-            <a href="supprimerRuchers">Supprimer Rucher</a>
+            <a href="/afficherRuchers">Afficher Ruchers</a>
+            <a href="/ajouterRucher">Ajouter Rucher</a>
+            <a href="/modifierRuchers">Modifier Rucher</a>
+            <a href="/supprimerRuchers">Supprimer Rucher</a>
         </div>
     </li><!--
     --><li class="dropdown2">
         <div class="dropbtn">Gestion Colonies &#9662</div><!--
         --><div class="dropdown-content">
-            <a href="afficherColonies">Afficher Colonies</a>
-            <a href="ajouterColonie">Ajouter Colonie</a>
-            <a href="modifierColonies">Modifier Colonie</a>
-            <a href="supprimerColonies">Supprimer Colonie</a>
+            <a href="/afficherColonies">Afficher Colonies</a>
+            <a href="/ajouterColonie">Ajouter Colonie</a>
+            <a href="/modifierColonies">Modifier Colonie</a>
+            <a href="/supprimerColonies">Supprimer Colonie</a>
         </div>
     </li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
     {% if user.is_superuser %}
-    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar"><a href="/showUsersAdmin">Administration</a></li>
     <li class="right liNavBar">Bonjour {{ user.username }} (superuser)</li>
     {% else %}
     <li class="right liNavBar">Bonjour {{ user.username }}</li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a class="active" href="{% url 'login' %}">Connexion</a></li>
-    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    <li class="right liNavBar"><a href="/inscription">Inscription</a></li>
     {% endif %}
 </ul>
 <h2>Login</h2>

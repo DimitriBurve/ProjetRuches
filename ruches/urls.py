@@ -11,6 +11,7 @@ urlpatterns = [
     path('camerasUser', views.camerasUser, name='camerasUser'),
     path('videoCameraUser/<str:nameCapteur>', views.videoCamerasUser, name='videoCameraUser'),
     # vues apiculteurs
+    path('afficherColonieId/<int:c_id>', views.afficherColonieId, name='afficherColonieId'),
     path('afficherColonies', views.afficherColonies, name='afficherColonies'),
     path('afficherColoniesRucher/<str:rucher>', views.affichercoloniesRucher, name='afficherColoniesRucher'),
     path('afficherNourrissements', views.afficherNourrissement, name='afficherNourrissements'),
@@ -37,6 +38,8 @@ urlpatterns = [
     path('createFeuilleVisite/<str:rucher>/<str:colonie>/<int:etape>', views.createFeuillevisite, name='createFeuilleVisite'),
     path('afficherFeuilles', views.afficherFeuilles, name='afficherFeuilles'),
     path('afficherPDF/<int:f_id>', views.export_pdf_Feuille, name='afficherPDF'),
+    #qr
+    path('afficherQR/<int:c_id>', views.render_png_to_pdf, name='afficherQR'),
     # vues inscription et mon compte
     path('inscription', views.inscription, name='inscription'),
     path('monCompte', views.monCompte, name='monComte'),

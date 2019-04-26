@@ -87,7 +87,7 @@
                         <button type="submit" class="btn btn-warning m-0">nouvelle Visite</button>
                     </form>
                     <form id="formDetails" method="get" style="display: inline-block"
-                          action="#">
+                          action="{% url 'afficherColonieId' colonie.id %}">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
                     </form>
 
@@ -100,6 +100,7 @@
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger m-0">supprimer</button>
                     </form>
+                    <a href="{% url 'afficherQR' colonie.id %}"> QR Code</a>
                 </td>
             </tr>
             {% endif %}

@@ -1,14 +1,21 @@
+import subprocess
+
+import qrcode as qrcode
+from PIL import Image
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.shortcuts import render, redirect
 import json
 import requests
 from django.contrib.auth import login, authenticate
 # from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.pdfgen.canvas import Canvas
 
 from .forms import *
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
 # from django.core.urlresolvers import reverse
 from static.fusioncharts import FusionCharts
 from static.fusioncharts import FusionTable
@@ -27,6 +34,9 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 
 from weasyprint import HTML
+
+import pyqrcode
+# import pypng
 
 # ensemble des vues
 
@@ -182,6 +192,53 @@ def videoCamerasUser(request, nameCapteur):
 
 
 # partie apiculteur
+
+
+#qrcode
+def render_png_to_pdf(request, c_id):
+    link_to_post = "127.0.0.1:8000/afficherColonieId/{}".format(c_id)
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(link_to_post)
+    qr.make(fit=True)
+
+    img = qr.make_image()
+    img.save('static/ProjetRuches/images/qrcode.png')
+
+    image_data = Image.open("static/ProjetRuches/images/qrcode.png")
+    filename = 'static/ProjetRuches/images/qrcode.png'
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="qrcode.pdf"'
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawImage(filename, 0, 450)
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    return response
+
+
+def afficherColonieId(request, c_id):
+    colonie = Colonie.objects.get(pk=c_id)
+    feuillesObj = FeuilleVisite.objects.all()
+    feuilles = []
+    for f in feuillesObj:
+        if f.rucher == colonie.rucher and f.colonie == colonie:
+            feuilles.append(f)
+    print(feuilles)
+    return render(request, 'Apiculteurs/affichage/afficherColonieId.html',
+                  {'c': colonie, 'feuilles': feuilles})
+
 
 def afficherColonies(request):
     colonies = Colonie.objects.all()
