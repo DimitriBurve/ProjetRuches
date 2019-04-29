@@ -230,14 +230,25 @@ def render_png_to_pdf(request, c_id):
 
 def afficherColonieId(request, c_id):
     colonie = Colonie.objects.get(pk=c_id)
-    feuillesObj = FeuilleVisite.objects.all()
-    feuilles = []
-    for f in feuillesObj:
-        if f.rucher == colonie.rucher and f.colonie == colonie:
-            feuilles.append(f)
-    print(feuilles)
+
+    feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonie)
+    feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+
+    nourrissementsObj = Nourrissement.objects.all().filter(colonie=colonie)
+    nourrissementsObj = sorted(nourrissementsObj, key=lambda a: a.date, reverse=True)
+
+    traitementsObj = Traitement.objects.all().filter(colonie=colonie)
+    traitementsObj = sorted(traitementsObj, key=lambda a: a.date, reverse=True)
+
+    recoltesObj = Recolte.objects.all().filter(colonie=colonie)
+    recoltesObj = sorted(recoltesObj, key=lambda a: a.date, reverse=True)
+
+    peseesObj = Pesee.objects.all().filter(colonie=colonie)
+    peseesObj = sorted(peseesObj, key=lambda a: a.date, reverse=True)
+
     return render(request, 'Apiculteurs/affichage/afficherColonieId.html',
-                  {'c': colonie, 'feuilles': feuilles})
+                  {'c': colonie, 'feuilles': feuillesObj, 'nourri': nourrissementsObj,
+                   'trait': traitementsObj, 'recoltes': recoltesObj, 'pesees': peseesObj})
 
 
 def afficherColonies(request):

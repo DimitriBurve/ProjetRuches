@@ -29,7 +29,7 @@
  --><li class="dropdown2">
         <div class="dropbtn active">Gestion Colonies &#9662</div><!--
         --><div class="dropdown-content">
-            <a class="active" href="afficherColonies">Afficher Colonies</a>
+            <a class="active" href="/afficherColonies">Afficher Colonies</a>
             <a href="ajouterColonie">Ajouter Colonie</a>
             <a href="modifierColonies">Modifier Colonie</a>
             <a href="supprimerColonies">Supprimer Colonie</a>
@@ -71,21 +71,6 @@
                 <td style="vertical-align: middle">{{ colonie.date }}</td>
                 <td style="vertical-align: middle; width: 550px">{{ colonie.remarque }}</td>
                 <td style="vertical-align: middle; width: 350px">
-                    <form method="get" style="display: inline-block" action="{% url 'ajouterNourrissement' colonie.rucher colonie.nom %}">
-                        <button type="submit" class="btn btn-warning m-0">ajouter Nourrissement</button>
-                    </form>
-                    <form method="get" style="display: inline-block" action="{% url 'ajouterTraitement' colonie.rucher colonie.nom %}">
-                        <button type="submit" class="btn btn-warning m-0">ajouter Traitement</button>
-                    </form>
-                    <form method="get" style="display: inline-block" action="{% url 'ajouterRecolte' colonie.rucher colonie.nom %}">
-                        <button type="submit" class="btn btn-warning m-0">nouvelle Récolte</button>
-                    </form>
-                    <form method="get" style="display: inline-block" action="{% url 'ajouterPesee' colonie.rucher colonie.nom %}">
-                        <button type="submit" class="btn btn-warning m-0">nouvelle Pesée</button>
-                    </form>
-                    <form method="get" style="display: inline-block" action="{% url 'createFeuilleVisite' colonie.rucher colonie.nom 1 %}">
-                        <button type="submit" class="btn btn-warning m-0">nouvelle Visite</button>
-                    </form>
                     <form id="formDetails" method="get" style="display: inline-block"
                           action="{% url 'afficherColonieId' colonie.id %}">
                         <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>

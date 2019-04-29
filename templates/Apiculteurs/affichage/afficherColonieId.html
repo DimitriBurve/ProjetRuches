@@ -53,6 +53,7 @@
     <h2>Colonie {{c.nom}} {{c.rucher}} </h2>
     <div>
         <h4>Infos</h4>
+        {% if c %}
         <div class="table-responsive" style="padding-right: 15%">
             <table class="table table-hover" style="text-align: center">
                 <tr>
@@ -87,50 +88,215 @@
                 {% endif %}
             </table>
         </div>
+        {% else %}
+        <p>Aucunes infos</p>
+        {% endif %}
     </div>
     <div>
-        <h4>Feuilles Visite</h4>
-            <div class="table-responsive" style="padding-right: 15%">
-                <table class="table table-hover" style="text-align: center">
-                    <tr>
-                        <th>date</th>
-                        <th>conditions climatiques</th>
-                        <th>Notes</th>
-                    </tr>
-                    {% for f in feuilles %}
-                    {% for u in c.rucher.user.all %}
-                    {% if u == user %}
-                    <tr>
-                        <td style="vertical-align: middle">{{ f.date }}</td>
-                        <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
-                        <td style="vertical-align: middle; width: 850px">{{ f.notes }}</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                    {% if user.is_staff %}
-                    <tr>
-                        <td style="vertical-align: middle">{{ f.date }}</td>
-                        <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
-                        <td style="vertical-align: middle; width: 850px">{{ f.notes }}</td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                </table>
-            </div>
+        <h4 style="display: inline-block">Feuilles Visite</h4>
+        <form method="get" style="display: inline-block" action="{% url 'createFeuilleVisite' c.rucher c.nom 1 %}">
+            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
+        </form>
+        {% if feuilles %}
+        <div class="table-responsive" style="padding-right: 15%">
+            <table class="table table-hover" style="text-align: center">
+                <tr>
+                    <th>date</th>
+                    <th>conditions climatiques</th>
+                    <th>Notes</th>
+                </tr>
+                {% for f in feuilles %}
+                {% for u in c.rucher.user.all %}
+                {% if u == user %}
+                <tr>
+                    <td style="vertical-align: middle">{{ f.date }}</td>
+                    <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ f.notes }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% if user.is_staff %}
+                <tr>
+                    <td style="vertical-align: middle">{{ f.date }}</td>
+                    <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ f.notes }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>Aucunes feuilles de visite</p>
+        {% endif %}
     </div>
     <div>
-        <h4>Nourrissements</h4>
+        <h4 style="display: inline-block">Nourrissements</h4>
+        <form method="get" style="display: inline-block" action="{% url 'ajouterNourrissement' c.rucher c.nom %}">
+            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
+        </form>
+        {% if nourri %}
+        <div class="table-responsive" style="padding-right: 15%">
+            <table class="table table-hover" style="text-align: center">
+                <tr>
+                    <th>date</th>
+                    <th>type nourrissement</th>
+                    <th>type aliment</th>
+                    <th>produit</th>
+                    <th>quantite</th>
+                    <th>Notes</th>
+                </tr>
+                {% for n in nourri %}
+                {% for u in c.rucher.user.all %}
+                {% if u == user %}
+                <tr>
+                    <td style="vertical-align: middle">{{ n.date }}</td>
+                    <td style="vertical-align: middle">{{ n.typeNourrissement }}</td>
+                    <td style="vertical-align: middle">{{ n.typeAliment }}</td>
+                    <td style="vertical-align: middle">{{ n.produit }}</td>
+                    <td style="vertical-align: middle">{{ n.quantite }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ n.note }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% if user.is_staff %}
+                <tr>
+                    <td style="vertical-align: middle">{{ n.date }}</td>
+                    <td style="vertical-align: middle">{{ n.typeNourrissement }}</td>
+                    <td style="vertical-align: middle">{{ n.typeAliment }}</td>
+                    <td style="vertical-align: middle">{{ n.produit }}</td>
+                    <td style="vertical-align: middle">{{ n.quantite }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ n.note }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>Aucuns nourrissements</p>
+        {% endif %}
     </div>
     <div>
-        <h4>Traitements</h4>
+        <h4 style="display: inline-block">Traitements</h4>
+        <form method="get" style="display: inline-block" action="{% url 'ajouterTraitement' c.rucher c.nom %}">
+            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
+        </form>
+        {% if trait %}
+        <div class="table-responsive" style="padding-right: 15%">
+            <table class="table table-hover" style="text-align: center">
+                <tr>
+                    <th>Apiculteur</th>
+                    <th>date</th>
+                    <th>maladie</th>
+                    <th>methode</th>
+                    <th>posologie</th>
+                    <th>remarques</th>
+                </tr>
+                {% for t in trait %}
+                {% for u in c.rucher.user.all %}
+                {% if u == user %}
+                <tr>
+                    <td style="vertical-align: middle">{{ t.api }}</td>
+                    <td style="vertical-align: middle">{{ t.date }}</td>
+                    <td style="vertical-align: middle">{{ t.maladie }}</td>
+                    <td style="vertical-align: middle">{{ t.methode }}</td>
+                    <td style="vertical-align: middle">{{ t.posologie }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ t.remarques }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% if user.is_staff %}
+                <tr>
+                    <td style="vertical-align: middle">{{ t.api }}</td>
+                    <td style="vertical-align: middle">{{ t.date }}</td>
+                    <td style="vertical-align: middle">{{ t.maladie }}</td>
+                    <td style="vertical-align: middle">{{ t.methode }}</td>
+                    <td style="vertical-align: middle">{{ t.posologie }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ t.remarques }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>Aucuns traitements</p>
+        {% endif %}
     </div>
     <div>
-        <h4>Récoltes</h4>
+        <h4 style="display: inline-block">Récoltes</h4>
+        <form method="get" style="display: inline-block" action="{% url 'ajouterRecolte' c.rucher c.nom %}">
+            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
+        </form>
+        {% if recoltes %}
+        <div class="table-responsive" style="padding-right: 15%">
+            <table class="table table-hover" style="text-align: center">
+                <tr>
+                    <th>date</th>
+                    <th>produit recolte</th>
+                    <th>quantite</th>
+                    <th>notes</th>
+                </tr>
+                {% for r in recoltes %}
+                {% for u in c.rucher.user.all %}
+                {% if u == user %}
+                <tr>
+                    <td style="vertical-align: middle">{{ r.date }}</td>
+                    <td style="vertical-align: middle">{{ r.produitRecolte }}</td>
+                    <td style="vertical-align: middle">{{ r.quantite }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ r.note }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% if user.is_staff %}
+                <tr>
+                    <td style="vertical-align: middle">{{ r.date }}</td>
+                    <td style="vertical-align: middle">{{ r.produitRecolte }}</td>
+                    <td style="vertical-align: middle">{{ r.quantite }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ r.note }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>Aucunes récoltes</p>
+        {% endif %}
     </div>
     <div>
-        <h4>Pesées</h4>
+        <h4 style="display: inline-block">Pesées</h4>
+        <form method="get" style="display: inline-block" action="{% url 'ajouterPesee' c.rucher c.nom %}">
+            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
+        </form>
+        {% if pesees %}
+        <div class="table-responsive" style="padding-right: 15%">
+            <table class="table table-hover" style="text-align: center">
+                <tr>
+                    <th>date</th>
+                    <th>poids</th>
+                    <th>notes</th>
+                </tr>
+                {% for p in pesees %}
+                {% for u in c.rucher.user.all %}
+                {% if u == user %}
+                <tr>
+                    <td style="vertical-align: middle">{{ p.date }}</td>
+                    <td style="vertical-align: middle">{{ p.poids }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ p.note }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% if user.is_staff %}
+                <tr>
+                    <td style="vertical-align: middle">{{ p.date }}</td>
+                    <td style="vertical-align: middle">{{ p.poids }}</td>
+                    <td style="vertical-align: middle; width: 850px">{{ p.note }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>Aucunes pesées</p>
+        {% endif %}
     </div>
     {% else %}
     <p>You are not logged</p>
