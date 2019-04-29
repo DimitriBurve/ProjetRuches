@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Time",
+    "type": "date",
+    "format": "%Y-%m-%d %H:%M:%S"
+  },
+  {
+    "name": "Batterie (%)",
+    "type": "number"
+  },
+  {
+    "name": "Humidite (%)",
+    "type": "number"
+  },
+  {
+    "name": "Temperature",
+    "type": "number"
+  }
+]

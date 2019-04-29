@@ -36,6 +36,8 @@ from django.template.loader import render_to_string
 from weasyprint import HTML
 
 import pyqrcode
+
+
 # import pypng
 
 # ensemble des vues
@@ -55,10 +57,10 @@ def header(apikey):
 def informationsUser(request):
     apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
 
-    r = requests.get(
-        "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/alerts/5cb43b5e10cd010020e908c6",
-        headers=header(apikey)).text
-    print(r)
+    res = requests.get(
+        "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/devices",
+        headers=header(apikey)).json()
+    print(res)
     # response = requete.urlopen("https://github.com/timeline.json")
     # data_test = json.load(response)
 
@@ -66,27 +68,88 @@ def informationsUser(request):
 
     localisationsCapteurs = []
 
-    with open('fixtures/Capteurs.json') as json_data:
-        data_dict = json.load(json_data)
+    ruchers = Rucher.objects.all()
 
-    # print(len(data_dict))
-    for i in range(0, len(data_dict)):
-        # print(data_dict[i]["fields"]["localisation"])
-        localisationsCapteurs.append(data_dict[i]["fields"]["localisation"])
+    for r in ruchers:
+        localisationsCapteurs.append(r)
+
+    coloniesObj = Colonie.objects.all()
+
+    capteurs = []
+
+    for rep in res:
+        nom = rep["name"]
+        temp = nom.split(" ")
+        for w in temp:
+            for c in coloniesObj:
+                for l in localisationsCapteurs:
+                    capteurs.append({'loc': l, 'id': rep['id'], 'name': rep['name']})
+                    # if w == l and c.rucher == l:
+                    # print("true, ", l)
+                break
+            break
+
+    print(capteurs)
 
     # data_str = json.dumps(data_dict)
     # print(data_str)
     # data = json.load(open("/fixtures/Capteurs.json"))
     # capteurs = Capteurs.objects.all()
 
-    return render(request, 'User/informationsUser.html', {'capteurs': localisationsCapteurs})
+    return render(request, 'User/informationsUser.html', {'ruchers': localisationsCapteurs, 'capteurs': capteurs})
 
 
-def capteurUser(request, nameCapteur):
+def capteurUser(request, idCapteur):
+    apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
+
+    res = requests.get(
+        "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/devices",
+        headers=header(apikey)).json()
+
+    url = "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/hooks/5cc6f3f3619c67001743f7df/deliveries"
+
+    response = requests.get(url, headers=header(apikey)).json()
+    # payload = ""
+    # headers = {
+    #     'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY",
+    #     'cache-control': "no-cache",
+    #     'Postman-Token': "24bd5fd8-7fb6-47b8-9159-c288506650d5"
+    # }
+
+    # response = requests.request("GET", url, data=payload, headers=headers).json()
+
+    dataCapteur = []
+
+    for resp in response:
+        # print(resp['deviceId'])
+        date = resp['createdAt']
+        temp = date.split('T')
+        temp2 = temp[1].split('Z')
+        temp3 = temp2[0].split('.')
+        dateTemp = temp3[0].split(':')
+        hours = (int(dateTemp[0]) + 2) % 24
+        hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
+        datef = temp[0] + " " + str(hourF)
+        if resp['deviceId'] == idCapteur and idCapteur == "591b3f0c50e1ff001b65e817":
+            dataCapteur.append([datef,
+                                resp['request']['payload']['record']['data']['vbat'],
+                                resp['request']['payload']['record']['data']['humidity'],
+                                resp['request']['payload']['record']['data']['temperature']])
+        elif resp['deviceId'] == idCapteur:
+            print("test")
+            dataCapteur.append([datef,
+                                resp['request']['payload']['record']['data']['battery_2'],
+                                resp['request']['payload']['record']['data']['humidite_2'],
+                                resp['request']['payload']['record']['data']['temperature_2']])
+
+    print(dataCapteur)
+
     data = requests.get(
         'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/data/adding-a-reference-line-data.json').text
     schema = requests.get(
         'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/adding-a-reference-line-schema.json').text
+
+    schema2 = json.load(open("fixtures/schema.json"))
 
     # pour recuperer derniere temperature
 
@@ -97,7 +160,7 @@ def capteurUser(request, nameCapteur):
     derniereHum = data2[len(data2) - 1][1]
     dernierPoids = data2[len(data2) - 1][3]
 
-    fusionTable = FusionTable(schema, data)
+    fusionTable = FusionTable(schema2, dataCapteur)
 
     # graph pour temperatures
 
@@ -132,7 +195,7 @@ def capteurUser(request, nameCapteur):
     timeSeriesHum.AddAttribute("caption", """{text: 'Humidité de la ruche'}""")
 
     timeSeriesHum.AddAttribute("yAxis", """[{
-                                                plot: 'Carbon mono-oxide (mg/m^3)',
+                                                plot: 'Humidite (%)',
                                                 title: 'Humidité',
                                                 format:{
                                                     suffix: '%',
@@ -155,10 +218,10 @@ def capteurUser(request, nameCapteur):
     timeSeriesPoids.AddAttribute("caption", """{text: 'Poids de la ruche'}""")
 
     timeSeriesPoids.AddAttribute("yAxis", """[{
-                                                    plot: 'Benzene',
-                                                    title: 'Poids',
+                                                    plot: 'Batterie (%)',
+                                                    title: 'Batterie',
                                                     format:{
-                                                        suffix: 'kg',
+                                                        suffix: '%',
                                                     },
                                                     style: {
                                                         title: {
@@ -170,9 +233,15 @@ def capteurUser(request, nameCapteur):
     fcChartPoids = FusionCharts("timeseries", "ex3", 700, 450, "chart-poids", "json", timeSeriesPoids)
 
     return render(request, 'User/capteursUser.html',
-                  {'nameCapteur': nameCapteur, 'graphTemp': fcChartTemp.render(), 'graphHum': fcChartHum.render(),
+                  {'nameCapteur': idCapteur, 'graphTemp': fcChartTemp.render(), 'graphHum': fcChartHum.render(),
                    'graphPoids': fcChartPoids.render(),
                    'derniereTemp': derniereTemp, 'derniereHum': derniereHum, 'dernierPoids': dernierPoids})
+
+
+def jsonView(request):
+    received_json_data = json.loads(request.body)
+
+    return render(request, 'User/testjson.html', {'test': received_json_data})
 
 
 def camerasUser(request):
@@ -194,7 +263,7 @@ def videoCamerasUser(request, nameCapteur):
 # partie apiculteur
 
 
-#qrcode
+# qrcode
 def render_png_to_pdf(request, c_id):
     link_to_post = "127.0.0.1:8000/afficherColonieId/{}".format(c_id)
     qr = qrcode.QRCode(

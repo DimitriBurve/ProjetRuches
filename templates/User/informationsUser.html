@@ -50,15 +50,17 @@
 </ul>
 
 <div>
-    <h4>Liste capteurs</h4>
+    <h4>Liste Villes</h4>
     <ul>
-        {% for c in capteurs %}
+        {% for r in ruchers %}
         <li>
-            {{ c }}
-            <a href="{% url 'detailsUser' c %}">details</a>
-            {% if user.is_authenticated %}
-            <a href="#">modifier</a>
+            {{ r.ville }}
+            <a href="{% url 'detailsUser' r %}">details</a>
+            {% for cap in capteurs %}
+            {% if cap.loc.nom == r.nom %}
+            <p>{{ cap.name }} <a href="{% url 'detailsUser' cap.id %}">voir</a></p>
             {% endif %}
+            {% endfor %}
         </li>
         {% endfor %}
     </ul>

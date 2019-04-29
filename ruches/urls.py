@@ -7,7 +7,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('home', views.home, name='homeUser'),
     path('informationsUser', views.informationsUser, name='infosUser'),
-    path('detailCapteurUser/<str:nameCapteur>', views.capteurUser, name='detailsUser'),
+    path('detailCapteurUser/<str:idCapteur>', views.capteurUser, name='detailsUser'),
+    path('json', views.jsonView, name="json"),
     path('camerasUser', views.camerasUser, name='camerasUser'),
     path('videoCameraUser/<str:nameCapteur>', views.videoCamerasUser, name='videoCameraUser'),
     # vues apiculteurs
