@@ -494,6 +494,18 @@ def modifierRuchers(request):
     return render(request, 'Apiculteurs/modification/modifierRuchers.html', {'ruchers': ruchers})
 
 
+def modifierRucherId(request, r_id):
+    rucher = Rucher.objects.get(pk=r_id)
+    if request.method == 'POST':
+        form = RucherForm(request.POST, instance=rucher)
+        if form.is_valid():
+            form.save()
+            return redirect('afficherRuchers')
+    else:
+        form = RucherForm(instance=rucher)
+    return render(request, 'Apiculteurs/modification/modifierRucherId.html', {'form': form})
+
+
 def supprimerColonies(request):
     colonies = Colonie.objects.all()
     return render(request, 'Apiculteurs/suppression/supprimerColonies.html', {'colonies': colonies})

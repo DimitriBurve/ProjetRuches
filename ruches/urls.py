@@ -28,6 +28,7 @@ urlpatterns = [
     path('ajouterTraitement/<str:rucher>/<str:colonie>', views.ajouterTraitement, name='ajouterTraitement'),
     path('modifierColonies', views.modifierColonies, name='modifierColonies'),
     path('modifierRuchers', views.modifierRuchers, name='modifierRuchers'),
+    path('modifierRucherId/<int:r_id>', views.modifierRucherId, name='modifierRucherId'),
     path('supprimerColonies', views.supprimerColonies, name='supprimerColonies'),
     path('supprimerRuchers', views.supprimerRuchers, name='supprimerRuchers'),
     path('validSupprimerColonie/<str:colonie>/<str:rucher>', views.validSupprimerColonie, name='validSupprimerColonie'),

@@ -51,34 +51,17 @@
 <div>
     <h2>Ruchers</h2>
     {% if user.is_authenticated %}
-    <div class="table-responsive" style="padding-right: 20%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Nom</th>
-                <th>localisation</th>
-                <th>Propriétaire</th>
-            </tr>
-            {% for rucher in ruchers %}
-
-            <tr>
-                <td style="vertical-align: middle">{{ rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ rucher }}</td>
-                <td style="vertical-align: middle">{{ rucher }}</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierRucherId' rucher.id %}">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
     {% else %}
     <p>You are not logged</p>
     {% endif %}
 </div>
 
-<!--<script type="text/javascript">
+<script type="text/javascript">
     function validateRucher(form, rucher) {
         if (confirm("Voulez vous supprimer "+rucher+" ?") === false) {
             return false;
@@ -86,6 +69,6 @@
             return true;
         }
     }
-</script>-->
+</script>
 </body>
 </html>

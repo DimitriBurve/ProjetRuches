@@ -29,7 +29,7 @@ li.liNavBar a, .dropbtn {
 }
 
 li.liNavBar a:hover, .dropdown2:hover .dropbtn {
-    background-color: #4CAF50;
+    background-color: #bdbd00;
     text-decoration: none;
     color: black;
     cursor: pointer;
@@ -57,7 +57,7 @@ li.dropdown2 {
 }
 
 .dropdown-content a:hover {
-    background-color: #4CAF50;
+    background-color: #bdbd00;
     text-decoration: none;
     color: black;
 }
@@ -67,7 +67,7 @@ li.dropdown2 {
 }
 
 .active {
-  background-color: #4CAF50;
+  background-color: #bdbd00;
 }
 
 .helptext {

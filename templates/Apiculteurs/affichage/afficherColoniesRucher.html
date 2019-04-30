@@ -62,7 +62,7 @@
                 <th>Dernière Remarque</th>
             </tr>
             {% for colonie in colonies %}
-            {% if colonie.rucher.nom == rucher or user.is_staff%}
+            {% if colonie.rucher.nom == rucher %}
             <tr>
                 <td style="vertical-align: middle">{{ colonie.nom }}</td>
                 <td style="vertical-align: middle">{{ colonie.rucher }}</td>
