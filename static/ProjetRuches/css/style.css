@@ -68,10 +68,30 @@ li.dropdown2 {
 
 .active {
   background-color: #bdbd00;
+    color: black;
 }
 
 .helptext {
     visibility: hidden;
+}
+
+.navbarMenu .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  ul.navbarMenu li.right,
+  ul.navbarMenu li.liNavBar,
+  ul.navbarMenu li.dropdown2 {display: none;}
+    ul.navbarMenu a.icon {display: inline-block}
+    ul.responsive li.liNavBar,
+    ul.responsive li.right,
+    ul.responsive li.dropdown2 {float: none; display: inline-block}
+}
+
+i.fa-bars{
+    /*soit une fleche*/
+    color: #bdbd00;
 }
 
 

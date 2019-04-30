@@ -83,7 +83,7 @@
                     <td style="vertical-align: middle">{{ c.type }}</td>
                     <td style="vertical-align: middle">{{ c.nombre_de_cadres }}</td>
                     <td style="vertical-align: middle">{{ c.date }}</td>
-                    <td style="vertical-align: middle; width: 550px">{{ c.remarque }}</td>
+                    <td style="text-align: justify; width: 550px">{{ c.remarque }}</td>
                 </tr>
                 {% endif %}
             </table>
@@ -104,6 +104,7 @@
                     <th>date</th>
                     <th>conditions climatiques</th>
                     <th>Notes</th>
+                    <th>Télécharger</th>
                 </tr>
                 {% for f in feuilles %}
                 {% for u in c.rucher.user.all %}
@@ -111,7 +112,8 @@
                 <tr>
                     <td style="vertical-align: middle">{{ f.date }}</td>
                     <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ f.notes }}</td>
+                    <td style="vertical-align: middle; width: 850px"><p style="max-height: 100px">{{ f.notes}}</p></td>
+                    <td><a href="{% url 'afficherPDF' colonie.id %}"><img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf"></a></td>
                 </tr>
                 {% endif %}
                 {% endfor %}
@@ -119,7 +121,8 @@
                 <tr>
                     <td style="vertical-align: middle">{{ f.date }}</td>
                     <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ f.notes }}</td>
+                    <td style="vertical-align: middle; width: 850px"><p style="max-height: 100px">{{ f.notes }}</p></td>
+                    <td><a href="{% url 'afficherPDF' f.id %}"><img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px"></a></td>
                 </tr>
                 {% endif %}
                 {% endfor %}
