@@ -27,6 +27,7 @@ urlpatterns = [
     path('ajouterRucher', views.ajouterRucher, name='ajouterRucher'),
     path('ajouterTraitement/<str:rucher>/<str:colonie>', views.ajouterTraitement, name='ajouterTraitement'),
     path('modifierColonies', views.modifierColonies, name='modifierColonies'),
+    path('modifierColonieId/<int:c_id>', views.modifierColonieId, name='modifierColonieId'),
     path('modifierRuchers', views.modifierRuchers, name='modifierRuchers'),
     path('modifierRucherId/<int:r_id>', views.modifierRucherId, name='modifierRucherId'),
     path('supprimerColonies', views.supprimerColonies, name='supprimerColonies'),
@@ -52,3 +53,5 @@ urlpatterns = [
     path('deleteUserAdmin/<str:username>', views.deleteUserAdmin, name='deleteUserAdmin'),
     path('detailsUserAdmin/<str:username>', views.detailsUserAdmin, name='detailsUserAdmin'),
 ]
+
+

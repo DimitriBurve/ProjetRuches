@@ -26,12 +26,12 @@
             <a href="supprimerRuchers">Supprimer Rucher</a>
         </div>
     </li><!--
- --><li class="dropdown2">
+    --><li class="dropdown2">
         <div class="dropbtn active">Gestion Colonies &#9662</div><!--
         --><div class="dropdown-content">
-            <a class="active" href="/afficherColonies">Afficher Colonies</a>
+            <a href="afficherColonies">Afficher Colonies</a>
             <a href="ajouterColonie">Ajouter Colonie</a>
-            <a href="modifierColonies">Modifier Colonie</a>
+            <a class="active" href="modifierColonies">Modifier Colonie</a>
             <a href="supprimerColonies">Supprimer Colonie</a>
         </div>
     </li>
@@ -51,47 +51,12 @@
 <div>
     <h2>Colonies</h2>
     {% if user.is_authenticated %}
-    <div class="table-responsive" style="padding-right: 15%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Identification</th>
-                <th>Rucher</th>
-                <th>Type de Ruche</th>
-                <th>Nombre de cadres</th>
-                <th>Date Création</th>
-                <th>Dernière Remarque</th>
-            </tr>
-            {% for colonie in colonies %}
-            {% if colonie.rucher.user == user or user.is_staff%}
-            <tr>
-                <td style="vertical-align: middle">{{ colonie.nom }}</td>
-                <td style="vertical-align: middle">{{ colonie.rucher }}</td>
-                <td style="vertical-align: middle">{{ colonie.type }}</td>
-                <td style="vertical-align: middle">{{ colonie.nombre_de_cadres }}</td>
-                <td style="vertical-align: middle">{{ colonie.date }}</td>
-                <td style="vertical-align: middle; width: 550px">{{ colonie.remarque }}</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form id="formDetails" method="get" style="display: inline-block"
-                          action="{% url 'afficherColonieId' colonie.id %}">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
-                    </form>
+    <form>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
 
-                    <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
-                    </form>
-
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
-                    </form>
-                    <a href="{% url 'afficherQR' colonie.id %}"> QR Code</a>
-                </td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-        </table>
-    </div>
     {% else %}
     <p>You are not logged</p>
     {% endif %}

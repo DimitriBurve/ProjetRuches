@@ -489,6 +489,18 @@ def modifierColonies(request):
     return render(request, 'Apiculteurs/modification/modifierColonies.html', {'colonies': colonies})
 
 
+def modifierColonieId(request, c_id):
+    colonie = Colonie.objects.get(pk=c_id)
+    if request.method == 'POST':
+        form = RucheForm(request.POST, instance=colonie)
+        if form.is_valid():
+            form.save()
+            return redirect('afficherColonieId', c_id)
+    else:
+        form = RucheForm(instance=colonie)
+        return render(request, 'Apiculteurs/modification/modifierColonieId.html', {'form': form})
+
+
 def modifierRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/modification/modifierRuchers.html', {'ruchers': ruchers})
