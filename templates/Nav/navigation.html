@@ -1,0 +1,131 @@
+<style>
+    #access {
+        background: #191970;
+        /*display: block;*/
+
+        /*margin: 10px auto;*/
+        /*width:100%;*/
+        /*max-width:250px;*/
+        /*z-index: 10;*/
+        text-align: right;
+    }
+
+    #access label {
+        font-size: 25px;
+
+    }
+
+    #access span.fa {
+        background: #191970;
+        color: #fff;
+        text-align: center;
+        padding: 2px;
+        cursor: pointer;
+        width: 35px;
+        height: 30px;
+        vertical-align: bottom;
+    }
+
+    #access .menu-header, div.menu {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    #access li:hover > a {
+        background: #6478be;
+        color: #fff;
+
+    }
+
+    ul.menu {
+        padding: 0 0 5px;
+    }
+
+    #check-toggle {
+        display: none;
+    }
+
+    #menu0 {
+        max-height: 0;
+        opacity: 0;
+        transition: all .8s;
+    }
+
+    #check-toggle:checked + #menu0 {
+        max-height: 300px;
+        opacity: 1;
+        transition: opacity .8s;
+    }
+
+    #access .menu-header li, div.menu li {
+        float: none;
+        display: block;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        margin-left: 0;
+        margin-right: 0;
+        -webkit-transition: all .2s;
+        -o-transition: all .2s;
+        transition: all .2s;
+    }
+
+    #access .menu-header li::before, div.menu li::before {
+        display: block;
+        height: 1px;
+        width: 10%;
+        background-color: #fff2ab;
+        content: " ";
+        position: absolute;
+        text-align: center;
+        left: 50%;
+        bottom: 0;
+        margin-left: -5%;
+        -webkit-transition: all .2s;
+        -o-transition: all .2s;
+        transition: all .2s;
+    }
+
+    #access .menu-header li:hover::before {
+        left: 15%;
+        margin-left: 0;
+        width: 70%;
+    }
+
+    #access a {
+        min-width: 80px;
+        padding: 0 5px;
+        color: #aaa;
+        display: block;
+        line-height: 38px;
+        text-decoration: none;
+    }
+
+    #menu0 a {
+        max-height: 0;
+        transition: max-height .8s ease;
+    }
+
+    #check-toggle:checked + #menu0 a {
+        max-height: 38px;
+        transition: max-height .8s ease;
+    }
+</style>
+<div class="menuMobile" style="width:100%;text-align:center;">
+    <div id="access" role="navigation">
+        <label for="check-toggle"><span class="fa fa-navicon"></span></label>
+        <input id="check-toggle" name="check-toggle" type="checkbox">
+        <div id="menu0">
+            <div class="menu-header">
+                <ul class="menu">
+                    <li class="menu-item"><a href="/home">Accueil</a></li>
+                    <li class="menu-item"><a href="/camerasUser">cameras</a></li>
+                    <li class="menu-item"><a href="informationsUser">Informations</a></li>
+                    <li class="menu-item"><a href="/afficherRuchers">ruchers</a></li>
+                    <li class="menu-item"><a href="/afficherColonies">colonies</a></li>
+                    <li class="menu-item"><a href="/inscription">inscription</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

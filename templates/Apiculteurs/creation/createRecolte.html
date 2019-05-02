@@ -33,24 +33,8 @@
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
     <li class="liNavBar"><a href="informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
-    <li class="dropdown2">
-        <div class="dropbtn">Gestion Ruchers &#9662</div><!--
-        --><div class="dropdown-content">
-            <a href="afficherRuchers">Afficher Ruchers</a>
-            <a href="ajouterRucher">Ajouter Rucher</a>
-            <a href="modifierRuchers">Modifier Rucher</a>
-            <a href="supprimerRuchers">Supprimer Rucher</a>
-        </div>
-    </li><!--
-    --><li class="dropdown2">
-        <div class="dropbtn">Gestion Colonies &#9662</div><!--
-        --><div class="dropdown-content">
-            <a href="afficherColonies">Afficher Colonies</a>
-            <a href="ajouterColonie">Ajouter Colonie</a>
-            <a href="modifierColonies">Modifier Colonie</a>
-            <a href="supprimerColonies">Supprimer Colonie</a>
-        </div>
-    </li>
+    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
     {% if user.is_superuser %}
@@ -64,6 +48,7 @@
     <li class="right liNavBar"><a href="inscription">Inscription</a></li>
     {% endif %}
 </ul>
+{% include "../../Nav/navigation.html" %}
 <div>
     <h2>Ajouter Récolte</h2>
 

@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    top: 0;
 }
 
 ul.navbarMenu {
@@ -7,16 +8,20 @@ ul.navbarMenu {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: rgba(22, 76, 154, 0.94);
+
 }
 
 li.liNavBar {
     float: left;
 }
 
-ul.navbarMenu li.right {float: right; color: white}
+ul.navbarMenu li.right {
+    float: right;
+    color: white
+}
 
-li.liNavBar a{
+li.liNavBar a {
     text-decoration: none;
 }
 
@@ -29,9 +34,9 @@ li.liNavBar a, .dropbtn {
 }
 
 li.liNavBar a:hover, .dropdown2:hover .dropbtn {
-    background-color: #bdbd00;
+    background-color: rgb(116, 153, 209);
     text-decoration: none;
-    color: black;
+    color: white;
     cursor: pointer;
 }
 
@@ -57,9 +62,9 @@ li.dropdown2 {
 }
 
 .dropdown-content a:hover {
-    background-color: #bdbd00;
+    background-color: rgb(116, 153, 209);
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .dropdown2:hover .dropdown-content {
@@ -67,45 +72,66 @@ li.dropdown2 {
 }
 
 .active {
-  background-color: #bdbd00;
-    color: black;
+    background-color: rgb(116, 153, 209);
+    color: white;
 }
 
 .helptext {
     visibility: hidden;
 }
 
-.navbarMenu .icon {
-  display: none;
+.menuMobile {
+    display: none;
 }
 
 @media screen and (max-width: 600px) {
-  ul.navbarMenu li.right,
-  ul.navbarMenu li.liNavBar,
-  ul.navbarMenu li.dropdown2 {display: none;}
-    ul.navbarMenu a.icon {display: inline-block}
-    ul.responsive li.liNavBar,
-    ul.responsive li.right,
-    ul.responsive li.dropdown2 {float: none; display: inline-block}
+    ul.navbarMenu {
+        display: none;
+    }
+    .menuMobile {
+        display: block;
+    }
 }
 
-i.fa-bars{
+i.fa-bars {
     /*soit une fleche*/
     color: #bdbd00;
 }
 
 
+#my-menu{
+    background-color: black;
+    color: #fff;
+    text-align:center;
+    width: 250px;
+}
+#my-menu label{
+    cursor:pointer;
+}
+/* le bloc n'est pas visible lorsque la checkbox n'est pas cochée */
+#my-block{
+    display: none;
+    line-height:100px;
+    border: 1px dotted #fff;
+    margin:2px;
+}
+/* le bloc est visible lorsque la checkbox est cochée */
+#toggle-block:checked + #my-block{
+   display: block;
+}
+
+
 /*feuille visite*/
 
-form.formVisite p{
+form.formVisite p {
     display: block;
 }
 
-ul#id_conditionClimatique{
+ul#id_conditionClimatique {
     display: inline-block;
 }
 
-ul#id_conditionClimatique li{
+ul#id_conditionClimatique li {
     display: inline-block;
 }
 

@@ -12,6 +12,8 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 <ul class="navbarMenu">
@@ -19,24 +21,8 @@
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
     <li class="liNavBar"><a href="informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
-    <li class="dropdown2">
-        <div class="dropbtn">Gestion Ruchers &#9662</div><!--
-        --><div class="dropdown-content">
-            <a class="active" href="afficherRuchers">Afficher Ruchers</a>
-            <a href="ajouterRucher">Ajouter Rucher</a>
-            <a href="modifierRuchers">Modifier Rucher</a>
-            <a href="supprimerRuchers">Supprimer Rucher</a>
-        </div>
-    </li><!--
-    --><li class="dropdown2">
-        <div class="dropbtn">Gestion Colonies &#9662</div><!--
-        --><div class="dropdown-content">
-            <a href="afficherColonies">Afficher Colonies</a>
-            <a href="ajouterColonie">Ajouter Colonie</a>
-            <a href="modifierColonies">Modifier Colonie</a>
-            <a href="supprimerColonies">Supprimer Colonie</a>
-        </div>
-    </li>
+    <li class="liNavBar"><a class="active" href="afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
     {% if user.is_superuser %}
@@ -50,6 +36,7 @@
     <li class="right liNavBar"><a href="inscription">Inscription</a></li>
     {% endif %}
 </ul>
+{% include "../../Nav/navigation.html" %}
 <div>
     <h2>Feuilles de visites</h2>
     {% if user.is_authenticated %}
