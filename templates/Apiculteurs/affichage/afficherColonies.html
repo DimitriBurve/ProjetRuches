@@ -38,19 +38,23 @@
 <div>
     <h2>Colonies</h2>
     {% if user.is_authenticated %}
-    <div class="table-responsive" style="padding-right: 15%">
+    <div class="table-responsive" style="padding-right: 10%">
         <table class="table table-hover" style="text-align: center">
             <tr>
+                <th>Etat</th>
                 <th>Identification</th>
                 <th>Rucher</th>
                 <th>Type de Ruche</th>
                 <th>Nombre de cadres</th>
                 <th>Date Création</th>
                 <th>Dernière Remarque</th>
+                <th>Actions</th>
+                <th>QR Code</th>
             </tr>
             {% for colonie in colonies %}
             {% if colonie.rucher.user == user or user.is_staff%}
             <tr>
+                <td style="vertical-align: middle">Vert</td>
                 <td style="vertical-align: middle">{{ colonie.nom }}</td>
                 <td style="vertical-align: middle">{{ colonie.rucher }}</td>
                 <td style="vertical-align: middle">{{ colonie.type }}</td>
@@ -60,19 +64,27 @@
                 <td style="vertical-align: middle; width: 350px">
                     <form id="formDetails" method="get" style="display: inline-block"
                           action="{% url 'afficherColonieId' colonie.id %}">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
+                        <button type="submit" class="btn btn-primary m-0">
+                            <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                        </button>
                     </form>
 
                     <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
+                        <button type="submit" class="btn btn-primary m-0">
+                            <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                        </button>
                     </form>
 
                     <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
                           action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
+                        <button type="submit" class="btn btn-danger m-0">
+                            <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                        </button>
                     </form>
-                    <a href="{% url 'afficherQR' colonie.id %}"> QR Code</a>
+                </td>
+                <td>
+                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
                 </td>
             </tr>
             {% endif %}
