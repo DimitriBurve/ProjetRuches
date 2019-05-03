@@ -504,8 +504,14 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
 
 
 class FeuilleVisiteApresNotesForm(ModelForm):
+    ETAT_CHOICES = [
+        ('Normal', 'Normal'),
+        ('A surveiller', 'A surveiller'),
+        ('Critique', 'Critique')
+    ]
     notes = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
+    etatColonie = forms.CharField(widget=forms.RadioSelect(choices=ETAT_CHOICES))
 
     class Meta:
         model = FeuilleVisite
-        fields = ['notes']
+        fields = ['notes', 'etatColonie']

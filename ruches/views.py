@@ -322,7 +322,32 @@ def afficherColonieId(request, c_id):
 
 def afficherColonies(request):
     colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/affichage/afficherColonies.html', {'colonies': colonies})
+    etatFeuilles = []
+    feuilles = []
+    for c in colonies:
+        feuillesObj = FeuilleVisite.objects.all().filter(colonie=c)
+        feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+        for f in feuillesObj:
+            feuilles.append(f)
+            break
+
+    test = False
+    etat = ''
+    for c in colonies:
+        for f in feuilles:
+
+            if f.colonie == c:
+                test = True
+                etat = f.etatColonie
+                break
+            else:
+                test = False
+        if test:
+            etatFeuilles.append({'colonie': c, 'etat': etat})
+        else:
+            etatFeuilles.append({'colonie': c, 'etat': 'rien'})
+    print(etatFeuilles)
+    return render(request, 'Apiculteurs/affichage/afficherColonies.html', {'colonies': colonies, 'etatColonie': etatFeuilles})
 
 
 def affichercoloniesRucher(request, rucher):

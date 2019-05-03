@@ -11,9 +11,15 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.css" />
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
@@ -44,58 +50,88 @@
 <div>
     <h2>Colonies</h2>
     {% if user.is_authenticated %}
-    <div class="table-responsive" style="padding-right: 10%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Etat</th>
-                <th>Identification</th>
-                <th>Rucher</th>
-                <th>Type de Ruche</th>
-                <th>Nombre de cadres</th>
-                <th>Date Création</th>
-                <th>Dernière Remarque</th>
-                <th>Actions</th>
-                <th>QR Code</th>
-            </tr>
-            {% for colonie in colonies %}
-            {% if colonie.rucher.user == user or user.is_staff%}
-            <tr>
-                <td style="vertical-align: middle">Vert</td>
-                <td style="vertical-align: middle">{{ colonie.nom }}</td>
-                <td style="vertical-align: middle">{{ colonie.rucher }}</td>
-                <td style="vertical-align: middle">{{ colonie.type }}</td>
-                <td style="vertical-align: middle">{{ colonie.nombre_de_cadres }}</td>
-                <td style="vertical-align: middle">{{ colonie.date }}</td>
-                <td style="vertical-align: middle; width: 550px">{{ colonie.remarque }}</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form id="formDetails" method="get" style="display: inline-block"
-                          action="{% url 'afficherColonieId' colonie.id %}">
-                        <button type="submit" class="btn btn-primary m-0">
-                            <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
-                        </button>
-                    </form>
+    <div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+                <div class="table100 ver5 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1">Etat</th>
+                                <th class="cell100 column2">Identification</th>
+                                <th class="cell100 column3">Rucher</th>
+                                <th class="cell100 column4">Type de Ruche</th>
+                                <th class="cell100 column5">Nombre de cadres</th>
+                                <th class="cell100 column6">Date création</th>
+                                <th class="cell100 column7">Dernière remarque</th>
+                                <th class="cell100 column8">Actions</th>
+                                <th class="cell100 column9">QR Code</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll">
+                        <table>
+                            <tbody>
+                            {% for colonie in colonies %}
+                            {% if colonie.rucher.user == user or user.is_staff%}
+                            <tr class="row100 body">
+                                <td class="cell100 column1">
+                                    {% for etat in etatColonie %}
+                                    {% if etat.colonie == colonie %}
+                                    {% if etat.etat == 'Critique' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
+                                    {% elif etat.etat == 'Normal' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
+                                    {% elif etat.etat == 'A surveiller' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
+                                    {% else %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="cell100 column2">{{ colonie.nom }}</td>
+                                <td class="cell100 column3">{{ colonie.rucher }}</td>
+                                <td class="cell100 column4">{{ colonie.type }}</td>
+                                <td class="cell100 column5">{{ colonie.nombre_de_cadres }}</td>
+                                <td class="cell100 column6">{{ colonie.date }}</td>
+                                <td class="cell100 column7">{{ colonie.remarque }}</td>
+                                <td class="cell100 column8">
+                                    <form id="formDetails" method="get" style="display: inline-block"
+                                      action="{% url 'afficherColonieId' colonie.id %}">
+                                    <button type="submit" class="btn btn-primary m-0">
+                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                    </button>
+                                </form>
 
-                    <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
-                        <button type="submit" class="btn btn-primary m-0">
-                            <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
-                        </button>
-                    </form>
+                                <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
+                                    <button type="submit" class="btn btn-primary m-0">
+                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                    </button>
+                                </form>
 
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">
-                            <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
-                        </button>
-                    </form>
-                </td>
-                <td>
-                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
-                </td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-        </table>
+                                <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                                      action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger m-0">
+                                        <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                    </button>
+                                </form>
+                                </td>
+                                <td class="cell100 column9">
+                                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {% else %}
     <p>You are not logged</p>
@@ -111,5 +147,16 @@
         }
     }
 </script>
+<script>
+		$('.js-pscroll').each(function(){
+			var ps = new PerfectScrollbar(this);
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+
+
+	</script>
 </body>
 </html>

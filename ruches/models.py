@@ -217,6 +217,7 @@ class FeuilleVisite(models.Model):
     nombreHausseRecolte = models.IntegerField(null=True)
 
     notes = models.CharField(max_length=1024, null=True)
+    etatColonie = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return str("Visite sur {} {} {} le {}".format(self.rucher, self.colonie, self.typeRuche, self.date))
