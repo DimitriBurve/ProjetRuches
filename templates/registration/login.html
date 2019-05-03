@@ -22,12 +22,18 @@
     <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
     <li class="liNavBar"><a href="/afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
-    <li class="right liNavBar"><a href="/monCompte">Mon Compte</a></li>
+    <li class="right liNavBar" style="height: 52px">
+        <a href="/monCompte" style="padding-top: 0">
+            {% if user.is_superuser %}
+            <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
+            {% else %}
+            <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }}</p>
+            {% endif %}
+            Mon Compte
+        </a>
+    </li>
     {% if user.is_superuser %}
     <li class="right liNavBar"><a href="/showUsersAdmin">Administration</a></li>
-    <li class="right liNavBar">Bonjour {{ user.username }} (superuser)</li>
-    {% else %}
-    <li class="right liNavBar">Bonjour {{ user.username }}</li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a class="active" href="{% url 'login' %}">Connexion</a></li>
