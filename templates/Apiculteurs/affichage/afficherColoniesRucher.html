@@ -14,6 +14,10 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="/home">Accueil</a></li>
     <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
@@ -42,48 +46,111 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Colonies</h2>
+    <h2 style="color: #1C5F90">Colonies</h2>
     {% if user.is_authenticated %}
-    <div class="table-responsive" style="padding-right: 15%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Identification</th>
-                <th>Rucher</th>
-                <th>Type de Ruche</th>
-                <th>Nombre de cadres</th>
-                <th>Date Création</th>
-                <th>Dernière Remarque</th>
-            </tr>
-            {% for colonie in colonies %}
-            {% if colonie.rucher.nom == rucher %}
-            <tr>
-                <td style="vertical-align: middle">{{ colonie.nom }}</td>
-                <td style="vertical-align: middle">{{ colonie.rucher }}</td>
-                <td style="vertical-align: middle">{{ colonie.type }}</td>
-                <td style="vertical-align: middle">{{ colonie.nombre_de_cadres }}</td>
-                <td style="vertical-align: middle">{{ colonie.date }}</td>
-                <td style="vertical-align: middle; width: 350px">{{ colonie.remarque }}</td>
-                <td style="vertical-align: middle; width: 150px"></td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form id="formDetails" method="get" style="display: inline-block"
-                          action="#">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
-                    </form>
+    <div>
+        <div style="padding-left: 8%">
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/green_circle.png' %}">
+            <p style="display:inline-block; padding-right: 15px">: Bonne santé</p>
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/orange_circle.png' %}">
+            <p style="display:inline-block; padding-right: 15px">: A surveiller</p>
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/red_circle.png' %}">
+            <p style="display:inline-block; padding-right: 15px">: Critique</p>
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/interrogation.png' %}">
+            <p style="display:inline-block;">: Aucune Information</p>
+        </div>
+    </div>
+    <div style="position: relative">
+        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
+                <button type="submit" class="btn btn-primary m-0" style="position: absolute; right: 12%; top: 0;">
+                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+    </div>
+    <br>
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100 ver5 m-b-100">
+                    <div class="table100-head">
+                        <table>
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1">Etat</th>
+                                <th class="cell100 column2">Identification</th>
+                                <th class="cell100 column3">Rucher</th>
+                                <th class="cell100 column4">Type de Ruche</th>
+                                <th class="cell100 column5">Nombre de cadres</th>
+                                <th class="cell100 column6">Date création</th>
+                                <th class="cell100 column7">Dernière remarque</th>
+                                <th class="cell100 column8">Actions</th>
+                                <th class="cell100 column9">QR Code</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll">
+                        <table>
+                            <tbody>
+                            {% for colonie in colonies %}
+                            {% if colonie.rucher.nom == rucher %}
+                            <tr>
+                                <td class="cell100 column1">
+                                    {% for etat in etatColonie %}
+                                    {% if etat.colonie == colonie %}
+                                    {% if etat.etat == 'Critique' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
+                                    {% elif etat.etat == 'Normal' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
+                                    {% elif etat.etat == 'A surveiller' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
+                                    {% else %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="cell100 column2">{{ colonie.nom }}</td>
+                                <td class="cell100 column3">{{ colonie.rucher }}</td>
+                                <td class="cell100 column4">{{ colonie.type }}</td>
+                                <td class="cell100 column5">{{ colonie.nombre_de_cadres }}</td>
+                                <td class="cell100 column6">{{ colonie.date }}</td>
+                                <td class="cell100 column7">{{ colonie.remarque }}</td>
+                                <td class="cell100 column8">
+                                    <form id="formDetails" method="get" style="display: inline-block"
+                                      action="{% url 'afficherColonieId' colonie.id %}">
+                                    <button type="submit" class="btn btn-primary m-0">
+                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                    </button>
+                                </form>
 
-                    <form id="formModif" method="get" style="display: inline-block">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
-                    </form>
+                                <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
+                                    <button type="submit" class="btn btn-primary m-0">
+                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                    </button>
+                                </form>
 
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
-                    </form>
-                </td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-        </table>
+                                <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                                      action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger m-0">
+                                        <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                    </button>
+                                </form>
+                                </td>
+                                <td class="cell100 column9">
+                                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {% else %}
     <p>You are not logged</p>

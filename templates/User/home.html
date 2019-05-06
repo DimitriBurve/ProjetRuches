@@ -16,6 +16,11 @@
 
 </head>
 <body>
+
+<div style="text-align: center">
+    {% include "../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu" id="mynavbarMenu">
     <li class="liNavBar"><a class="active" href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
@@ -44,12 +49,28 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <p>Accueil</p>
-    {% if user.is_authenticated %}
-    Hi {{ user.username }}!
-    {% else %}
-    <p>You are not logged</p>
-    {% endif %}
+    <div style="display: inline-block; width: 59%">
+        <img style="width: 100%" src="{% static 'ProjetRuches/images/Capture.png' %}" alt="image abeille">
+    </div>
+    <div style="display: inline-block; width: 35%; position: absolute">
+        <p style="position: relative; top: 160px; left: 20%; font-size: 45px; font-family: 'Avenir Next', sans-serif; color: #1C5F90">Bienvenue sur la gestion des ruches</p>
+        <div style="position: relative; top: 200px; left: 20%; width: 100%">
+            <p style="width: 80%; font-family: 'Avenir Next', sans-serif; color: #1C5F90">
+                Quam ob rem vita quidem talis fuit vel fortuna vel
+                gloria, ut nihil posset accedere, moriendi autem
+                sensum celeritas abstulit; quo de genere mortis
+                di cile dictu est; quid homines suspicentur, videtis;
+                hoc vere tamen licet dicere, P. Scipioni ex multis
+                diebus, quos in vita celeberrimos laetissimosque
+                viderit, illum diem clarissimum fuisse, cum senatu
+                dimisso domum reductus ad vesperum est a patribus
+                conscriptis, populo Romano, sociis et Latinis, pridie
+                quam excessit e vita, ut ex tam alto dignitatis gradu ad
+                superos videatur deos potius quam ad inferos
+                pervenisse.
+            </p>
+        </div>
+    </div>
 </div>
 <script>
 function myFunction() {

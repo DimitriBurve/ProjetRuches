@@ -12,6 +12,10 @@ ul.navbarMenu {
 
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
 
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
 li.liNavBar {
@@ -88,6 +92,9 @@ li.dropdown2 {
 
 @media screen and (max-width: 600px) {
     ul.navbarMenu {
+        display: none;
+    }
+    .imgTop {
         display: none;
     }
     .menuMobile {
@@ -391,4 +398,20 @@ th, td {
 
 .table100.ver5 .ps__rail-y .ps__thumb-y::before {
   background-color: #cccccc;
+}
+
+
+/*-------------------------------------------------------*/
+
+h2 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5%;
+    color: #1C5F90;
+}
+
+.divTitre {
+    padding-left: 8%;
+    padding-top: 50px;
+    padding-bottom: 8px;
 }

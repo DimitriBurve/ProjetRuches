@@ -298,10 +298,53 @@ def render_png_to_pdf(request, c_id):
 
 
 def afficherColonieId(request, c_id):
+    nourrissementsObj = Nourrissement.objects.all()
+    peseesObj = Pesee.objects.all()
+    recoltesObj = Recolte.objects.all()
+    traitementsObj = Traitement.objects.all()
+
+    for n in nourrissementsObj:
+        if n.typeNourrissement is None:
+            n.delete()
+
+    for p in peseesObj:
+        if p.poids is None:
+            p.delete()
+
+    for r in recoltesObj:
+        if r.produitRecolte is None:
+            r.delete()
+
+    for t in traitementsObj:
+        if t.maladie is None:
+            t.delete()
+
     colonie = Colonie.objects.get(pk=c_id)
 
     feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonie)
     feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+
+    etatFeuilles = []
+    feuilles = []
+
+    for f in feuillesObj:
+        feuilles.append(f)
+        break
+
+    test = False
+    etat = ''
+
+    for f in feuilles:
+        if f.colonie == colonie:
+            test = True
+            etat = f.etatColonie
+            break
+        else:
+            test = False
+    if test:
+        etatFeuilles.append({'colonie': colonie, 'etat': etat})
+    else:
+        etatFeuilles.append({'colonie': colonie, 'etat': 'rien'})
 
     nourrissementsObj = Nourrissement.objects.all().filter(colonie=colonie)
     nourrissementsObj = sorted(nourrissementsObj, key=lambda a: a.date, reverse=True)
@@ -315,9 +358,12 @@ def afficherColonieId(request, c_id):
     peseesObj = Pesee.objects.all().filter(colonie=colonie)
     peseesObj = sorted(peseesObj, key=lambda a: a.date, reverse=True)
 
+    print(etatFeuilles)
+
     return render(request, 'Apiculteurs/affichage/afficherColonieId.html',
                   {'c': colonie, 'feuilles': feuillesObj, 'nourri': nourrissementsObj,
-                   'trait': traitementsObj, 'recoltes': recoltesObj, 'pesees': peseesObj})
+                   'trait': traitementsObj, 'recoltes': recoltesObj, 'pesees': peseesObj,
+                   'etatColonie': etatFeuilles})
 
 
 def afficherColonies(request):
@@ -346,63 +392,48 @@ def afficherColonies(request):
             etatFeuilles.append({'colonie': c, 'etat': etat})
         else:
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
-    print(etatFeuilles)
-    return render(request, 'Apiculteurs/affichage/afficherColonies.html', {'colonies': colonies, 'etatColonie': etatFeuilles})
+
+    colonies = sorted(colonies, key=lambda a: a.rucher.nom)
+
+    return render(request, 'Apiculteurs/affichage/afficherColonies.html',
+                  {'colonies': colonies, 'etatColonie': etatFeuilles})
 
 
 def affichercoloniesRucher(request, rucher):
     colonies = Colonie.objects.all()
+    etatFeuilles = []
+    feuilles = []
+    for c in colonies:
+        feuillesObj = FeuilleVisite.objects.all().filter(colonie=c)
+        feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+        for f in feuillesObj:
+            feuilles.append(f)
+            break
+
+    test = False
+    etat = ''
+    for c in colonies:
+        for f in feuilles:
+
+            if f.colonie == c:
+                test = True
+                etat = f.etatColonie
+                break
+            else:
+                test = False
+        if test:
+            etatFeuilles.append({'colonie': c, 'etat': etat})
+        else:
+            etatFeuilles.append({'colonie': c, 'etat': 'rien'})
+    print(etatFeuilles)
+
     return render(request, 'Apiculteurs/affichage/afficherColoniesRucher.html',
-                  {'colonies': colonies, 'rucher': rucher})
-
-
-def afficherNourrissement(request):
-    nourrissementsObj = Nourrissement.objects.all()
-    nourrissements = []
-    for n in nourrissementsObj:
-        if n.typeNourrissement is None:
-            n.delete()
-        else:
-            nourrissements.append(n)
-    return render(request, 'Apiculteurs/affichage/afficherNourrissements.html', {'nourrissements': nourrissements})
-
-
-def afficherPesees(request):
-    peseesObj = Pesee.objects.all()
-    pesees = []
-    for p in peseesObj:
-        if p.poids is None:
-            p.delete()
-        else:
-            pesees.append(p)
-    return render(request, 'Apiculteurs/affichage/afficherPesees.html', {'pesees': pesees})
-
-
-def afficherRecoltes(request):
-    recoltesObj = Recolte.objects.all()
-    recoltes = []
-    for r in recoltesObj:
-        if r.produitRecolte is None:
-            r.delete()
-        else:
-            recoltes.append(r)
-    return render(request, 'Apiculteurs/affichage/afficherRecoltes.html', {'recoltes': recoltes})
+                  {'colonies': colonies, 'rucher': rucher, 'etatColonie': etatFeuilles})
 
 
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
     return render(request, 'Apiculteurs/affichage/afficherRuchers.html', {'ruchers': ruchers})
-
-
-def afficherTraitement(request):
-    traitementsObj = Traitement.objects.all()
-    traitements = []
-    for t in traitementsObj:
-        if t.maladie is None:
-            t.delete()
-        else:
-            traitements.append(t)
-    return render(request, 'Apiculteurs/affichage/afficherTraitements.html', {'traitements': traitements})
 
 
 def ajouterColonie(request):
@@ -437,7 +468,7 @@ def ajouterNourrissement(request, rucher, colonie):
         nourrissementForm = NourrissementForm(request.POST, instance=obj)
         if nourrissementForm.is_valid():
             nourrissementForm.save()
-            return redirect('afficherNourrissement')
+            return redirect('afficherColonieId', colonieObj.id)
     else:
         obj = Nourrissement.objects.create(colonie=colonieObj)
         nourrissementForm = NourrissementForm(instance=obj)

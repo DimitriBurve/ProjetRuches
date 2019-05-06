@@ -14,6 +14,9 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
@@ -42,67 +45,99 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Ruchers</h2>
+    <h2 style="color: #1C5F90">Ruchers</h2>
     {% if user.is_authenticated %}
-    <div class="table-responsive" style="padding-right: 20%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Nom</th>
-                <th>localisation</th>
-                <th>Propriétaire</th>
-            </tr>
-            {% for rucher in ruchers %}
-            {% for u in rucher.user.all %}
-            {% if u == user %}
-            <tr>
-                <td style="vertical-align: middle">{{ rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
-                <td style="vertical-align: middle">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form id="formDetails" method="get" style="display: inline-block"
-                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
-                    </form>
+    <div style="position: relative">
+        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterRucher' %}">
+                <button type="submit" class="btn btn-primary m-0" style="position: absolute; right: 12%; top: 0;">
+                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+    </div>
+    <br>
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100 ver5 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column2">Nom</th>
+                                <th class="cell100 column8">localisation</th>
+                                <th class="cell100 column2">Propriétaire(s)</th>
+                                <th class="cell100 column8">Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll">
+                        <table>
+                            <tbody>
+                            {% for rucher in ruchers %}
+                            {% for u in rucher.user.all %}
+                            {% if u == user %}
+                            <tr class="row100 body">
+                                <td class="cell100 column2">{{ rucher.nom }}</td>
+                                <td class="cell100 column8">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
+                                <td class="cell100 column2">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
+                                <td class="cell100 column8">
+                                    <form id="formDetails" method="get" style="display: inline-block"
+                                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
+                                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
+                                    </form>
 
-                    <form id="formModif" method="get" style="display: inline-block">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
-                    </form>
+                                    <form id="formModif" method="get" style="display: inline-block">
+                                        <button type="submit" class="btn btn-warning m-0">modifier</button>
+                                    </form>
 
-                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerRucher' rucher.nom %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
-                    </form>
-                </td>
-            </tr>
-            {% endif %}
-            {% endfor %}
+                                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
+                                          action="{% url 'validSupprimerRucher' rucher.nom %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
 
-            {% if user.is_staff%}
-            <tr>
-                <td style="vertical-align: middle">{{ rucher.nom }}</td>
-                <td style="vertical-align: middle">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
-                <td style="vertical-align: middle">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form id="formDetailsA" method="get" style="display: inline-block"
-                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
-                    </form>
+                            {% if user.is_staff%}
+                            <tr class="row100 body">
+                                <td class="cell100 column2">{{ rucher.nom }}</td>
+                                <td class="cell100 column8">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
+                                <td class="cell100 column2">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
+                                <td class="cell100 column8">
+                                    <form id="formDetailsA" method="get" style="display: inline-block"
+                                          action="{% url 'afficherColoniesRucher' rucher.nom %}">
+                                        <button type="submit" class="btn btn-primary m-0">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                        </button>
+                                    </form>
 
-                    <form id="formModifA" method="get" style="display: inline-block">
-                        <button type="submit" class="btn btn-warning m-0">modifier</button>
-                    </form>
+                                    <form id="formModifA" method="get" style="display: inline-block">
+                                        <button type="submit" class="btn btn-primary m-0">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                        </button>
+                                    </form>
 
-                    <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                          action="{% url 'validSupprimerRucher' rucher.nom %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
-                    </form>
-                </td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-        </table>
+                                    <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
+                                          action="{% url 'validSupprimerRucher' rucher.nom %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger m-0">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {% else %}
     <p>You are not logged</p>

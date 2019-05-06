@@ -14,6 +14,10 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="/home">Accueil</a></li>
     <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
@@ -43,259 +47,406 @@
 {% include "../../Nav/navigation.html" %}
 <div>
     {% if user.is_authenticated %}
-    <h2>Colonie {{c.nom}} {{c.rucher}} </h2>
+    <h2 style="color: #1C5F90">Colonie {{c.nom}} {{c.rucher}} </h2>
     <div>
-        <h4>Infos</h4>
+        <div class="divTitre" style="padding-top: 20px">
+            <h4 style="color: #1C5F90; display: inline-block;">Etat :</h4>
+            {% for etat in etatColonie %}
+            {% if etat.colonie == c %}
+            {% if etat.etat == 'Critique' %}
+            <img style="width: 30px; height: 30px; display: inline-block" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
+            {% elif etat.etat == 'Normal' %}
+            <img style="width: 30px; height: 30px; display: inline-block" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
+            {% elif etat.etat == 'A surveiller' %}
+            <img style="width: 30px; height: 30px; display: inline-block" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
+            {% else %}
+            <img style="width: 30px; height: 30px; display: inline-block" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="divTitre" style="padding-top: 20px">
+            <h4 style="color: #1C5F90;">Infos</h4>
+        </div>
         {% if c %}
-        <div class="table-responsive" style="padding-right: 15%">
-            <table class="table table-hover" style="text-align: center">
-                <tr>
-                    <th>Identification</th>
-                    <th>Rucher</th>
-                    <th>Type de Ruche</th>
-                    <th>Nombre de cadres</th>
-                    <th>Date Création</th>
-                    <th>Dernière Remarque</th>
-                </tr>
-                {% for u in c.rucher.user.all %}
-                {% if u == user %}
-                <tr>
-                    <td style="vertical-align: middle">{{ c.nom }}</td>
-                    <td style="vertical-align: middle">{{ c.rucher }}</td>
-                    <td style="vertical-align: middle">{{ c.type }}</td>
-                    <td style="vertical-align: middle">{{ c.nombre_de_cadres }}</td>
-                    <td style="vertical-align: middle">{{ c.date }}</td>
-                    <td style="vertical-align: middle; width: 550px">{{ c.remarque }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                {% if user.is_staff %}
-                <tr>
-                    <td style="vertical-align: middle">{{ c.nom }}</td>
-                    <td style="vertical-align: middle">{{ c.rucher }}</td>
-                    <td style="vertical-align: middle">{{ c.type }}</td>
-                    <td style="vertical-align: middle">{{ c.nombre_de_cadres }}</td>
-                    <td style="vertical-align: middle">{{ c.date }}</td>
-                    <td style="text-align: justify; width: 550px">{{ c.remarque }}</td>
-                </tr>
-                {% endif %}
-            </table>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver5 m-b-110">
+                        <div class="table100-head">
+                            <table>
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="cell100 column2">Identification</th>
+                                    <th class="cell100 column3">Rucher</th>
+                                    <th class="cell100 column4">Type de Ruche</th>
+                                    <th class="cell100 column5">Nombre de cadres</th>
+                                    <th class="cell100 column6">Date Création</th>
+                                    <th class="cell100 column7">Dernière Remarque</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table100-body js-pscroll">
+                            <table>
+                                <tbody>
+                                {% for u in c.rucher.user.all %}
+                                {% if u == user %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column2">{{ c.nom }}</td>
+                                    <td class="cell100 column3">{{ c.rucher }}</td>
+                                    <td class="cell100 column4">{{ c.type }}</td>
+                                    <td class="cell100 column5">{{ c.nombre_de_cadres }}</td>
+                                    <td class="cell100 column6">{{ c.date }}</td>
+                                    <td class="cell100 column7">{{ c.remarque }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column2">{{ c.nom }}</td>
+                                    <td class="cell100 column3">{{ c.rucher }}</td>
+                                    <td class="cell100 column4">{{ c.type }}</td>
+                                    <td class="cell100 column5">{{ c.nombre_de_cadres }}</td>
+                                    <td class="cell100 column6">{{ c.date }}</td>
+                                    <td class="cell100 column7">{{ c.remarque }}</td>
+                                </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Aucunes infos</p>
+        <p style="padding-left: 5%">Aucunes infos</p>
         {% endif %}
     </div>
     <div>
-        <h4 style="display: inline-block">Feuilles Visite</h4>
-        <form method="get" style="display: inline-block" action="{% url 'createFeuilleVisite' c.rucher c.nom 1 %}">
-            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
-        </form>
+        <div class="divTitre">
+            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Feuilles Visite</h4>
+            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'createFeuilleVisite' c.rucher c.nom 1 %}">
+                <button type="submit" class="btn btn-primary m-0">
+                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+        </div>
         {% if feuilles %}
-        <div class="table-responsive" style="padding-right: 15%">
-            <table class="table table-hover" style="text-align: center">
-                <tr>
-                    <th>date</th>
-                    <th>conditions climatiques</th>
-                    <th>Notes</th>
-                    <th>Télécharger</th>
-                </tr>
-                {% for f in feuilles %}
-                {% for u in c.rucher.user.all %}
-                {% if u == user %}
-                <tr>
-                    <td style="vertical-align: middle">{{ f.date }}</td>
-                    <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
-                    <td style="vertical-align: middle; width: 850px"><p style="max-height: 100px">{{ f.notes}}</p></td>
-                    <td><a href="{% url 'afficherPDF' colonie.id %}"><img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf"></a></td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                {% if user.is_staff %}
-                <tr>
-                    <td style="vertical-align: middle">{{ f.date }}</td>
-                    <td style="vertical-align: middle">{{ f.conditionClimatique }}</td>
-                    <td style="vertical-align: middle; width: 850px"><p style="max-height: 100px">{{ f.notes }}</p></td>
-                    <td><a href="{% url 'afficherPDF' f.id %}"><img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px"></a></td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </table>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver5 m-b-110">
+                        <div class="table100-head">
+                            <table>
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="cell100 column6">date</th>
+                                    <th class="cell100 column8">conditions climatiques</th>
+                                    <th class="cell100 column7">Notes</th>
+                                    <th class="cell100 column8">Télécharger</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table100-body js-pscroll">
+                            <table>
+                                <tbody>
+                                {% for f in feuilles %}
+                                {% for u in c.rucher.user.all %}
+                                {% if u == user %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ f.date }}</td>
+                                    <td class="cell100 column8">{{ f.conditionClimatique }}</td>
+                                    <td class="cell100 column7"><p style="max-height: 100px">{{ f.notes}}</p></td>
+                                    <td class="cell100 column8">
+                                        <a href="{% url 'afficherPDF' colonie.id %}">
+                                            <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf">
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ f.date }}</td>
+                                    <td class="cell100 column8">{{ f.conditionClimatique }}</td>
+                                    <td class="cell100 column7"><p style="max-height: 100px">{{ f.notes }}</p></td>
+                                    <td class="cell100 column8">
+                                        <a href="{% url 'afficherPDF' f.id %}">
+                                        <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px">
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Aucunes feuilles de visite</p>
+        <p style="padding-left: 5%">Aucunes feuilles de visite</p>
         {% endif %}
     </div>
     <div>
-        <h4 style="display: inline-block">Nourrissements</h4>
-        <form method="get" style="display: inline-block" action="{% url 'ajouterNourrissement' c.rucher c.nom %}">
-            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
-        </form>
+        <div class="divTitre">
+            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Nourrissements</h4>
+            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterNourrissement' c.rucher c.nom %}">
+                <button type="submit" class="btn btn-primary m-0">
+                    <img style="width: 20px" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+        </div>
         {% if nourri %}
-        <div class="table-responsive" style="padding-right: 15%">
-            <table class="table table-hover" style="text-align: center">
-                <tr>
-                    <th>date</th>
-                    <th>type nourrissement</th>
-                    <th>type aliment</th>
-                    <th>produit</th>
-                    <th>quantite</th>
-                    <th>Notes</th>
-                </tr>
-                {% for n in nourri %}
-                {% for u in c.rucher.user.all %}
-                {% if u == user %}
-                <tr>
-                    <td style="vertical-align: middle">{{ n.date }}</td>
-                    <td style="vertical-align: middle">{{ n.typeNourrissement }}</td>
-                    <td style="vertical-align: middle">{{ n.typeAliment }}</td>
-                    <td style="vertical-align: middle">{{ n.produit }}</td>
-                    <td style="vertical-align: middle">{{ n.quantite }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ n.note }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                {% if user.is_staff %}
-                <tr>
-                    <td style="vertical-align: middle">{{ n.date }}</td>
-                    <td style="vertical-align: middle">{{ n.typeNourrissement }}</td>
-                    <td style="vertical-align: middle">{{ n.typeAliment }}</td>
-                    <td style="vertical-align: middle">{{ n.produit }}</td>
-                    <td style="vertical-align: middle">{{ n.quantite }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ n.note }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </table>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver5 m-b-110">
+                        <div class="table100-head">
+                            <table>
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="cell100 column6">date</th>
+                                    <th class="cell100 column4">type nourrissement</th>
+                                    <th class="cell100 column4">type aliment</th>
+                                    <th class="cell100 column2">produit</th>
+                                    <th class="cell100 column2">quantite</th>
+                                    <th class="cell100 column7">Notes</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table100-body js-pscroll">
+                            <table>
+                                <tbody>
+                                {% for n in nourri %}
+                                {% for u in c.rucher.user.all %}
+                                {% if u == user %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ n.date }}</td>
+                                    <td class="cell100 column4">{{ n.typeNourrissement }}</td>
+                                    <td class="cell100 column4">{{ n.typeAliment }}</td>
+                                    <td class="cell100 column2">{{ n.produit }}</td>
+                                    <td class="cell100 column2">{{ n.quantite }}</td>
+                                    <td class="cell100 column7">{{ n.note }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ n.date }}</td>
+                                    <td class="cell100 column4">{{ n.typeNourrissement }}</td>
+                                    <td class="cell100 column4">{{ n.typeAliment }}</td>
+                                    <td class="cell100 column2">{{ n.produit }}</td>
+                                    <td class="cell100 column2">{{ n.quantite }}</td>
+                                    <td class="cell100 column7">{{ n.note }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Aucuns nourrissements</p>
+        <p style="padding-left: 5%">Aucuns nourrissements</p>
         {% endif %}
     </div>
     <div>
-        <h4 style="display: inline-block">Traitements</h4>
-        <form method="get" style="display: inline-block" action="{% url 'ajouterTraitement' c.rucher c.nom %}">
-            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
-        </form>
+        <div class="divTitre">
+            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Traitements</h4>
+            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterTraitement' c.rucher c.nom %}">
+                <button type="submit" class="btn btn-primary m-0">
+                    <img style="width: 20px" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+        </div>
         {% if trait %}
-        <div class="table-responsive" style="padding-right: 15%">
-            <table class="table table-hover" style="text-align: center">
-                <tr>
-                    <th>Apiculteur</th>
-                    <th>date</th>
-                    <th>maladie</th>
-                    <th>methode</th>
-                    <th>posologie</th>
-                    <th>remarques</th>
-                </tr>
-                {% for t in trait %}
-                {% for u in c.rucher.user.all %}
-                {% if u == user %}
-                <tr>
-                    <td style="vertical-align: middle">{{ t.api }}</td>
-                    <td style="vertical-align: middle">{{ t.date }}</td>
-                    <td style="vertical-align: middle">{{ t.maladie }}</td>
-                    <td style="vertical-align: middle">{{ t.methode }}</td>
-                    <td style="vertical-align: middle">{{ t.posologie }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ t.remarques }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                {% if user.is_staff %}
-                <tr>
-                    <td style="vertical-align: middle">{{ t.api }}</td>
-                    <td style="vertical-align: middle">{{ t.date }}</td>
-                    <td style="vertical-align: middle">{{ t.maladie }}</td>
-                    <td style="vertical-align: middle">{{ t.methode }}</td>
-                    <td style="vertical-align: middle">{{ t.posologie }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ t.remarques }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </table>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver5 m-b-110">
+                        <div class="table100-head">
+                            <table>
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="cell100 column2">Apiculteur</th>
+                                    <th class="cell100 column6">date</th>
+                                    <th class="cell100 column8">maladie</th>
+                                    <th class="cell100 column2">methode</th>
+                                    <th class="cell100 column2">posologie</th>
+                                    <th class="cell100 column7">remarques</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table100-body js-pscroll">
+                            <table>
+                                <tbody>
+                                {% for t in trait %}
+                                {% for u in c.rucher.user.all %}
+                                {% if u == user %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column2">{{ t.api }}</td>
+                                    <td class="cell100 column6">{{ t.date }}</td>
+                                    <td class="cell100 column8">{{ t.maladie }}</td>
+                                    <td class="cell100 column2">{{ t.methode }}</td>
+                                    <td class="cell100 column2">{{ t.posologie }}</td>
+                                    <td class="cell100 column7">{{ t.remarques }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column2">{{ t.api }}</td>
+                                    <td class="cell100 column6">{{ t.date }}</td>
+                                    <td class="cell100 column8">{{ t.maladie }}</td>
+                                    <td class="cell100 column2">{{ t.methode }}</td>
+                                    <td class="cell100 column2">{{ t.posologie }}</td>
+                                    <td class="cell100 column7">{{ t.remarques }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Aucuns traitements</p>
+        <p style="padding-left: 5%">Aucuns traitements</p>
         {% endif %}
     </div>
     <div>
-        <h4 style="display: inline-block">Récoltes</h4>
-        <form method="get" style="display: inline-block" action="{% url 'ajouterRecolte' c.rucher c.nom %}">
-            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
-        </form>
+        <div class="divTitre">
+            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Récoltes</h4>
+            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterRecolte' c.rucher c.nom %}">
+                <button type="submit" class="btn btn-primary m-0">
+                    <img style="width: 20px" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+        </div>
         {% if recoltes %}
-        <div class="table-responsive" style="padding-right: 15%">
-            <table class="table table-hover" style="text-align: center">
-                <tr>
-                    <th>date</th>
-                    <th>produit recolte</th>
-                    <th>quantite</th>
-                    <th>notes</th>
-                </tr>
-                {% for r in recoltes %}
-                {% for u in c.rucher.user.all %}
-                {% if u == user %}
-                <tr>
-                    <td style="vertical-align: middle">{{ r.date }}</td>
-                    <td style="vertical-align: middle">{{ r.produitRecolte }}</td>
-                    <td style="vertical-align: middle">{{ r.quantite }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ r.note }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                {% if user.is_staff %}
-                <tr>
-                    <td style="vertical-align: middle">{{ r.date }}</td>
-                    <td style="vertical-align: middle">{{ r.produitRecolte }}</td>
-                    <td style="vertical-align: middle">{{ r.quantite }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ r.note }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </table>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver5 m-b-110">
+                        <div class="table100-head">
+                            <table>
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="cell100 column6">date</th>
+                                    <th class="cell100 column2">produit recolte</th>
+                                    <th class="cell100 column2">quantite</th>
+                                    <th class="cell100 column7">notes</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table100-body js-pscroll">
+                            <table>
+                                <tbody>
+                                {% for r in recoltes %}
+                                {% for u in c.rucher.user.all %}
+                                {% if u == user %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ r.date }}</td>
+                                    <td class="cell100 column2">{{ r.produitRecolte }}</td>
+                                    <td class="cell100 column2">{{ r.quantite }}</td>
+                                    <td class="cell100 column7">{{ r.note }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ r.date }}</td>
+                                    <td class="cell100 column2">{{ r.produitRecolte }}</td>
+                                    <td class="cell100 column2">{{ r.quantite }}</td>
+                                    <td class="cell100 column7">{{ r.note }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Aucunes récoltes</p>
+        <p style="padding-left: 5%">Aucunes récoltes</p>
         {% endif %}
     </div>
     <div>
-        <h4 style="display: inline-block">Pesées</h4>
-        <form method="get" style="display: inline-block" action="{% url 'ajouterPesee' c.rucher c.nom %}">
-            <button type="submit" class="btn btn-warning m-0">Ajouter</button>
-        </form>
+        <div class="divTitre">
+            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Pesées</h4>
+            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterPesee' c.rucher c.nom %}">
+                <button type="submit" class="btn btn-primary m-0">
+                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+        </div>
         {% if pesees %}
-        <div class="table-responsive" style="padding-right: 15%">
-            <table class="table table-hover" style="text-align: center">
-                <tr>
-                    <th>date</th>
-                    <th>poids</th>
-                    <th>notes</th>
-                </tr>
-                {% for p in pesees %}
-                {% for u in c.rucher.user.all %}
-                {% if u == user %}
-                <tr>
-                    <td style="vertical-align: middle">{{ p.date }}</td>
-                    <td style="vertical-align: middle">{{ p.poids }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ p.note }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                {% if user.is_staff %}
-                <tr>
-                    <td style="vertical-align: middle">{{ p.date }}</td>
-                    <td style="vertical-align: middle">{{ p.poids }}</td>
-                    <td style="vertical-align: middle; width: 850px">{{ p.note }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </table>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver5 m-b-100">
+                        <div class="table100-head">
+                            <table>
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="cell100 column6">date</th>
+                                    <th class="cell100 column2">poids</th>
+                                    <th class="cell100 column7">notes</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table100-body js-pscroll">
+                            <table>
+                                <tbody>
+                                {% for p in pesees %}
+                                {% for u in c.rucher.user.all %}
+                                {% if u == user %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ p.date }}</td>
+                                    <td class="cell100 column2">{{ p.poids }}</td>
+                                    <td class="cell100 column7">{{ p.note }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">{{ p.date }}</td>
+                                    <td class="cell100 column2">{{ p.poids }}</td>
+                                    <td class="cell100 column7">{{ p.note }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p>Aucunes pesées</p>
+        <p style="padding-left: 5%">Aucunes pesées</p>
         {% endif %}
     </div>
     {% else %}
-    <p>You are not logged</p>
+    <p style="padding-left: 5%">You are not logged</p>
     {% endif %}
 </div>
 

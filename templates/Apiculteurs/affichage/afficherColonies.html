@@ -48,8 +48,29 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Colonies</h2>
+    <h2 style="color: #1C5F90">Colonies</h2>
     {% if user.is_authenticated %}
+    <div>
+        <div style="padding-left: 8%">
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/green_circle.png' %}">
+            <p style="display:inline-block; padding-right: 15px">: Bonne santé</p>
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/orange_circle.png' %}">
+            <p style="display:inline-block; padding-right: 15px">: A surveiller</p>
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/red_circle.png' %}">
+            <p style="display:inline-block; padding-right: 15px">: Critique</p>
+            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/interrogation.png' %}">
+            <p style="display:inline-block;">: Aucune Information</p>
+        </div>
+    </div>
+    <div style="position: relative">
+        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
+                <button type="submit" class="btn btn-primary m-0" style="position: absolute; right: 12%; top: 0;">
+                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                    Ajouter
+                </button>
+            </form>
+    </div>
+    <br>
     <div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
