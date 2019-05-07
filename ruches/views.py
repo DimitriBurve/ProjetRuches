@@ -298,10 +298,12 @@ def render_png_to_pdf(request, c_id):
 
 
 def afficherColonieId(request, c_id):
-    nourrissementsObj = Nourrissement.objects.all()
-    peseesObj = Pesee.objects.all()
-    recoltesObj = Recolte.objects.all()
-    traitementsObj = Traitement.objects.all()
+    colonie = Colonie.objects.get(pk=c_id)
+    nourrissementsObj = Nourrissement.objects.all().filter(colonie=colonie)
+    peseesObj = Pesee.objects.all().filter(colonie=colonie)
+    recoltesObj = Recolte.objects.all().filter(colonie=colonie)
+    traitementsObj = Traitement.objects.all().filter(colonie=colonie)
+    feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonie)
 
     for n in nourrissementsObj:
         if n.typeNourrissement is None:
@@ -319,10 +321,15 @@ def afficherColonieId(request, c_id):
         if t.maladie is None:
             t.delete()
 
-    colonie = Colonie.objects.get(pk=c_id)
+    for f in feuillesObj:
+        if f.notes is None:
+            f.delete()
 
-    feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonie)
     feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+    nourrissementsObj = sorted(nourrissementsObj, key=lambda a: a.date, reverse=True)
+    traitementsObj = sorted(traitementsObj, key=lambda a: a.date, reverse=True)
+    recoltesObj = sorted(recoltesObj, key=lambda a: a.date, reverse=True)
+    peseesObj = sorted(peseesObj, key=lambda a: a.date, reverse=True)
 
     etatFeuilles = []
     feuilles = []
@@ -345,18 +352,6 @@ def afficherColonieId(request, c_id):
         etatFeuilles.append({'colonie': colonie, 'etat': etat})
     else:
         etatFeuilles.append({'colonie': colonie, 'etat': 'rien'})
-
-    nourrissementsObj = Nourrissement.objects.all().filter(colonie=colonie)
-    nourrissementsObj = sorted(nourrissementsObj, key=lambda a: a.date, reverse=True)
-
-    traitementsObj = Traitement.objects.all().filter(colonie=colonie)
-    traitementsObj = sorted(traitementsObj, key=lambda a: a.date, reverse=True)
-
-    recoltesObj = Recolte.objects.all().filter(colonie=colonie)
-    recoltesObj = sorted(recoltesObj, key=lambda a: a.date, reverse=True)
-
-    peseesObj = Pesee.objects.all().filter(colonie=colonie)
-    peseesObj = sorted(peseesObj, key=lambda a: a.date, reverse=True)
 
     print(etatFeuilles)
 
@@ -690,7 +685,20 @@ def createFeuillevisite(request, rucher, colonie, etape):
                 print("1 is valid")
                 form.save()
                 dateForm = form.cleaned_data.get('date')
-                feuille = FeuilleVisite.objects.get(date=dateForm, rucher=rucherObj, colonie=colonieObj)
+                feuillesObj = FeuilleVisite.objects.all().filter(date=dateForm)
+                feuilleObj = None
+                # indice = 0
+                # for f in feuillesObj:
+                #     if indice == 0:
+                #         feuilleObj = f
+                #         indice = 1
+                #     else:
+                #         f.delete()
+
+                # print(feuilleObj)
+                feuille = feuillesObj[len(feuillesObj)-1]
+                print(feuille.conditionClimatique)
+                # feuille = FeuilleVisite.objects.get(date=dateForm, rucher=rucherObj, colonie=colonieObj)
                 print("feuille 2: ", feuille)
                 # obj.delete()
                 etape += 1
@@ -750,9 +758,19 @@ def createFeuillevisite(request, rucher, colonie, etape):
                 if form.is_valid():
                     print("7 is valid")
                     form.save()
+                    etape += 1
+                    print("+1")
             except Exception as e:
                 pass
-        return redirect('createFeuilleVisite', rucher, colonie, etape)
+        if etape != 8:
+            return redirect('createFeuilleVisite', rucher, colonie, etape)
+        else:
+            colonieObj = Colonie.objects.get(nom=colonie, rucher=rucherObj)
+            feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonieObj)
+            for f in feuillesObj:
+                if f.notes is None:
+                    f.delete()
+            return redirect('afficherColonieId', colonieObj.id)
     else:
         form = FeuilleVisiteDebutForm()
         if etape == 1:
@@ -816,7 +834,14 @@ def export_pdf_Feuille(request, f_id):
     fs = FileSystemStorage('/tmp')
     with fs.open('mypdf.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+        date = str(fPDF.date)
+        temp = date.split(' ')
+        print(temp)
+        temp2 = temp[0].split('-')
+        date = str("{}-{}-{}".format(temp2[2], temp2[1], temp2[0]))
+        name = str("visite {}-{}-{}.pdf".format(fPDF.colonie.nom, fPDF.rucher.nom, date))
+        print(name)
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(name)
         return response
 
     return response
@@ -899,4 +924,32 @@ def deleteUserAdmin(request, username):
 @staff_member_required
 def detailsUserAdmin(request, username):
     userEdit = User.objects.get(username=username)
-    return render(request, 'Admin/detailsUserAdmin.html', {'userEdit': userEdit})
+    colonies = Colonie.objects.all()
+    etatFeuilles = []
+    feuilles = []
+    for c in colonies:
+        feuillesObj = FeuilleVisite.objects.all().filter(colonie=c)
+        feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+        for f in feuillesObj:
+            feuilles.append(f)
+            break
+
+    test = False
+    etat = ''
+    for c in colonies:
+        for f in feuilles:
+
+            if f.colonie == c:
+                test = True
+                etat = f.etatColonie
+                break
+            else:
+                test = False
+        if test:
+            etatFeuilles.append({'colonie': c, 'etat': etat})
+        else:
+            etatFeuilles.append({'colonie': c, 'etat': 'rien'})
+
+    colonies = sorted(colonies, key=lambda a: a.rucher.nom)
+
+    return render(request, 'Admin/detailsUserAdmin.html', {'userEdit': userEdit, 'colonies': colonies, 'etatColonie': etatFeuilles})

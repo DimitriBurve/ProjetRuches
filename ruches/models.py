@@ -42,7 +42,7 @@ class Apiculteur(models.Model):
     telephoneAgentSanitaire = models.CharField(max_length=10, default='')
 
     def __str__(self):
-        return self.user
+        return str("{}".format(self.user))
 
 
 class Capteurs(models.Model):

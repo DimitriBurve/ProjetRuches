@@ -15,6 +15,10 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
@@ -43,65 +47,144 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <h2>Mon Compte</h2>
-    <div class="table-responsive" style="padding-right: 20%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Username</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Mail</th>
-            </tr>
-            <tr>
-                <td>{{ user.username }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.email }}</td>
-                <td style="vertical-align: middle; width: 250px">
-                    <form method="get" style="display: inline-block"
-                        action="{% url 'detailsMonCompte' user.id %}">
-                        <button type="submit" class="btn btn-primary btn-lg m-0">Details</button>
-                    </form>
-                    <form id="formModifier" method="get" style="display: inline-block"
-                          action="/modifierMonCompte">
-                        <button type="submit" class="btn btn-warning m-0">Modifier</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+    <h2 style="color: #1C5F90">Mon Compte</h2>
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100 ver5 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="column2">Username</th>
+                                <th class="column2">Nom</th>
+                                <th class="column2">Prenom</th>
+                                <th class="column2">Mail</th>
+                                <th class="column8">Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll">
+                        <table>
+                            <tbody>
+                            <tr class="row100 body">
+                                <td class="cell100 column2">{{ user.username }}</td>
+                                <td class="cell100 column2">{{ user.last_name }}</td>
+                                <td class="cell100 column2">{{ user.first_name }}</td>
+                                <td class="cell100 column2">{{ user.email }}</td>
+                                <td class="cell100 column8">
+                                    <form method="get" style="display: inline-block"
+                                        action="{% url 'detailsMonCompte' user.id %}">
+                                        <button type="submit" class="btn btn-primary m-0">
+                                            <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                        </button>
+                                    </form>
+                                    <form id="formModifier" method="get" style="display: inline-block"
+                                          action="/modifierMonCompte">
+                                        <button type="submit" class="btn btn-primary m-0">
+                                            <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <h3>Mes Colonies</h3>
-    <div class="table-responsive" style="padding-right: 25%">
-        <table class="table table-hover" style="text-align: center">
-            <tr>
-                <th>Colonies N°</th>
-                <th>Dernière Température (°C)</th>
-                <th>Dernière Humidité (%)</th>
-                <th>Dernier Poids (kg)</th>
-            </tr>
-            <tr>
-                <td>42</td>
-                <td>24</td>
-                <td>76</td>
-                <td>17</td>
-                <td style="vertical-align: middle; width: 350px">
-                    <form method="get" style="display: inline-block"
-                          action="#">
-                        <button type="submit" class="btn btn-warning btn-lg m-0">Détails</button>
-                    </form>
-                    <form method="get" style="display: inline-block"
-                          action="#">
-                        <button type="submit" class="btn btn-warning btn-lg m-0">Modifier</button>
-                    </form>
-                    <form method="post" onsubmit="return validateRuche(this)" style="display: inline-block"
-                          action="#">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+    <h2 style="color: #1C5F90">Mes Colonies</h2>
+    {% if colonies %}
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100 ver5 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="cell100 column1">Etat</th>
+                                <th class="cell100 column2">Identification</th>
+                                <th class="cell100 column3">Rucher</th>
+                                <th class="cell100 column4">Type de Ruche</th>
+                                <th class="cell100 column5">Nombre de cadres</th>
+                                <th class="cell100 column6">Date création</th>
+                                <th class="cell100 column7">Dernière remarque</th>
+                                <th class="cell100 column8">Actions</th>
+                                <th class="cell100 column9">QR Code</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll">
+                        <table>
+                            <tbody>
+                            {% for colonie in colonies %}
+                            {% for u in colonie.rucher.user.all %}
+                            {% if u == user %}
+                            <tr class="row100 body">
+                                <td class="cell100 column1">
+                                    {% for etat in etatColonie %}
+                                    {% if etat.colonie == colonie %}
+                                    {% if etat.etat == 'Critique' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
+                                    {% elif etat.etat == 'Normal' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
+                                    {% elif etat.etat == 'A surveiller' %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
+                                    {% else %}
+                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="cell100 column2">{{ colonie.nom }}</td>
+                                <td class="cell100 column3">{{ colonie.rucher }}</td>
+                                <td class="cell100 column4">{{ colonie.type }}</td>
+                                <td class="cell100 column5">{{ colonie.nombre_de_cadres }}</td>
+                                <td class="cell100 column6">{{ colonie.date }}</td>
+                                <td class="cell100 column7">{{ colonie.remarque }}</td>
+                                <td class="cell100 column8">
+                                    <form id="formDetails" method="get" style="display: inline-block"
+                                      action="{% url 'afficherColonieId' colonie.id %}">
+                                    <button type="submit" class="btn btn-primary m-0">
+                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                    </button>
+                                </form>
+
+                                <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
+                                    <button type="submit" class="btn btn-primary m-0">
+                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                    </button>
+                                </form>
+
+                                <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                                      action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger m-0">
+                                        <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                    </button>
+                                </form>
+                                </td>
+                                <td class="cell100 column9">
+                                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    {% else %}
+    <p style="padding-left: 5%">Aucunes colonies</p>
+    {% endif %}
 </div>
 
 <script type="text/javascript">
@@ -113,5 +196,14 @@
         }
     }
 </script>
+<script>
+    $('.js-pscroll').each(function(){
+        var ps = new PerfectScrollbar(this);
+
+        $(window).on('resize', function(){
+            ps.update();
+        })
+    });
+ </script>
 </body>
 </html>

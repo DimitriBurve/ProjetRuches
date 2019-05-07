@@ -100,13 +100,10 @@ li.dropdown2 {
     .menuMobile {
         display: block;
     }
+    .divDate{
+        margin: 0 15px 0 0;
+    }
 }
-
-i.fa-bars {
-    /*soit une fleche*/
-    color: #bdbd00;
-}
-
 
 #my-menu{
     background-color: black;
@@ -127,21 +124,6 @@ i.fa-bars {
 /* le bloc est visible lorsque la checkbox est cochée */
 #toggle-block:checked + #my-block{
    display: block;
-}
-
-
-/*feuille visite*/
-
-form.formVisite p {
-    display: block;
-}
-
-ul#id_conditionClimatique {
-    display: inline-block;
-}
-
-ul#id_conditionClimatique li {
-    display: inline-block;
 }
 
 /*//////////////////////////////////////////////////////////////////
@@ -274,6 +256,11 @@ th, td {
 }
 
 .column9 {
+    text-align: center;
+}
+
+.column10{
+    width: 15%;
     text-align: center;
 }
 
@@ -414,4 +401,79 @@ h2 {
     padding-left: 8%;
     padding-top: 50px;
     padding-bottom: 8px;
+}
+
+/*feuille visite*/
+
+.multipleForm {
+
+}
+
+.container-form {
+    min-width: 50%;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+.bigTitleForm {
+    background-color: #ececec;
+    margin: 0;
+    text-align: center;
+    color: #1C5F90;
+    font-size: 20pt;
+    padding: 5% 50px 5%;
+}
+
+.titleForm {
+    border-radius: 5px;
+    overflow: hidden;
+    color: #1C5F90;
+    background-color: white;
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
+    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
+    -o-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
+    -ms-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
+}
+
+.subTitleForm {
+    display: inline-block;
+}
+
+.formVisite {
+    text-align: center;
+    padding-top: 5%;
+}
+
+form.formVisite p {
+    display: block;
+}
+
+ul#id_conditionClimatique {
+    text-align: justify;
+    padding-left: 45%;
+}
+
+.divDate {
+    margin-left: 40%;
+}
+
+.titleForm ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.titleForm ul li {
+    width: 50%;
+}
+
+.btnFormSuivant {
+
 }

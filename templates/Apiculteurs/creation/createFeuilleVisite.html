@@ -29,6 +29,10 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="/home">Accueil</a></li>
     <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
@@ -57,36 +61,60 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Feuille visite</h2>
-    <form class="formVisite" method="post">
-        {% csrf_token %}
-
-        {% if etape == 1 %}
-        <p>Rucher : </p> {{ rucher }}
-        <br>
-        <p>Colonie : </p> {{ colonie }}
-        <br>
-        <p style="display: inline-block">Date : </p>
-            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                {{ form.date }}
-                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    <h2 style="color: #1C5F90;">Colonie {{colonie}} {{rucher}} </h2>
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm">Nouvelle Feuille de Visite</p>
+                <div class="titleForm">
+                    {% if etape == 1 %}
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true">
+                            <p style="text-align: center">Infos pricipales</p>
+                        </li>
+                        <li>
+                            <p style="text-align: center">Infos complémentaires</p>
+                        </li>
+                    </ul>
+                    {% endif %}
                 </div>
+                <form class="formVisite" method="post">
+                    {% csrf_token %}
+
+                    {% if etape == 1 %}
+                    <div style="display:inline-block; padding-right: 20px">
+                        <p style="display: inline-block;">Rucher : </p> {{ rucher }}
+                    </div>
+                    <div style="display: inline-block; padding-left: 20px">
+                        <p style="display:inline-block;">Colonie : </p> {{ colonie }}
+                    </div>
+                    <p>Date : </p>
+                    <div class="divDate">
+                        <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px;">
+                            {{ form.date }}
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <p>Condition climatique :</p>{{ form.conditionClimatique }}
+                    <br>
+                    <button type="submit" class="btn btn-primary btnFormSuivant">Suivant</button>
+                    {% else %}
+                    {% if etape < 16 %}
+                    {{ form.as_p }}
+                    <a href="javascript:history.back()" class="btn btn-warning btnFormPrec">Précédent</a>
+                    <button type="button" class="btn btn-warning btnFormPrec">Précédent</button>
+                    <button type="submit" class="btn btn-primary btnFormSuivant">Suivant</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-warning btnFormPrec">Précédent</button>
+                    {% endif %}
+                    {% endif %}
+                </form>
             </div>
-        <br>
-        <p>Condition climatique :</p>{{ form.conditionClimatique }}
-        <br>
-        <button type="submit" class="btn btn-primary">Suivant</button>
-        {% else %}
-        {% if etape < 16 %}
-        {{ form.as_p }}
-        <button type="button" class="btn btn-warning">Précédent</button>
-        <button type="submit" class="btn btn-primary">Suivant</button>
-        {% else %}
-        <button type="submit" class="btn btn-warning">Précédent</button>
-        {% endif %}
-        {% endif %}
-    </form>
+        </div>
+    </div>
 </div>
 <script>
     $(function () {
