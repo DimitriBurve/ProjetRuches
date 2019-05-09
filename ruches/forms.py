@@ -43,8 +43,13 @@ class ApiForm(forms.ModelForm):
 
 
 class RucherForm(ModelForm):
+    users = User.objects.all()
+    UsersChoices = []
+    for u in users:
+        UsersChoices.append((u.username, u.username))
     adresseS = forms.CharField(max_length=200, required=False)
     codePostal = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
+    user = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=UsersChoices)
 
     class Meta:
         model = Rucher
@@ -60,6 +65,12 @@ class RucheForm(ModelForm):
             'data-target': '#datetimepicker1'
         })
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user")
+        super(RucheForm, self).__init__(*args, **kwargs)
+        print('user : ', user)
+        self.fields['rucher'] = forms.ChoiceField(choices=[(r.nom, r.nom) for r in Rucher.objects.filter(user=user)])
 
     class Meta:
         model = Colonie
@@ -151,7 +162,6 @@ class FeuilleVisiteDebutForm(ModelForm):
 
 
 class FeuilleVisiteAvantForm(ModelForm):
-
     TRAFIC_CHOICES = [
         ('Fort', 'Fort'),
         ('Normal', 'Normal'),
@@ -173,12 +183,12 @@ class FeuilleVisiteAvantForm(ModelForm):
         widget=forms.RadioSelect(choices=TRAFIC_CHOICES)
     )
 
-    abeillesRentrantPollen = forms.CharField (
+    abeillesRentrantPollen = forms.CharField(
         label="Abeilles rentrant avec du pollen ",
         widget=forms.RadioSelect(choices=RENTRANT_POLLEN_CHOICES)
     )
 
-    abeillesMortesExterieur = forms.CharField (
+    abeillesMortesExterieur = forms.CharField(
         label="Abeilles mortes à l'extérieur ",
         widget=forms.RadioSelect(choices=MORTES_EXTERIEUR_CHOICES)
     )
@@ -298,7 +308,7 @@ class FeuilleVisiteApresReineBourdonsMaladieForm(ModelForm):
         widget=forms.RadioSelect(choices=REINE_PRESENTE_CHOICES)
     )
 
-    reineMarquee = forms.CharField (
+    reineMarquee = forms.CharField(
         label="Reine marquée ",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )
@@ -309,7 +319,7 @@ class FeuilleVisiteApresReineBourdonsMaladieForm(ModelForm):
         required=False,
     )
 
-    presenceCelluleRoyale = forms.CharField (
+    presenceCelluleRoyale = forms.CharField(
         label="Présence cellule Royale ",
         widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
     )

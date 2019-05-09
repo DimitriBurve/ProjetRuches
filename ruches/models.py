@@ -72,7 +72,7 @@ class Colonie(models.Model):
     nom = models.CharField(max_length=200)
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
     type = models.ForeignKey(TypeRuche, on_delete=models.CASCADE)
-    nombre_de_cadres = models.CharField(max_length=20)
+    nombre_de_cadres = models.IntegerField()
     date = models.DateTimeField(default=datetime.datetime.now)
     remarque = models.CharField(max_length=1024, null=True)
 

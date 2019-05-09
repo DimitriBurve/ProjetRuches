@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" http-equiv="Refresh" CONTENT="120; URL={% url 'afficherColonieId' c.id %}">
     <title>Ruches</title>
     <link rel="stylesheet" type="text/css" href="{% static 'ProjetRuches/css/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -163,8 +163,8 @@
                                     <td class="cell100 column8">{{ f.conditionClimatique }}</td>
                                     <td class="cell100 column7"><p style="max-height: 100px">{{ f.notes}}</p></td>
                                     <td class="cell100 column8">
-                                        <a href="{% url 'afficherPDF' colonie.id %}">
-                                            <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf">
+                                        <a href="{% url 'afficherPDF' f.id %}">
+                                            <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px">
                                         </a>
                                     </td>
                                 </tr>
@@ -177,7 +177,7 @@
                                     <td class="cell100 column7"><p style="max-height: 100px">{{ f.notes }}</p></td>
                                     <td class="cell100 column8">
                                         <a href="{% url 'afficherPDF' f.id %}">
-                                        <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px">
+                                            <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px">
                                         </a>
                                     </td>
                                 </tr>

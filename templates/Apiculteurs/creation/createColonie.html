@@ -29,13 +29,17 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
     <li class="liNavBar"><a href="informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
     <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
-    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
+    <li class="liNavBar active"><a href="afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
@@ -57,34 +61,68 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Ajouter Colonie</h2>
+    <h2 style="color: #1C5F90">Ajouter Colonie</h2>
 
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            <p style="display: inline-block">Nom : </p>{{ form.nom }}
-            <br>
-            <p style="display: inline-block">Rucher : </p>{{ form.rucher }}
-            <br>
-            <p style="display: inline-block">Type de Ruche : </p>{{ form.type }}
-            <br>
-            <p style="display: inline-block">Nombre de cadres : </p>{{ form.nombre_de_cadres }}
-            <br>
-            <p style="display: inline-block">Date : </p>
-            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                {{ form.date }}
-                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    {% if user.is_authenticated %}
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm">Ajouter Colonie</p>
+                <div class="titleForm">
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">&nbsp;</p>
+                        </li>
+                    </ul>
                 </div>
+                <form class="formVisite" method="post">
+                    {% csrf_token %}
+                    <div style="margin-left: 25%">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Nom : &nbsp;</div><div style="display: inline-block">{{ form.nom }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Rucher : &nbsp;</div><div style="display: inline-block">{{ form.rucher }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="margin-left: 25%">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Type de Ruche : &nbsp;</div><div style="display: inline-block">{{ form.type }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Nombre de cadres : &nbsp;</div><div style="display: inline-block">{{ form.nombre_de_cadres }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div style="margin-left: 25%; display: inline-block">Date : </div>
+                        <div class="divDate" style="display: inline-block">
+                            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                {{ form.date }}
+                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div style="display: inline-block; margin-left: 25%">Remarques : </div>
+                        <br>
+                        <div style="margin-left: 35%" class="divTextArea">
+                        {{ form.remarque }}
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 45%">Ajouter</button>
+                </form>
             </div>
-            <br>
-            <p style="display: inline-block">Remarques : </p>
-            <br>
-            {{ form.remarque }}
-            <br>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
+        </div>
     </div>
+    {% else %}
+    <p>You are not logged</p>
+    {% endif %}
 </div>
 <script>
     $(function () {

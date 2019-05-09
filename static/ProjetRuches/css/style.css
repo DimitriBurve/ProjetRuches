@@ -100,8 +100,15 @@ li.dropdown2 {
     .menuMobile {
         display: block;
     }
-    .divDate{
+    .divDate {
         margin: 0 15px 0 0;
+    }
+    #id_nom {
+
+    }
+    #id_remarque {
+        width: 200px;
+        height: 100px;
     }
 }
 
@@ -406,7 +413,7 @@ h2 {
 /*feuille visite*/
 
 .multipleForm {
-
+    padding-bottom: 5%;
 }
 
 .container-form {
@@ -446,21 +453,42 @@ h2 {
 }
 
 .formVisite {
-    text-align: center;
+    text-align: justify;
     padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.formFeuille {
+    text-align: justify;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.formVisite ul {
+    list-style-type: none;
+    text-align: justify;
+    padding-left: 45%;
 }
 
 form.formVisite p {
     display: block;
+    text-align: center;
 }
 
 ul#id_conditionClimatique {
     text-align: justify;
     padding-left: 45%;
+    list-style-type: none;
+}
+
+ul#id_attitudeAbeillles {
+    text-align: justify;
+    padding-left: 45%;
+    list-style-type: none;
 }
 
 .divDate {
-    margin-left: 40%;
+    /*margin-left: 20%;*/
 }
 
 .titleForm ul {
@@ -474,6 +502,64 @@ ul#id_conditionClimatique {
     width: 50%;
 }
 
-.btnFormSuivant {
-
+.modif {
+    width: 100%;
 }
+
+
+#id_nom {
+    width: 100px;
+}
+
+#id_nombre_de_cadres {
+    width: 75px;
+}
+
+#id_codePostal {
+    width: 75px;
+}
+
+[type="checkbox"]:checked + label {
+  cursor: pointer;    /* affiche un curseur adapté */
+}
+
+.divChoixUser {
+    max-height: 150px;
+    text-align: left;
+    overflow: scroll;
+}
+
+#id_user {
+    list-style-type: none;
+}
+
+#id_user li {
+    width: max-content;
+    display: block;
+    padding-right: 20px;
+}
+
+#id_user li label {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#id_user li input {
+    cursor: pointer;
+}
+
+#id_user li input:checked {
+    background-color: #1C5F90;
+}
+
+/*#id_attitudeAbeilles ul li {*/
+/*    display: inline-block;*/
+/*}*/

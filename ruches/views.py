@@ -363,6 +363,13 @@ def afficherColonieId(request, c_id):
 
 def afficherColonies(request):
     colonies = Colonie.objects.all()
+
+    feuillesObj = FeuilleVisite.objects.all()
+
+    for f in feuillesObj:
+        if f.notes is None:
+            f.delete()
+
     etatFeuilles = []
     feuilles = []
     for c in colonies:
@@ -447,7 +454,8 @@ def ajouterColonie(request):
             print(form_errors)
     else:
         print("else post")
-        rucheForm = RucheForm()
+        user = request.user
+        rucheForm = RucheForm(user=user)
     return render(request, 'Apiculteurs/creation/createColonie.html',
                   {'form': rucheForm, 'listeRuchers': listeRuchers, 'listeTypesRuche': listeTypesRuche})
 
@@ -547,6 +555,8 @@ def modifierColonieId(request, c_id):
         if form.is_valid():
             form.save()
             return redirect('afficherColonieId', c_id)
+        else:
+            print(form.errors)
     else:
         form = RucheForm(instance=colonie)
         return render(request, 'Apiculteurs/modification/modifierColonieId.html', {'form': form})
