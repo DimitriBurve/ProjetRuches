@@ -377,6 +377,11 @@ class FeuilleVisiteApresNuisibleAutreNourriApportPonctionForm(ModelForm):
         ('Autre', 'Autre'),
     ]
 
+    UNITE_CHOICES = [
+        ('gr', 'gr'),
+        ('L', 'L'),
+    ]
+
     APPORT_CHOICES = [
         ('Rien', 'Rien'),
         ('Miel', 'Miel'),
@@ -415,7 +420,8 @@ class FeuilleVisiteApresNuisibleAutreNourriApportPonctionForm(ModelForm):
         widget=forms.RadioSelect(choices=ALIMENTS_CHOICES)
     )
 
-    quantiteAlimentNourrissement = forms.IntegerField(required=False)
+    quantiteAlimentNourrissement = forms.DecimalField(max_digits=12, decimal_places=3, required=False)
+    uniteNourrissement = forms.ChoiceField(choices=UNITE_CHOICES, required=False)
 
     apport = forms.CharField(
         label="Apport",
@@ -434,7 +440,7 @@ class FeuilleVisiteApresNuisibleAutreNourriApportPonctionForm(ModelForm):
     class Meta:
         model = FeuilleVisite
         fields = ['nuisible', 'recoltePropolis', 'recoltePollen', 'typeAlimentNourrissement',
-                  'quantiteAlimentNourrissement', 'apport', 'provenanceApport', 'ponction',
+                  'quantiteAlimentNourrissement', 'uniteNourrissement', 'apport', 'provenanceApport', 'ponction',
                   'destinationPonction']
 
 
@@ -446,6 +452,13 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
         ('Rouge', 'Rouge'),
         ('Vert', 'Vert'),
     ]
+
+    DESTINATION_CHOICES = [
+        ('None', '------'),
+    ]
+
+    for r in Rucher.objects.all():
+        DESTINATION_CHOICES.append((r.nom, r.nom))
 
     reineMarqueeManipulation = forms.CharField(
         label="Reine marquée ",
@@ -475,7 +488,7 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
         input_formats=['%d/%m/%Y %H:%M'],
         widget=forms.DateTimeInput(attrs={
             'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker2'
+            'data-target': '#datetimepicker3'
         }),
         required=False
     )
@@ -484,7 +497,7 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
         input_formats=['%d/%m/%Y %H:%M'],
         widget=forms.DateTimeInput(attrs={
             'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker2'
+            'data-target': '#datetimepicker4'
         }),
         required=False
     )
@@ -493,7 +506,7 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
         input_formats=['%d/%m/%Y %H:%M'],
         widget=forms.DateTimeInput(attrs={
             'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker2'
+            'data-target': '#datetimepicker5'
         }),
         required=False
     )
@@ -506,9 +519,11 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
 
     nombreHausseRecolte = forms.IntegerField(required=False)
 
+    destinationDeplacee = forms.ChoiceField(required=False, choices=DESTINATION_CHOICES)
+
     class Meta:
         model = FeuilleVisite
-        fields = ['reineMarqueeManipulation', 'colonieDeplacee', 'essaimageNaturel', 'remerage',
+        fields = ['reineMarqueeManipulation', 'colonieDeplacee', 'destinationDeplacee', 'essaimageNaturel', 'remerage',
                   'origineRemerage', 'divisionColonie', 'creationRuche', 'reunionColonie',
                   'liberationRuche', 'nombreHausseRecolte']
 

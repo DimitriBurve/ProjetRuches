@@ -113,11 +113,15 @@ li.dropdown2 {
     .parti {
         padding-left: 10%;
     }
-    ul#id_couleurReineMarque {
+    ul#id_couleurReineMarque, ul#id_maladieTraitement, ul#id_nuisible, ul#id_typeAlimentNourrissement, ul#id_apport, ul#id_ponction, ul#id_reineMarqueeManipulation {
         display: block !important;
     }
-    ul#id_couleurReineMarque li {
+    ul#id_couleurReineMarque li, ul#id_maladieTraitement li, ul#id_nuisible li, ul#id_typeAlimentNourrissement li, ul#id_apport li, ul#id_ponction li, ul#id_reineMarqueeManipulation li {
         display: block !important;
+    }
+
+    ul#id_typeAlimentNourrissement, ul#id_typeAlimentNourrissement li{
+        vertical-align: top;
     }
 }
 
@@ -509,17 +513,17 @@ ul#id_origineReine, ul#id_reinePresente, ul#id_presenceCelluleRoyale, ul#id_pres
     padding-left: 10px;
 }
 
-ul#id_partition, ul#id_couvainCompact, ul#id_couvainMosaique, ul#id_couvainChauve, ul#id_presenceOeuf, ul#id_cadreCouvain, ul#id_reineMarquee, ul#id_couleurReineMarque, ul#id_celluleFauxBourdons, ul#id_presenceFauxBourdons {
+ul#id_partition, ul#id_couvainCompact, ul#id_couvainMosaique, ul#id_couvainChauve, ul#id_presenceOeuf, ul#id_cadreCouvain, ul#id_reineMarquee, ul#id_couleurReineMarque, ul#id_celluleFauxBourdons, ul#id_presenceFauxBourdons, ul#id_maladieTraitement, ul#id_nuisible, ul#id_recoltePropolis, ul#id_recoltePollen, ul#id_typeAlimentNourrissement, ul#id_apport, ul#id_ponction, ul#id_reineMarqueeManipulation {
     display: inline-block;
     padding-left: 10px;
     margin-bottom: 0;
 }
 
-ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_couvainChauve li, ul#id_presenceOeuf li, ul#id_cadreCouvain li, ul#id_reineMarquee li, ul#id_couleurReineMarque li,  ul#id_presenceCelluleRoyale li, ul#id_celluleFauxBourdons li, ul#id_presenceFauxBourdons li{
+ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_couvainChauve li, ul#id_presenceOeuf li, ul#id_cadreCouvain li, ul#id_reineMarquee li, ul#id_couleurReineMarque li,  ul#id_presenceCelluleRoyale li, ul#id_celluleFauxBourdons li, ul#id_presenceFauxBourdons li, ul#id_maladieTraitement li, ul#id_nuisible li, ul#id_recoltePropolis li, ul#id_recoltePollen li, ul#id_typeAlimentNourrissement li, ul#id_apport li, ul#id_ponction li, ul#id_reineMarqueeManipulation li {
     display: inline-block;
 }
 
-#id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2 {
+#id_nombre_de_cadres, #id_codePostal, #id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2, #id_quantiteAlimentNourrissement {
     width: 75px;
 }
 
@@ -547,12 +551,9 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     width: 100px;
 }
 
-#id_nombre_de_cadres {
-    width: 75px;
-}
-
-#id_codePostal {
-    width: 75px;
+#id_methodeUtilisee {
+    width: 80%;
+    height: 200px;
 }
 
 [type="checkbox"]:checked + label {

@@ -301,6 +301,255 @@
                     </div>
                     <br>
 
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Maladie et traitements</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">{{ form.maladieTraitement }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Méthode (optionnel) :</div><div style="display: inline-block; vertical-align: top">{{ form.methodeUtilisee }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    {% elif etape == 5 %}
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Nuisible</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">{{ form.nuisible }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Autre</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div style="display: inline-block">
+                            <div style="padding-left: 10%">
+                                <div style="display: inline-block">Récolte Propolis : &nbsp;</div><div style="display: inline-block">{{ form.recoltePropolis }}</div>
+                            </div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="padding-left: 10%">
+                                <div style="display: inline-block">Récolte de pollen : &nbsp;</div><div style="display: inline-block">{{ form.recoltePollen }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Nourrissement</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Type aliment : </div><div style="display: inline-block; vertical-align: top">{{ form.typeAlimentNourrissement }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Quantité (Gramme ou litre) (optionnel) :</div><div style="display: inline-block;">{{ form.quantiteAlimentNourrissement }}</div><div style="display: inline-block">{{ form.uniteNourrissement }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Apport</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block; vertical-align: top">{{ form.apport }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Provenance (optionnel) :</div><div style="display: inline-block;">{{ form.provenanceApport }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Ponction</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block; vertical-align: top">{{ form.ponction }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Destination (optionnel) :</div><div style="display: inline-block;">{{ form.destinationPonction }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    {% elif etape == 6 %}
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Manipulation (optionnel)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Reine marquée : </div><div style="display: inline-block; vertical-align: top">{{ form.reineMarqueeManipulation }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Colonie déplacé : </div>
+                            <div style="display: inline-block">&nbsp; le : </div>
+                            <div class="divDate" style="display: inline-block">
+                                <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                    {{ form.colonieDeplacee }}
+                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: inline-block">&nbsp; à</div>
+                            <div style="display: inline-block">{{ form.destinationDeplacee }}</div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Essaimage naturel : </div>
+                            <div style="display: inline-block">&nbsp; le : </div>
+                            <div class="divDate" style="display: inline-block">
+                                <div class="input-group" id="datetimepicker2" data-target-input="nearest" style="width: 200px">
+                                    {{ form.essaimageNaturel }}
+                                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Remérage : </div>
+                            <div style="display: inline-block">&nbsp; le : </div>
+                            <div class="divDate" style="display: inline-block">
+                                <div class="input-group" id="datetimepicker3" data-target-input="nearest" style="width: 200px">
+                                    {{ form.remerage }}
+                                    <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: inline-block">&nbsp; origine : </div>
+                            <div style="display: inline-block">{{ form.origineRemerage }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Division colonie : </div>
+                            <div style="display: inline-block">&nbsp; le : </div>
+                            <div class="divDate" style="display: inline-block">
+                                <div class="input-group" id="datetimepicker4" data-target-input="nearest" style="width: 200px">
+                                    {{ form.divisionColonie }}
+                                    <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: inline-block">&nbsp; Création ruche : </div>
+                            <div style="display: inline-block">{{ form.creationRuche }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Réunion colonie : </div>
+                            <div style="display: inline-block">&nbsp; le : </div>
+                            <div class="divDate" style="display: inline-block">
+                                <div class="input-group" id="datetimepicker5" data-target-input="nearest" style="width: 200px">
+                                    {{ form.reunionColonie }}
+                                    <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: inline-block">&nbsp; Libération ruche : </div>
+                            <div style="display: inline-block">{{ form.liberationRuche }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Récolte (optionnel)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block">Nombre de hausses : &nbsp;</div><div style="display: inline-block;">{{ form.nombreHausseRecolte }}</div>
+                        </div>
+                    </div>
+                    <br>
+
 
 
                     {% endif %}
@@ -324,6 +573,18 @@
 <script>
     $(function () {
         $("#datetimepicker1").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+        $("#datetimepicker2").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+        $("#datetimepicker3").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+        $("#datetimepicker4").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+        $("#datetimepicker5").datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
         });
     });
