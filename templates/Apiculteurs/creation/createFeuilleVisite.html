@@ -76,16 +76,7 @@
                             <p style="text-align: center">Infos complémentaires</p>
                         </li>
                     </ul>
-                    {% elif etape == 2 %}
-                    <ul role="tablist">
-                        <li class="first" role="tab" aria-disabled="false" aria-selected="true">
-                            <p style="text-align: center">Infos pricipales</p>
-                        </li>
-                        <li class="active">
-                            <p style="text-align: center">Infos complémentaires</p>
-                        </li>
-                    </ul>
-                    {% elif etape == 3 %}
+                    {% else %}
                     <ul role="tablist">
                         <li class="first" role="tab" aria-disabled="false" aria-selected="true">
                             <p style="text-align: center">Infos pricipales</p>
@@ -128,9 +119,12 @@
                     </div>
                     {% else %}
                     {% if etape < 16 %}
-                    {% if etape == 3 %}
+                    {% if etape == 2 %}
+                    {{ form.as_p }}
+                    {% elif etape == 3 %}
 
                     <p>Attitude des abeilles :</p>{{ form.attitudeAbeilles }}
+
                     <br>
                     <div class="titleForm">
                         <ul role="tablist">
@@ -139,6 +133,174 @@
                             </li>
                         </ul>
                     </div>
+                    <br>
+
+                    <div style="padding-left: 5%">
+                        <div style="display: inline-block; padding-left: 10%; padding-right: 20%">
+                            <div>
+                                <div style="display: inline-block">Nombre de cadres : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresColonie }}</div>
+                            </div>
+                        </div>
+                        <div class="parti">
+                            <div>
+                                <p style="display: inline-block">Partition : </p><div style="display: inline-block">{{ form.partition }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Nombre de ruelles occupées : &nbsp;</div><div style="display: inline-block">{{ form.nombreRuellesOccupees }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Nombre de cadres de couvain : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresCouvain }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Nombre de cadres cire gauffrée introduit : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadreCireGauffreeIntroduit }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Nombre de hausses : &nbsp;</div><div style="display: inline-block">{{ form.nombreHausse }}</div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Couvain</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Compact : &nbsp;</div><div style="display: inline-block">{{ form.couvainCompact }} &nbsp;</div><div style="display: inline-block">(si coché oui, entraîne bonne reine)</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Mosaïque : &nbsp;</div><div style="display: inline-block">{{ form.couvainMosaique }} &nbsp;</div><div style="display: inline-block">(si coché oui, risque Loque ou Varroa)</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="padding-left: 10%">
+                            <div style="display: inline-block">Chauve : &nbsp;</div><div style="display: inline-block">{{ form.couvainChauve }} &nbsp;</div><div style="display: inline-block">(si coché oui, risque de teigne)</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="display: inline-block; padding-left: 10%; padding-right: 10%">
+                            <div>
+                                <div style="display: inline-block">Présence d'oeufs : </div><div style="display: inline-block">{{ form.presenceOeuf }}</div>
+                            </div>
+                        </div>
+                        <div class="parti">
+                            <div>
+                                <div style="display: inline-block">Nombre de cadres (optionnel) : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresOeuf }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="padding-left: 5%">
+                        <div style="display: inline-block; padding-left: 10%; padding-right: 9%">
+                            <div>
+                                <div style="display: inline-block">Cadre de couvain : </div><div style="display: inline-block">{{ form.cadreCouvain }}</div>
+                            </div>
+                        </div>
+                        <div class="parti">
+                            <div>
+                                <div style="display: inline-block">Nombre de cadres (optionnel) : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresCouvain2 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    {% elif etape == 4 %}
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Reine</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 9%">
+                            <div>
+                                <div style="display: inline-block">Origine reine : </div><div style="display: inline-block; vertical-align: top">{{ form.origineReine }}</div>
+                            </div>
+                        </div>
+                        <div class="parti">
+                            <div>
+                                <div style="display: inline-block">Reine présente : &nbsp;</div><div style="display: inline-block; vertical-align: top">{{ form.reinePresente }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div style="padding-left: 10%">
+                        <div style="display: block; padding-left: 10%; padding-right: 9%">
+                            <div>
+                                <div style="display: inline-block">Reine marquée : </div><div style="display: inline-block; vertical-align: top">{{ form.reineMarquee }}</div>
+                            </div>
+                        </div>
+                        <div style="display: block; padding-left: 10%">
+                            <div>
+                                <div style="display: inline-block">couleur (optionnel) : </div><div style="display: inline-block; vertical-align: top">{{ form.couleurReineMarque }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 7%">
+                            <div>
+                                <div style="display: inline-block">Présence cellule royale : </div><div style="display: inline-block; vertical-align: top">{{ form.presenceCelluleRoyale }}</div>
+                            </div>
+                        </div>
+                        <div class="parti">
+                            <div>
+                                <div style="display: inline-block">origine (optionnel) : </div><div style="display: inline-block; vertical-align: top">{{ form.presenceCelluleRoyaleOrigine }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Faux-Bourdons</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 9%">
+                            <div>
+                                <div style="display: inline-block">Cellule Faux-Bourdons : </div><div style="display: inline-block; vertical-align: top">{{ form.celluleFauxBourdons }}</div>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <div>
+                                <div style="display: inline-block">Présence Faux-Bourdons : </div><div style="display: inline-block; vertical-align: top">{{ form.presenceFauxBourdons }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
 
 
                     {% endif %}

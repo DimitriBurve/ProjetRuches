@@ -110,6 +110,15 @@ li.dropdown2 {
         width: 200px;
         height: 100px;
     }
+    .parti {
+        padding-left: 10%;
+    }
+    ul#id_couleurReineMarque {
+        display: block !important;
+    }
+    ul#id_couleurReineMarque li {
+        display: block !important;
+    }
 }
 
 #my-menu{
@@ -485,6 +494,33 @@ ul#id_attitudeAbeillles {
     text-align: justify;
     padding-left: 45%;
     list-style-type: none;
+}
+
+#id_nombreCadresColonie {
+    width: 75px;
+}
+
+.parti {
+    display: inline-block;
+    /*padding-left: 20%;*/
+}
+
+ul#id_origineReine, ul#id_reinePresente, ul#id_presenceCelluleRoyale, ul#id_presenceCelluleRoyaleOrigine, ul#id_presenceCelluleRoyale {
+    padding-left: 10px;
+}
+
+ul#id_partition, ul#id_couvainCompact, ul#id_couvainMosaique, ul#id_couvainChauve, ul#id_presenceOeuf, ul#id_cadreCouvain, ul#id_reineMarquee, ul#id_couleurReineMarque, ul#id_celluleFauxBourdons, ul#id_presenceFauxBourdons {
+    display: inline-block;
+    padding-left: 10px;
+    margin-bottom: 0;
+}
+
+ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_couvainChauve li, ul#id_presenceOeuf li, ul#id_cadreCouvain li, ul#id_reineMarquee li, ul#id_couleurReineMarque li,  ul#id_presenceCelluleRoyale li, ul#id_celluleFauxBourdons li, ul#id_presenceFauxBourdons li{
+    display: inline-block;
+}
+
+#id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2 {
+    width: 75px;
 }
 
 .divDate {
