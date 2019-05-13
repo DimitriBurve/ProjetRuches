@@ -21,6 +21,9 @@
         src="{% static 'ProjetRuches/node_modules/jquery-fusioncharts/dist/fusioncharts.jqueryplugin.js' %}"></script>
 <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 
+<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="/home">Accueil</a></li>
     <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
@@ -49,30 +52,24 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <p>details capteur {{ nameCapteur }}</p>
+    <h2 style="color: #1C5F90">details capteur {{ nameCapteur }}</h2>
     <br>
     <div>
         <div style="display: inline-block">
-            <div style="display: inline-block" id="chart-temp">{{ graphTemp|safe }}</div>
-            <p style="display: inline-block">derniere temperature reçue : {{ derniereTemp|safe }}</p>
-            <div style="display:inline-block;"></div>
+            <div style="display: block" id="chart-temp">{{ graphTemp|safe }}</div>
+            <p style="display: block">derniere temperature reçue : {{ derniereTemp|safe }}</p>
         </div>
-        <br>
         <div style="display: inline-block">
-            <div style="display: inline-block" id="chart-hum">{{ graphHum|safe }}</div>
-            <p style="display: inline-block">dernier pourcentage d'humidite reçu : {{ derniereHum|safe }}</p>
+            <div style="display: block" id="chart-hum">{{ graphHum|safe }}</div>
+            <p style="display: block">dernier pourcentage d'humidite reçu : {{ derniereHum|safe }}</p>
         </div>
-        <br>
         <div style="display: inline-block">
-            <div style="display: inline-block" id="chart-poids">{{ graphPoids|safe }}</div>
-            <p style="display: inline-block">dernier poids reçu : {{ dernierPoids|safe }}</p>
+            <div style="display: block" id="chart-poids">{{ graphPoids|safe }}</div>
+            <p style="display: block">dernier % bat reçu : {{ dernierBat|safe }}</p>
         </div>
-        {% if user.is_authenticated %}
-        <br>
         <div style="display: inline-block">
-            <a href="#" style="display: inline-block">modifier</a>
+            <div style="display: inline-block" id="chart-bat">{{ batGraph|safe }}</div>
         </div>
-        {% endif %}
     </div>
 </div>
 </body>

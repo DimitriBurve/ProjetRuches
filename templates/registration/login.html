@@ -14,6 +14,10 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../Nav/top.html" %}
+</div>
+
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="/home">Accueil</a></li>
     <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
@@ -41,11 +45,27 @@
     {% endif %}
 </ul>
 {% include "../Nav/navigation.html" %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary" type="submit">Login</button>
-</form>
+<h2 style="color: #1C5F90;">Connexion</h2>
+<div class="multipleForm">
+    <div class="container-table100">
+        <div class="container-form">
+            <p class="bigTitleForm"></p>
+            <div class="titleForm">
+                <ul role="tablist">
+                    <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                        <p style="text-align: center">&nbsp;</p>
+                    </li>
+                </ul>
+            </div>
+            <form class="formVisite" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div style="text-align: center">
+                    <button class="btn btn-primary" type="submit">Connexion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

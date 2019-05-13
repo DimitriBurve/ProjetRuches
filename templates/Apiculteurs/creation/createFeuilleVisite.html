@@ -550,6 +550,39 @@
                     </div>
                     <br>
 
+                    {% elif etape == 7 %}
+
+                     <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Notes (optionnel)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block;">{{ form.notes }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Etat</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div>
+                            <div style="display: inline-block;">{{ form.etatColonie }}</div>
+                        </div>
+                    </div>
+                    <br>
 
 
                     {% endif %}

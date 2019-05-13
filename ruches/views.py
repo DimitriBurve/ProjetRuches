@@ -1,4 +1,5 @@
 import subprocess
+from collections import OrderedDict
 
 import qrcode as qrcode
 from PIL import Image
@@ -55,50 +56,47 @@ def header(apikey):
 
 
 def informationsUser(request):
-#     apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
-#
-#     res = requests.get(
-#         "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/devices",
-#         headers=header(apikey)).json()
-#     print(res)
-#     # response = requete.urlopen("https://github.com/timeline.json")
-#     # data_test = json.load(response)
-#
-#     # print(data_test)
-#
-#     localisationsCapteurs = []
-#
-#     ruchers = Rucher.objects.all()
-#
-#     for r in ruchers:
-#         localisationsCapteurs.append(r)
-#
-#     coloniesObj = Colonie.objects.all()
-#
-#     capteurs = []
-#
-#     for rep in res:
-#         nom = rep["name"]
-#         temp = nom.split(" ")
-#         for w in temp:
-#             for c in coloniesObj:
-#                 for l in localisationsCapteurs:
-#                     capteurs.append({'loc': l, 'id': rep['id'], 'name': rep['name']})
-#                     # if w == l and c.rucher == l:
-#                     # print("true, ", l)
-#                 break
-#             break
-#
-#     print(capteurs)
-#
-#     # data_str = json.dumps(data_dict)
-#     # print(data_str)
-#     # data = json.load(open("/fixtures/Capteurs.json"))
-#     # capteurs = Capteurs.objects.all()
-#
-#     return render(request, 'User/informationsUser.html', {'ruchers': localisationsCapteurs, 'capteurs': capteurs})
+    #     apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
+    #
+    #     res = requests.get(
+    #         "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/devices",
+    #         headers=header(apikey)).json()
+    #     print(res)
+    #
 
-    return
+    capteurs = json.load(open("fixtures/capteurs.json"))
+    for cap in capteurs:
+        print(cap['rucher'])
+
+    localisationsCapteurs = []
+
+    ruchers = Rucher.objects.all()
+    for r in ruchers:
+        localisationsCapteurs.append(r)
+
+    #     coloniesObj = Colonie.objects.all()
+    #
+    #     capteurs = []
+    #
+    #     for rep in res:
+    #         nom = rep["name"]
+    #         temp = nom.split(" ")
+    #         for w in temp:
+    #             for c in coloniesObj:
+    #                 for l in localisationsCapteurs:
+    #                     capteurs.append({'loc': l, 'id': rep['id'], 'name': rep['name']})
+    #                     # if w == l and c.rucher == l:
+    #                     # print("true, ", l)
+    #                 break
+    #             break
+    #
+    #     print(capteurs)
+    #
+    #     # data_str = json.dumps(data_dict)
+    #     # print(data_str)
+
+    return render(request, 'User/informationsUser.html', {'ruchers': localisationsCapteurs, 'capteurs': capteurs})
+
 
 def capteurUser(request, idCapteur):
     # apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
@@ -119,7 +117,7 @@ def capteurUser(request, idCapteur):
     #
     # # response = requests.request("GET", url, data=payload, headers=headers).json()
     #
-    # dataCapteur = []
+    dataCapteur = []
     #
     # for resp in response:
     #     # print(resp['deviceId'])
@@ -143,6 +141,16 @@ def capteurUser(request, idCapteur):
     #                             resp['request']['payload']['record']['data']['humidite_2'],
     #                             resp['request']['payload']['record']['data']['temperature_2']])
     #
+
+    dataCapteurJson = json.load(open("fixtures/data.json"))
+
+    for d in dataCapteurJson:
+        # print(d)
+        dataCapteur.append([d['time'],
+                            d['bat'],
+                            d['hum'],
+                            d['temp']])
+
     # print(dataCapteur)
 
     data = requests.get(
@@ -157,11 +165,11 @@ def capteurUser(request, idCapteur):
     data2 = requests.get(
         'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/data/adding-a-reference-line-data.json').json()
 
-    derniereTemp = data2[len(data2) - 1][5]
-    derniereHum = data2[len(data2) - 1][1]
-    dernierPoids = data2[len(data2) - 1][3]
+    derniereTemp = dataCapteurJson[len(dataCapteurJson) - 1]['temp']
+    derniereHum = dataCapteurJson[len(dataCapteurJson) - 1]['hum']
+    dernierBat = dataCapteurJson[len(dataCapteurJson) - 1]['bat']
 
-    fusionTable = FusionTable(schema, data)
+    fusionTable = FusionTable(schema2, dataCapteur)
 
     # graph pour temperatures
 
@@ -216,7 +224,7 @@ def capteurUser(request, idCapteur):
 
     timeSeriesPoids = TimeSeries(fusionTable)
 
-    timeSeriesPoids.AddAttribute("caption", """{text: 'Poids de la ruche'}""")
+    timeSeriesPoids.AddAttribute("caption", """{text: 'Batterie du capteur'}""")
 
     timeSeriesPoids.AddAttribute("yAxis", """[{
                                                     plot: 'Batterie (%)',
@@ -233,10 +241,71 @@ def capteurUser(request, idCapteur):
 
     fcChartPoids = FusionCharts("timeseries", "ex3", 700, 450, "chart-poids", "json", timeSeriesPoids)
 
+    # Load dial indicator values from simple string array# e.g.dialValues = ["52", "10", "81", "95"]
+    dialValues = str(dernierBat)
+
+    # widget data is passed to the `dataSource` parameter, as dict, in the form of key-value pairs.
+    dataSource = OrderedDict()
+
+    # The `widgetConfig` dict contains key-value pairs of data for widget attribute
+    widgetConfig = OrderedDict()
+    widgetConfig["caption"] = "% bat du capteur"
+    widgetConfig["lowerLimit"] = "0"
+    widgetConfig["upperLimit"] = "100"
+    widgetConfig["showValue"] = "1"
+    widgetConfig["numberSuffix"] = "%"
+    widgetConfig["theme"] = "fusion"
+    widgetConfig["showToolTip"] = "0"
+
+    # The `colorData` dict contains key-value pairs of data for ColorRange of dial
+    colorRangeData = OrderedDict()
+    colorRangeData["color"] = [{
+            "minValue": "0",
+            "maxValue": "25",
+            "code": "#F2726F"
+        },
+        {
+            "minValue": "25",
+            "maxValue": "50",
+            "code": "#FFC533"
+        },
+        {
+            "minValue": "50",
+            "maxValue": "75",
+            "code": "#FFC533"
+        },
+        {
+            "minValue": "75",
+            "maxValue": "100",
+            "code": "#62B58F"
+        }
+    ]
+
+    # Convert the data in the `dialData` array into a format that can be consumed by FusionCharts.
+    dialData = OrderedDict()
+    dialData["dial"] = []
+
+    dataSource["chart"] = widgetConfig
+    dataSource["colorRange"] = colorRangeData
+    dataSource["dials"] = dialData
+
+    # Iterate through the data in `dialValues` and insert into the `dialData["dial"]` list.
+    # The data for the `dial`should be in an array wherein each element of the
+    # array is a JSON object# having the `value` as keys.
+    # for i in range(len(dialValues)):
+    dialData["dial"].append({
+        "value": dialValues
+    })
+    # Create an object for the angular-gauge using the FusionCharts class constructor
+    # The widget data is passed to the `dataSource` parameter.
+
+    angulargaugeWidget = FusionCharts("angulargauge", "ex4", 450, 270, "chart-bat", "json", dataSource)
+
     return render(request, 'User/capteursUser.html',
                   {'nameCapteur': idCapteur, 'graphTemp': fcChartTemp.render(), 'graphHum': fcChartHum.render(),
                    'graphPoids': fcChartPoids.render(),
-                   'derniereTemp': derniereTemp, 'derniereHum': derniereHum, 'dernierPoids': dernierPoids})
+                   'derniereTemp': derniereTemp, 'derniereHum': derniereHum, 'dernierBat': dernierBat,
+                   'batGraph': angulargaugeWidget.render()})
 
 
 def jsonView(request):
@@ -456,7 +525,7 @@ def ajouterColonie(request):
     else:
         print("else post")
         user = request.user
-        rucheForm = RucheForm(user=user)
+        rucheForm = RucheForm()
     return render(request, 'Apiculteurs/creation/createColonie.html',
                   {'form': rucheForm, 'listeRuchers': listeRuchers, 'listeTypesRuche': listeTypesRuche})
 
@@ -707,7 +776,7 @@ def createFeuillevisite(request, rucher, colonie, etape):
                 #         f.delete()
 
                 # print(feuilleObj)
-                feuille = feuillesObj[len(feuillesObj)-1]
+                feuille = feuillesObj[len(feuillesObj) - 1]
                 print(feuille.conditionClimatique)
                 # feuille = FeuilleVisite.objects.get(date=dateForm, rucher=rucherObj, colonie=colonieObj)
                 print("feuille 2: ", feuille)
@@ -965,4 +1034,5 @@ def detailsUserAdmin(request, username):
 
     colonies = sorted(colonies, key=lambda a: a.rucher.nom)
 
-    return render(request, 'Admin/detailsUserAdmin.html', {'userEdit': userEdit, 'colonies': colonies, 'etatColonie': etatFeuilles})
+    return render(request, 'Admin/detailsUserAdmin.html',
+                  {'userEdit': userEdit, 'colonies': colonies, 'etatColonie': etatFeuilles})

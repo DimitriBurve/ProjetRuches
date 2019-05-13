@@ -45,20 +45,36 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <h4>Liste Villes</h4>
-    <ul>
-        {% for r in ruchers %}
-        <li>
-            {{ r.ville }}
-            <a href="{% url 'detailsUser' r %}">details</a>
-            {% for cap in capteurs %}
-            {% if cap.loc.nom == r.nom %}
-            <p>{{ cap.name }} <a href="{% url 'detailsUser' cap.id %}">voir</a></p>
-            {% endif %}
+    <h2 style="color: #1C5F90">Liste Villes</h2>
+    <div style="padding-left: 7%;">
+        <ul style="list-style-type: none">
+            {% for r in ruchers %}
+            <li>
+                <div style="display: inline-block">{{ r.ville }}</div> <div onclick="show('colonies{{r.ville}}')" style="display: inline-block; cursor: pointer; color: #007bff;" id="detailsVille">details</div>
+                <div style="padding-left: 2%; display: none" id="colonies{{r.ville}}">
+                {% for cap in capteurs %}
+    <!--            {% if cap.loc.nom == r.nom %}-->
+<!--                <p>{{ cap }} <a href="{% url 'detailsUser' cap.id %}">voir</a></p>-->
+    <!--            {% endif %}-->
+                {% if cap.rucher == r.ville %}
+                <p>{{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}">voir</a></p>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </li>
+            <br>
             {% endfor %}
-        </li>
-        {% endfor %}
-    </ul>
+        </ul>
+    </div>
 </div>
+<script type="text/javascript">
+    function show(indice)
+    {
+        if (document.getElementById(indice).style.display==="none")		// Si la zone indiqué par indice est est invisible
+            document.getElementById(indice).style.display="block";		// On l'affiche
+        else									// Sinon (elle est donc visible)
+            document.getElementById(indice).style.display="none";		//On la crend invisible
+    }
+</script>
 </body>
 </html>

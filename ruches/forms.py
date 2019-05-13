@@ -66,12 +66,6 @@ class RucheForm(ModelForm):
         })
     )
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user")
-        super(RucheForm, self).__init__(*args, **kwargs)
-        print('user : ', user)
-        self.fields['rucher'] = forms.ChoiceField(choices=[(r.nom, r.nom) for r in Rucher.objects.filter(user=user)])
-
     class Meta:
         model = Colonie
         fields = ['nom', 'rucher', 'type', 'nombre_de_cadres', 'date', 'remarque']
