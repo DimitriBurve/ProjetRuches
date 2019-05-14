@@ -10,7 +10,7 @@ urlpatterns = [
     path('detailCapteurUser/<str:idCapteur>', views.capteurUser, name='detailsUser'),
     path('json', views.jsonView, name="json"),
     path('camerasUser', views.camerasUser, name='camerasUser'),
-    path('videoCameraUser/<str:nameCapteur>', views.videoCamerasUser, name='videoCameraUser'),
+    path('videoCameraUser/<int:c_id>', views.videoCamerasUser, name='videoCameraUser'),
     # vues apiculteurs
     path('afficherColonieId/<int:c_id>', views.afficherColonieId, name='afficherColonieId'),
     path('afficherColonies', views.afficherColonies, name='afficherColonies'),

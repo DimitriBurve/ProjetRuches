@@ -83,7 +83,7 @@ class NourrissementForm(ModelForm):
 
     class Meta:
         model = Nourrissement
-        fields = ['colonie', 'date', 'typeNourrissement', 'typeAliment', 'produit', 'quantite', 'note']
+        fields = ['date', 'typeNourrissement', 'typeAliment', 'produit', 'quantite', 'note']
 
 
 class TraitementForm(ModelForm):
@@ -98,7 +98,7 @@ class TraitementForm(ModelForm):
 
     class Meta:
         model = Traitement
-        fields = ['api', 'colonie', 'date', 'maladie', 'methode', 'posologie', 'remarques']
+        fields = ['api', 'date', 'maladie', 'methode', 'posologie', 'remarques']
 
 
 class RecolteForm(ModelForm):
@@ -113,7 +113,7 @@ class RecolteForm(ModelForm):
 
     class Meta:
         model = Recolte
-        fields = ['colonie', 'date', 'produitRecolte', 'quantite', 'note']
+        fields = ['date', 'produitRecolte', 'quantite', 'note']
 
 
 class PeseeForm(ModelForm):
@@ -128,7 +128,7 @@ class PeseeForm(ModelForm):
 
     class Meta:
         model = Pesee
-        fields = ['colonie', 'date', 'poids', 'note']
+        fields = ['date', 'poids', 'note']
 
 
 class FeuilleVisiteDebutForm(ModelForm):

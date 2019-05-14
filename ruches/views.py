@@ -195,7 +195,7 @@ def capteurUser(request, idCapteur):
                                             }]""")
 
     # Create an object for the chart using the FusionCharts class constructor
-    fcChartTemp = FusionCharts("timeseries", "ex1", 700, 450, "chart-temp", "json", timeSeriesTemp)
+    fcChartTemp = FusionCharts("timeseries", "ex1", "100%", "100%", "chart-temp", "json", timeSeriesTemp)
 
     # graph pour humidite
 
@@ -220,7 +220,7 @@ def capteurUser(request, idCapteur):
                                                 }]
                                             }]""")
 
-    fcChartHum = FusionCharts("timeseries", "ex2", 700, 450, "chart-hum", "json", timeSeriesHum)
+    fcChartHum = FusionCharts("timeseries", "ex2", "100%", "100%", "chart-hum", "json", timeSeriesHum)
 
     timeSeriesPoids = TimeSeries(fusionTable)
 
@@ -239,7 +239,7 @@ def capteurUser(request, idCapteur):
                                                     },
                                                 }]""")
 
-    fcChartPoids = FusionCharts("timeseries", "ex3", 700, 450, "chart-poids", "json", timeSeriesPoids)
+    fcChartPoids = FusionCharts("timeseries", "ex3", "100%", "100%", "chart-poids", "json", timeSeriesPoids)
 
     # Load dial indicator values from simple string array# e.g.dialValues = ["52", "10", "81", "95"]
     dialValues = str(dernierBat)
@@ -299,7 +299,7 @@ def capteurUser(request, idCapteur):
     # Create an object for the angular-gauge using the FusionCharts class constructor
     # The widget data is passed to the `dataSource` parameter.
 
-    angulargaugeWidget = FusionCharts("angulargauge", "ex4", 450, 270, "chart-bat", "json", dataSource)
+    angulargaugeWidget = FusionCharts("angulargauge", "ex4", "100%", "100%", "chart-bat", "json", dataSource)
 
     return render(request, 'User/capteursUser.html',
                   {'nameCapteur': idCapteur, 'graphTemp': fcChartTemp.render(), 'graphHum': fcChartHum.render(),
@@ -315,19 +315,21 @@ def jsonView(request):
 
 
 def camerasUser(request):
+    capteurs = json.load(open("fixtures/capteurs.json"))
+    for cap in capteurs:
+        print(cap['rucher'])
+
     localisationsCapteurs = []
 
-    with open('fixtures/Capteurs.json') as json_data:
-        data_dict = json.load(json_data)
+    ruchers = Rucher.objects.all()
+    for r in ruchers:
+        localisationsCapteurs.append(r)
 
-    for i in range(0, len(data_dict)):
-        localisationsCapteurs.append(data_dict[i]["fields"]["localisation"])
-
-    return render(request, 'User/camerasUser.html', {"capteurs": localisationsCapteurs})
+    return render(request, 'User/camerasUser.html', {"capteurs": capteurs, "ruchers": localisationsCapteurs})
 
 
-def videoCamerasUser(request, nameCapteur):
-    return render(request, 'User/videoCamerasUser.html', {'nameCapteur': nameCapteur})
+def videoCamerasUser(request, c_id):
+    return render(request, 'User/videoCamerasUser.html', {'nameCapteur': c_id})
 
 
 # partie apiculteur
@@ -505,6 +507,13 @@ def affichercoloniesRucher(request, rucher):
 
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
+    colonies = Colonie.objects.all()
+    for c in colonies:
+        colonieObj = Colonie.objects.get(nom=c, rucher=c.rucher)
+        feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonieObj)
+        for f in feuillesObj:
+            if f.notes is None:
+                f.delete()
     return render(request, 'Apiculteurs/affichage/afficherRuchers.html', {'ruchers': ruchers})
 
 
@@ -541,13 +550,16 @@ def ajouterNourrissement(request, rucher, colonie):
         nourrissementForm = NourrissementForm(request.POST, instance=obj)
         if nourrissementForm.is_valid():
             nourrissementForm.save()
+            nourrissementsObj = Nourrissement.objects.all()
+            for n in nourrissementsObj:
+                if n.typeNourrissement is None:
+                    n.delete()
             return redirect('afficherColonieId', colonieObj.id)
     else:
         obj = Nourrissement.objects.create(colonie=colonieObj)
         nourrissementForm = NourrissementForm(instance=obj)
     return render(request, 'Apiculteurs/creation/createNourrissement.html',
-                  {'form': nourrissementForm, 'listeTypeNourrissement': listeTypeNourrissement,
-                   'listeTypeAliment': listeTypeAliment})
+                  {'form': nourrissementForm, 'rucher': rucher, 'colonie': colonie})
 
 
 def ajouterPesee(request, rucher, colonie):
@@ -559,11 +571,15 @@ def ajouterPesee(request, rucher, colonie):
         peseeForm = PeseeForm(request.POST, instance=obj)
         if peseeForm.is_valid():
             peseeForm.save()
-            return redirect('afficherPesees')
+            peseesObj = Pesee.objects.all()
+            for p in peseesObj:
+                if p.poids is None:
+                    p.delete()
+            return redirect('afficherColonieId', colonieObj.id)
     else:
         obj = Pesee.objects.create(colonie=colonieObj)
         peseeForm = PeseeForm(instance=obj)
-    return render(request, 'Apiculteurs/creation/createPesee.html', {'form': peseeForm})
+    return render(request, 'Apiculteurs/creation/createPesee.html', {'form': peseeForm, 'colonie': colonie, 'rucher': rucher})
 
 
 def ajouterRecolte(request, rucher, colonie):
@@ -575,11 +591,15 @@ def ajouterRecolte(request, rucher, colonie):
         recolteForm = RecolteForm(request.POST, instance=obj)
         if recolteForm.is_valid():
             recolteForm.save()
-            return redirect('afficherRecoltes')
+            recoltesObj = Recolte.objects.all()
+            for r in recoltesObj:
+                if r.produitRecolte is None:
+                    r.delete()
+            return redirect('afficherColonieId', colonieObj.id)
     else:
         obj = Recolte.objects.create(colonie=colonieObj)
         recolteForm = RecolteForm(instance=obj)
-    return render(request, 'Apiculteurs/creation/createRecolte.html', {'form': recolteForm})
+    return render(request, 'Apiculteurs/creation/createRecolte.html', {'form': recolteForm, 'colonie': colonie, 'rucher': rucher})
 
 
 def ajouterRucher(request):
@@ -606,7 +626,11 @@ def ajouterTraitement(request, rucher, colonie):
         traitementForm = TraitementForm(request.POST, instance=obj)
         if traitementForm.is_valid():
             traitementForm.save()
-            return redirect('afficherTraitements')
+            traitementsObj = Traitement.objects.all()
+            for t in traitementsObj:
+                if t.maladie is None:
+                    t.delete()
+            return redirect('afficherColonieId', colonieObj.id)
     else:
         obj = Traitement.objects.create(colonie=colonieObj)
         traitementForm = TraitementForm(instance=obj)

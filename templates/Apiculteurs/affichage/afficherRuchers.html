@@ -85,19 +85,25 @@
                                 <td class="cell100 column8">{{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}</td>
                                 <td class="cell100 column2">{% for u in rucher.user.all %} {{ u }} {% endfor %}</td>
                                 <td class="cell100 column8">
-                                    <form id="formDetails" method="get" style="display: inline-block"
+                                    <form id="formDetailsA" method="get" style="display: inline-block"
                                           action="{% url 'afficherColoniesRucher' rucher.nom %}">
-                                        <button type="submit" class="btn btn-primary btn-lg m-0">Détails</button>
+                                        <button type="submit" class="btn btn-primary m-0">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                        </button>
                                     </form>
 
-                                    <form id="formModif" method="get" style="display: inline-block">
-                                        <button type="submit" class="btn btn-warning m-0">modifier</button>
+                                    <form id="formModifA" method="get" style="display: inline-block">
+                                        <button type="submit" class="btn btn-primary m-0">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                        </button>
                                     </form>
 
-                                    <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
+                                    <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
                                           action="{% url 'validSupprimerRucher' rucher.nom %}">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger m-0">supprimer</button>
+                                        <button type="submit" class="btn btn-danger m-0">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

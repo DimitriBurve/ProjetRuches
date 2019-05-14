@@ -28,6 +28,9 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
@@ -56,28 +59,59 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Ajouter Pesée</h2>
+    <h2 style="color: #1C5F90">Colonie {{colonie}} {{rucher}}</h2>
 
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            <p style="display: inline-block">Colonie : </p>{{ form.colonie }}
-            <br>
-            <p style="display: inline-block">Date : </p>
-            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                {{ form.date }}
-                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    {% if user.is_authenticated %}
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm">Ajouter Pesée</p>
+                <div class="titleForm">
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">&nbsp;</p>
+                        </li>
+                    </ul>
                 </div>
+                <form class="formVisite" method="post">
+                    {% csrf_token %}
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Colonie : &nbsp;</div><div style="display: inline-block">{{ colonie }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Date : </div>
+                            <div class="divDate" style="display: inline-block;">
+                                <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                    {{ form.date }}
+                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Poids : &nbsp;</div><div style="display: inline-block">{{ form.poids }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div style="display: inline-block; margin-left: 25%">Note (optionnel) : </div>
+                        <br>
+                        <div style="margin-left: 35%" class="divTextArea">
+                            {{ form.note }}
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 45%">Ajouter</button>
+                </form>
             </div>
-            <br>
-            <p style="display: inline-block">Poids : </p>{{ form.poids }}
-            <br>
-            <p>Note : </p>{{ form.note }}
-            <br>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
+        </div>
     </div>
+    {% endif %}
 </div>
 
 <script>

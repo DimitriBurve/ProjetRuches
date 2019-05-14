@@ -106,7 +106,7 @@ li.dropdown2 {
     #id_nom {
 
     }
-    #id_remarque, #id_notes {
+    #id_remarque, #id_notes, #id_note, #id_remarques {
         width: 200px;
         height: 100px;
     }
@@ -122,6 +122,11 @@ li.dropdown2 {
 
     ul#id_typeAlimentNourrissement, ul#id_typeAlimentNourrissement li{
         vertical-align: top;
+    }
+
+    #chart-temp, #chart-hum, #chart-bat, #chart-poids {
+        width: 310px !important;
+        height: 300px !important;
     }
 }
 
@@ -500,10 +505,6 @@ ul#id_attitudeAbeillles {
     list-style-type: none;
 }
 
-#id_nombreCadresColonie {
-    width: 75px;
-}
-
 .parti {
     display: inline-block;
     /*padding-left: 20%;*/
@@ -523,7 +524,7 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     display: inline-block;
 }
 
-#id_nombre_de_cadres, #id_codePostal, #id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2, #id_quantiteAlimentNourrissement {
+#id_nombre_de_cadres, #id_codePostal, #id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2, #id_quantiteAlimentNourrissement, #id_nombreCadresColonie, #id_quantite {
     width: 75px;
 }
 
@@ -599,6 +600,11 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
 
 #detailsVille:hover {
     text-decoration: underline;
+}
+
+#chart-temp, #chart-hum, #chart-bat, #chart-poids {
+    width: 720px;
+    height: 450px;
 }
 
 /*#id_attitudeAbeilles ul li {*/

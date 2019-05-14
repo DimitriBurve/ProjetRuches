@@ -28,13 +28,16 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
-    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
-    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
-    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
+    <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar active"><a href="/afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
@@ -47,42 +50,75 @@
         </a>
     </li>
     {% if user.is_superuser %}
-    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar"><a href="/showUsersAdmin">Administration</a></li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
-    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    <li class="right liNavBar"><a href="/inscription">Inscription</a></li>
     {% endif %}
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Ajouter Traitement</h2>
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            <p style="display: inline-block">Apiculteur ayant administré le traitement : </p>{{ form.api }}
-            <br>
-            <p style="display: inline-block">Colonie : </p>{{ form.colonie }}
-            <br>
-            <p style="display: inline-block">Date : </p>
-            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                {{ form.date }}
-                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    <h2 style="color: #1C5F90">Ajouter Traitement</h2>
+    {% if user.is_authenticated %}
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm">Ajouter Traitement</p>
+                <div class="titleForm">
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">&nbsp;</p>
+                        </li>
+                    </ul>
                 </div>
+                <form class="formVisite" method="post">
+                    {% csrf_token %}
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Apiculteur : &nbsp;</div><div style="display: inline-block">{{ form.api }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Colonie : &nbsp;</div><div style="display: inline-block">{{ form.colonie }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="display: inline-block">Date : </div>
+                        <div class="divDate" style="display: inline-block; padding-right: 25px">
+                            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                {{ form.date }}
+                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Maladie : &nbsp;</div><div style="display: inline-block">{{ form.maladie }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Méthode : &nbsp;</div><div style="display: inline-block">{{ form.methode }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Posologie : &nbsp;</div><div style="display: inline-block">{{ form.posologie }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div style="display: inline-block; margin-left: 25%">Remarques (optionnel) : </div>
+                        <br>
+                        <div style="margin-left: 35%" class="divTextArea">
+                        {{ form.remarques }}
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 45%">Ajouter</button>
+                </form>
             </div>
-            <br>
-            <p style="display: inline-block">Maladie : </p>{{ form.maladie }}
-            <br>
-            <p style="display: inline-block">Methode : </p>{{ form.methode }}
-            <br>
-            <p style="display: inline-block">Posologie : </p>{{ form.posologie }}
-            <br>
-            <p>Remarques : </p>{{ form.remarques }}
-            <br>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
-    </div>
+            {% endif %}
 </div>
 
 <script>

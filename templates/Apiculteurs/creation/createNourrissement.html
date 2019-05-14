@@ -28,13 +28,16 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../../Nav/top.html" %}
+</div>
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
-    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
-    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
-    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
+    <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar active"><a href="/afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
@@ -47,45 +50,84 @@
         </a>
     </li>
     {% if user.is_superuser %}
-    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar"><a href="/showUsersAdmin">Administration</a></li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
-    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    <li class="right liNavBar"><a href="/inscription">Inscription</a></li>
     {% endif %}
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2>Ajouter Nourrissement</h2>
+    <h2 style="color: #1C5F90">Colonie {{colonie}} {{rucher}}</h2>
 
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            <p style="display: inline-block">Colonie : </p>{{ form.colonie }}
-            <br>
-            <p style="display: inline-block">Date : </p>
-            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                {{ form.date }}
-                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    {% if user.is_authenticated %}
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm">Ajouter Nourrissement</p>
+                <div class="titleForm">
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">&nbsp;</p>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <br>
-            <p style="display: inline-block">type : </p>{{ form.typeNourrissement }}
-            <br>
-            <p style="display: inline-block">type Aliment : </p>{{ form.typeAliment }}
-            <br>
-            <p style="display: inline-block">Produit : </p>{{ form.produit }}
-            <br>
-            <p style="display: inline-block">Quantite : </p>{{ form.quantite }}
-            <br>
-            <p>Note : </p>{{ form.note }}
-            <br>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
-    </div>
-</div>
+                <form class="formVisite" method="post">
+                    {% csrf_token %}
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Colonie : &nbsp;</div><div style="display: inline-block">{{ colonie }}</div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <div style="display: inline-block">Date : </div>
+                            <div class="divDate" style="display: inline-block">
+                                <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                    {{ form.date }}
+                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
 
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Type de nourrissement : &nbsp;</div><div style="display: inline-block">{{ form.typeNourrissement }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Type d'aliment : &nbsp;</div><div style="display: inline-block">{{ form.typeAliment }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div style="text-align: center">
+                        <div style="display: inline-block; padding-right: 25px">
+                            <div style="display: inline-block">Produit : &nbsp;</div><div style="display: inline-block">{{ form.produit }}</div>
+                        </div>
+                        <div style="display: inline-block">
+                            <div style="display: inline-block">Quantite : &nbsp;</div><div style="display: inline-block">{{ form.quantite }}</div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div>
+                        <div style="display: inline-block; margin-left: 25%">Notes (optionnel) : </div>
+                        <br>
+                        <div style="margin-left: 35%" class="divTextArea">
+                        {{ form.note }}
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 45%">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
 <script>
     $(function () {
         $("#datetimepicker1").datetimepicker({

@@ -10,19 +10,34 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-</head>
-<body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-<script type="text/javascript" src="{% static 'ProjetRuches/node_modules/fusioncharts/fusioncharts.js' %}"></script>
-<script type="text/javascript"
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+
+    <!-- Tempus Dominus Bootstrap 4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{% static 'ProjetRuches/node_modules/fusioncharts/fusioncharts.js' %}"></script>
+    <script type="text/javascript"
         src="{% static 'ProjetRuches/node_modules/jquery-fusioncharts/dist/fusioncharts.jqueryplugin.js' %}"></script>
-<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 
 <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 
+</head>
+<body>
+<div style="text-align: center">
+    {% include "../Nav/top.html" %}
+</div>
 
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="/home">Accueil</a></li>
@@ -52,24 +67,25 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <h2 style="color: #1C5F90">details capteur {{ nameCapteur }}</h2>
+    <h2 style="color: #1C5F90">Détails capteur {{ nameCapteur }}</h2>
     <br>
     <div>
         <div style="display: inline-block">
             <div style="display: block" id="chart-temp">{{ graphTemp|safe }}</div>
-            <p style="display: block">derniere temperature reçue : {{ derniereTemp|safe }}</p>
+            <p style="display: block; padding-left: 15%">derniere temperature reçue : {{ derniereTemp|safe }}</p>
         </div>
         <div style="display: inline-block">
             <div style="display: block" id="chart-hum">{{ graphHum|safe }}</div>
-            <p style="display: block">dernier pourcentage d'humidite reçu : {{ derniereHum|safe }}</p>
+            <p style="display: block; padding-left: 15%">dernier pourcentage d'humidite reçu : {{ derniereHum|safe }}</p>
         </div>
         <div style="display: inline-block">
-            <div style="display: block" id="chart-poids">{{ graphPoids|safe }}</div>
-            <p style="display: block">dernier % bat reçu : {{ dernierBat|safe }}</p>
+            <div style="display: inline-block;" id="chart-poids">{{ graphPoids|safe }}</div>
+            <div style="display: inline-block;">
+                <div style="display: block" id="chart-bat">{{ batGraph|safe }}</div>
+            </div>
+            <p style="display: block; padding-left: 15%">dernier % bat reçu : {{ dernierBat|safe }}</p>
         </div>
-        <div style="display: inline-block">
-            <div style="display: inline-block" id="chart-bat">{{ batGraph|safe }}</div>
-        </div>
+
     </div>
 </div>
 </body>
