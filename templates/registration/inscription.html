@@ -68,75 +68,78 @@
                         {% endfor %}
                     {% endif %}
 
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
-                            <div style="display: inline-block">Prénom : &nbsp;</div><div style="display: inline-block;">{{ user_form.first_name }}</div>
+                    <div style="text-align: center; margin-left: auto; margin-right: auto">
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
+                                <div style="display: inline-block">Prénom : &nbsp;</div><div style="display: inline-block;">{{ user_form.first_name }}</div>
+                            </div>
+                            <div style="display: inline-block; padding-left: 5%">
+                                <div style="display: inline-block">Nom : &nbsp;</div><div style="display: inline-block;">{{ user_form.last_name }}</div>
+                            </div>
                         </div>
-                        <div style="display: inline-block; padding-left: 5%">
-                            <div style="display: inline-block">Nom : &nbsp;</div><div style="display: inline-block;">{{ user_form.last_name }}</div>
+                        <br>
+
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
+                                <div style="display: inline-block">Username : &nbsp;</div><div style="display: inline-block;">{{ user_form.username }}</div>
+                            </div>
+                            <div style="display: inline-block; padding-left: 5%">
+                                <div style="display: inline-block">Email : &nbsp;</div><div style="display: inline-block;">{{ user_form.email }}</div>
+                            </div>
                         </div>
+                        <br>
+
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 0; padding-right: 5%">
+                                <div style="display: inline-block">Mot de passe : &nbsp;</div><div style="display: inline-block;">{{ user_form.password1 }} {{ form.password1.errors }}</div>
+                            </div>
+                            <div style="display: inline-block; padding-left: 0">
+                                <div style="display: inline-block">Répéter le mot de passe : &nbsp;</div><div style="display: inline-block;">{{ user_form.password2 }} {{ form.password2.errors }}</div>
+                            </div>
+                        </div>
+                        <br>
+
+
+                        {{ api_form.user }}
+
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
+                                <div style="display: inline-block">Adresse : &nbsp;</div><div style="display: inline-block;">{{ api_form.adressePApi }}</div>
+                            </div>
+                            <div style="display: inline-block; padding-left: 5%">
+                                <div style="display: inline-block">Supplément adresse (optionnel) : &nbsp;</div><div style="display: inline-block;">{{ api_form.adresseSApi }}</div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
+                                <div style="display: inline-block">Code postal : &nbsp;</div><div style="display: inline-block;">{{ api_form.codePostalApi }}</div>
+                            </div>
+                            <div style="display: inline-block; padding-left: 5%">
+                                <div style="display: inline-block">Ville : &nbsp;</div><div style="display: inline-block;">{{ api_form.villeApi }}</div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
+                                <div style="display: inline-block">Téléphone : &nbsp;</div><div style="display: inline-block;">{{ api_form.telephoneApi }}</div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div style="text-align: left; margin-left: auto; margin-right: auto">
+                            <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
+                                <div style="display: inline-block">N° API : &nbsp;</div><div style="display: inline-block;">{{ api_form.numeroApi }}</div>
+                            </div>
+                            <div style="display: inline-block; padding-left: 5%">
+                                <div style="display: inline-block">N° SIRET ou Numagrit : &nbsp;</div><div style="display: inline-block;">{{ api_form.numeroSiretAgrit }}</div>
+                            </div>
+                        </div>
+                        <br>
+
                     </div>
-                    <br>
-
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
-                            <div style="display: inline-block">Username : &nbsp;</div><div style="display: inline-block;">{{ user_form.username }}</div>
-                        </div>
-                        <div style="display: inline-block; padding-left: 5%">
-                            <div style="display: inline-block">mail : &nbsp;</div><div style="display: inline-block;">{{ user_form.email }}</div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 0; padding-right: 5%">
-                            <div style="display: inline-block">Mot de passe : &nbsp;</div><div style="display: inline-block;">{{ user_form.password1 }} {{ form.password1.errors }}</div>
-                        </div>
-                        <div style="display: inline-block; padding-left: 0">
-                            <div style="display: inline-block">Répéter le mot de passe : &nbsp;</div><div style="display: inline-block;">{{ user_form.password2 }} {{ form.password2.errors }}</div>
-                        </div>
-                    </div>
-                    <br>
-
-
-                    {{ api_form.user }}
-
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
-                            <div style="display: inline-block">Adresse : &nbsp;</div><div style="display: inline-block;">{{ api_form.adressePApi }}</div>
-                        </div>
-                        <div style="display: inline-block; padding-left: 5%">
-                            <div style="display: inline-block">Supplément (optionnel) : &nbsp;</div><div style="display: inline-block;">{{ api_form.adresseSApi }}</div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
-                            <div style="display: inline-block">Code postal : &nbsp;</div><div style="display: inline-block;">{{ api_form.codePostalApi }}</div>
-                        </div>
-                        <div style="display: inline-block; padding-left: 5%">
-                            <div style="display: inline-block">Ville : &nbsp;</div><div style="display: inline-block;">{{ api_form.villeApi }}</div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
-                            <div style="display: inline-block">Téléphone : &nbsp;</div><div style="display: inline-block;">{{ api_form.telephoneApi }}</div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-left: 5%; padding-right: 5%">
-                            <div style="display: inline-block">N° API : &nbsp;</div><div style="display: inline-block;">{{ api_form.numeroApi }}</div>
-                        </div>
-                        <div style="display: inline-block; padding-left: 5%">
-                            <div style="display: inline-block">N° SIRET ou Numagrit : &nbsp;</div><div style="display: inline-block;">{{ api_form.numeroSiretAgrit }}</div>
-                        </div>
-                    </div>
-                    <br>
 
 
                     <div class="titleForm">
@@ -249,7 +252,7 @@
                     <br>
 
                     <div style="text-align: center">
-                        <button class="btn btn-primary" type="submit">Inscription</button>
+                        <button class="btn btn-primary" type="submit" style="width: 200px; height: 50px">Inscription</button>
                     </div>
                 </form>
             </div>

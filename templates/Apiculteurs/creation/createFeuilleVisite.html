@@ -69,19 +69,13 @@
                 <div class="titleForm">
                     {% if etape == 1 %}
                     <ul role="tablist">
-                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true">
-                            <p style="text-align: center">Infos pricipales</p>
-                        </li>
-                        <li>
-                            <p style="text-align: center">Infos complémentaires</p>
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">Infos principales</p>
                         </li>
                     </ul>
                     {% else %}
                     <ul role="tablist">
-                        <li class="first" role="tab" aria-disabled="false" aria-selected="true">
-                            <p style="text-align: center">Infos pricipales</p>
-                        </li>
-                        <li class="active">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
                             <p style="text-align: center">Infos complémentaires</p>
                         </li>
                     </ul>
@@ -183,7 +177,7 @@
 
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Compact : &nbsp;</div><div style="display: inline-block">{{ form.couvainCompact }} &nbsp;</div><div style="display: inline-block">(si coché oui, entraîne bonne reine)</div>
+                            <div style="display: inline-block"><b>Compact :</b> &nbsp;</div><div style="display: inline-block">{{ form.couvainCompact }} &nbsp;</div><div style="display: inline-block">(si coché oui, entraîne bonne reine)</div>
                         </div>
                     </div>
                     <br>
@@ -256,6 +250,7 @@
                                 <div style="display: inline-block">Reine marquée : </div><div style="display: inline-block; vertical-align: top">{{ form.reineMarquee }}</div>
                             </div>
                         </div>
+                        <br>
                         <div style="display: block; padding-left: 10%">
                             <div>
                                 <div style="display: inline-block">couleur (optionnel) : </div><div style="display: inline-block; vertical-align: top">{{ form.couleurReineMarque }}</div>
@@ -381,7 +376,7 @@
                     <br>
                     <div style="text-align: center">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Quantité (Gramme ou litre) (optionnel) :</div><div style="display: inline-block;">{{ form.quantiteAlimentNourrissement }}</div><div style="display: inline-block">{{ form.uniteNourrissement }}</div>
+                            <div style="display: inline-block">Quantité en gramme ou litre (optionnel) :</div><div style="display: inline-block;">{{ form.quantiteAlimentNourrissement }}</div><div style="display: inline-block">{{ form.uniteNourrissement }}</div>
                         </div>
                     </div>
                     <br>
@@ -588,10 +583,10 @@
                     {% endif %}
                     <div>
                         <div style="display: inline-block; padding-left: 5%">
-                            <a href="javascript:history.back()" class="btn btn-warning">Précédent</a>
+                            <a href="javascript:history.back()" class="btn btnBleuModif">Précédent</a>
                         </div>
                         <div style="display: inline-block; padding-right: 5%; float: right">
-                            <button type="submit" class="btn btn-primary">Suivant</button>
+                            <button type="submit" class="btn btnBleuModif m-0">Suivant</button>
                         </div>
                     </div>
                     {% else %}

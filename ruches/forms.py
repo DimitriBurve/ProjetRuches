@@ -173,7 +173,7 @@ class FeuilleVisiteAvantForm(ModelForm):
     ]
 
     traficEntreeRuche = forms.CharField(
-        label="trafic à l'entrée de la ruche ",
+        label="Trafic à l'entrée de la ruche ",
         widget=forms.RadioSelect(choices=TRAFIC_CHOICES)
     )
 

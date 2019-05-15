@@ -847,6 +847,8 @@ def createFeuillevisite(request, rucher, colonie, etape):
                     print("5 is valid")
                     form.save()
                     etape += 1
+                else:
+                    print(form.errors)
             except Exception as e:
                 pass
         elif etape == 6:

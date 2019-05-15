@@ -128,6 +128,110 @@ li.dropdown2 {
         width: 310px !important;
         height: 300px !important;
     }
+
+    tbody td {
+        display: block;
+        width: 100% !important;
+    }
+
+    tbody b, tbody .donnees {
+        display: inline !important;
+    }
+
+    .table100-head {
+        display: none;
+    }
+
+    .actionForm form {
+        display: block !important;
+    }
+
+    .actionForm form div {
+        height: 5px !important;
+    }
+
+    .table100 {
+        height: auto;
+        padding-top: 0 !important;
+    }
+
+    .table100-body {
+        height: 100%;
+        max-height: 550px !important;
+    }
+
+    .etat {
+        display: block !important;
+    }
+
+    .limiter {
+        padding-bottom: 10% !important;
+    }
+
+    .imgAccueil {
+        display: none !important;
+    }
+
+    .imgAccueil2, .texteAccueil {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .texteAccueil {
+        position: relative !important;
+    }
+
+    .texteAccueil div {
+        top: 0 !important;
+        left: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: auto !important;
+        text-align: center;
+    }
+
+    .titreAccueil {
+        font-size: 30px !important;
+        top: 0 !important;
+        left: 0 !important;
+        margin-left: 5% !important;
+        margin-top: 50px !important;
+        width: auto !important;
+    }
+
+    .paraAcceuil {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        font-size: 17px !important;
+        text-align: left;
+    }
+
+    .table100.ver5 td {
+        background-color: #ececec !important;
+    }
+
+    .table100.ver5 .table100-body td:first-child {
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 10px;
+    }
+
+    .table100.ver5 .table100-body td:last-child {
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 0 !important;
+    }
+
+    .btnBleuDetails, .btnBleuModif, .btnRg {
+        width: 50%;
+    }
+
+    table b {
+        color: #1C5F90;
+    }
+
+    .Colonies, .ajoutColonies {
+        display: inline-block;
+        left: 50%;
+    }
 }
 
 #my-menu{
@@ -349,7 +453,7 @@ th, td {
 
 .table100.ver5 .table100-body tr {
   overflow: hidden;
-  border-bottom: 10px solid #fff;
+  border-bottom: 10px solid #ffffff;
   border-radius: 10px;
 }
 
@@ -416,9 +520,10 @@ th, td {
 /*-------------------------------------------------------*/
 
 h2 {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 50px;
+    /*padding-bottom: 5px;*/
     padding-left: 5%;
+    margin-bottom: 0 !important;
     color: #1C5F90;
 }
 
@@ -522,11 +627,16 @@ ul#id_partition, ul#id_couvainCompact, ul#id_couvainMosaique, ul#id_couvainChauv
 
 ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_couvainChauve li, ul#id_presenceOeuf li, ul#id_cadreCouvain li, ul#id_reineMarquee li, ul#id_couleurReineMarque li,  ul#id_presenceCelluleRoyale li, ul#id_celluleFauxBourdons li, ul#id_presenceFauxBourdons li, ul#id_maladieTraitement li, ul#id_nuisible li, ul#id_recoltePropolis li, ul#id_recoltePollen li, ul#id_typeAlimentNourrissement li, ul#id_apport li, ul#id_ponction li, ul#id_reineMarqueeManipulation li, ul#id_etatColonie li {
     display: inline-block;
+    margin-right: 15px;
 }
 
 #id_nombre_de_cadres, #id_codePostal, #id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2, #id_quantiteAlimentNourrissement, #id_nombreCadresColonie, #id_quantite {
     width: 75px;
 }
+
+/*#id_couleurReineMarque li, #id_maladieTraitement li {*/
+/*    margin-right: 15px;*/
+/*}*/
 
 .divDate ul {
     padding-left: 0 !important;
@@ -607,6 +717,18 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     height: 450px;
 }
 
-/*#id_attitudeAbeilles ul li {*/
-/*    display: inline-block;*/
-/*}*/
+.btnBleuAjout {
+    background-color: #C7CFCF !important;
+}
+
+.btnBleuDetails {
+    background-color: #ADD8E6 !important;
+}
+
+.btnBleuModif {
+    background-color: #87CEFA !important;
+}
+
+.btnRg {
+    background-color: #d7665d !important;
+}

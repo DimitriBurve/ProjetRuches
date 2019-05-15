@@ -197,7 +197,7 @@ class FeuilleVisite(models.Model):
 
     typeAlimentNourrissement = models.CharField(max_length=200, null=True)
     quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True)
-    uniteNourrissement = models.CharField(max_length=1, null=True)
+    uniteNourrissement = models.CharField(max_length=2, null=True)
 
     apport = models.CharField(max_length=200, null=True)
     provenanceApport = models.CharField(max_length=200, null=True)

@@ -48,27 +48,35 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2 style="color: #1C5F90">Colonies</h2>
+    <h2 class="Colonies" style="color: #1C5F90">Colonies</h2>
     {% if user.is_authenticated %}
+    <div class="ajoutColonies" style="position: relative">
+        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
+            <button type="submit" class="btn btnBleuAjout m-0" style="position: absolute; right: 12%; top: 0;">
+                <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                Ajouter
+            </button>
+        </form>
+    </div>
     <div>
         <div style="padding-left: 8%">
-            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/green_circle.png' %}">
-            <p style="display:inline-block; padding-right: 15px">: Bonne santé</p>
-            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/orange_circle.png' %}">
-            <p style="display:inline-block; padding-right: 15px">: A surveiller</p>
-            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/red_circle.png' %}">
-            <p style="display:inline-block; padding-right: 15px">: Critique</p>
-            <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/interrogation.png' %}">
-            <p style="display:inline-block;">: Aucune Information</p>
+            <div class="etat" style="display: inline-block">
+                <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/green_circle.png' %}">
+                <p style="display:inline-block; padding-right: 15px">: Bonne santé</p>
+            </div>
+            <div class="etat" style="display: inline-block">
+                <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/orange_circle.png' %}">
+                <p style="display:inline-block; padding-right: 15px">: A surveiller</p>
+            </div>
+            <div class="etat" style="display: inline-block">
+                <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/red_circle.png' %}">
+                <p style="display:inline-block; padding-right: 15px">: Critique</p>
+            </div>
+            <div class="etat" style="display: inline-block">
+                <img style="width: 30px; display: inline-block;" src="{% static 'ProjetRuches/images/interrogation.png' %}">
+                <p style="display:inline-block;">: Aucune Information</p>
+            </div>
         </div>
-    </div>
-    <div style="position: relative">
-        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
-                <button type="submit" class="btn btn-primary m-0" style="position: absolute; right: 12%; top: 0;">
-                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
     </div>
     <br>
     <div class="limiter">
@@ -100,50 +108,94 @@
                             {% if u == user %}
                             <tr class="row100 body">
                                 <td class="cell100 column1">
-                                    {% for etat in etatColonie %}
-                                    {% if etat.colonie == colonie %}
-                                    {% if etat.etat == 'Critique' %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
-                                    {% elif etat.etat == 'Normal' %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
-                                    {% elif etat.etat == 'A surveiller' %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
-                                    {% else %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
-                                    {% endif %}
-                                    {% endif %}
-                                    {% endfor %}
+                                    <b style="display: none" class="cell100 column2">Etat</b>
+                                    <div class="donnees">
+                                        {% for etat in etatColonie %}
+                                        {% if etat.colonie == colonie %}
+                                        {% if etat.etat == 'Critique' %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
+                                        {% elif etat.etat == 'Normal' %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
+                                        {% elif etat.etat == 'A surveiller' %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
+                                        {% else %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 </td>
-                                <td class="cell100 column2">{{ colonie.nom }}</td>
-                                <td class="cell100 column3">{{ colonie.rucher }}</td>
-                                <td class="cell100 column4">{{ colonie.type }}</td>
-                                <td class="cell100 column5">{{ colonie.nombre_de_cadres }}</td>
-                                <td class="cell100 column6">{{ colonie.date }}</td>
-                                <td class="cell100 column7">{{ colonie.remarque }}</td>
+                                <td class="cell100 column2">
+                                    <div>
+                                        <b style="display: none" class="cell100 column2">Nom</b>
+                                        <div class="donnees">
+                                            {{ colonie.nom }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cell100 column3">
+                                    <b style="display: none" class="cell100 column2">Rucher</b>
+                                    <div class="donnees">
+                                        {{ colonie.rucher }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column4">
+                                    <b style="display: none" class="cell100 column2">Type de ruche</b>
+                                    <div class="donnees">
+                                        {{ colonie.type }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column5">
+                                    <b style="display: none" class="cell100 column2">Nombre de cadres</b>
+                                    <div class="donnees">
+                                        {{ colonie.nombre_de_cadres }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column6">
+                                    <b style="display: none" class="cell100 column2">Date création</b>
+                                    <div class="donnees">
+                                        {{ colonie.date }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column7">
+                                    <b style="display: none" class="cell100 column2">Dernière remarque</b>
+                                    <div class="donnees">
+                                        {{ colonie.remarque }}
+                                    </div>
+                                </td>
                                 <td class="cell100 column8">
-                                    <form id="formDetails" method="get" style="display: inline-block"
-                                      action="{% url 'afficherColonieId' colonie.id %}">
-                                    <button type="submit" class="btn btn-primary m-0">
-                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
-                                    </button>
-                                </form>
+                                    <b style="display: none" class="cell100 column8">Actions</b>
+                                    <div class="actionForm">
+                                        <form id="formDetails" method="get" style="display: inline-block"
+                                              action="{% url 'afficherColonieId' colonie.id %}">
+                                            <button type="submit" class="btn btn-primary m-0">
+                                                <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                            </button>
+                                            <div></div>
+                                        </form>
 
-                                <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
-                                    <button type="submit" class="btn btn-primary m-0">
-                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
-                                    </button>
-                                </form>
+                                        <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
+                                            <button type="submit" class="btn btn-primary m-0">
+                                                <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                            </button>
+                                            <div></div>
+                                        </form>
 
-                                <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
-                                      action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger m-0">
-                                        <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
-                                    </button>
-                                </form>
+                                        <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                                              action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger m-0">
+                                                <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                            </button>
+                                            <div></div>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td class="cell100 column9">
-                                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                    <b style="display: none" class="cell100 column8">QR Code</b>
+                                    <div class="donnees">
+                                        <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                    </div>
                                 </td>
                             </tr>
                             {% endif %}
@@ -151,50 +203,94 @@
                             {% if user.is_staff %}
                             <tr class="row100 body">
                                 <td class="cell100 column1">
-                                    {% for etat in etatColonie %}
-                                    {% if etat.colonie == colonie %}
-                                    {% if etat.etat == 'Critique' %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
-                                    {% elif etat.etat == 'Normal' %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
-                                    {% elif etat.etat == 'A surveiller' %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
-                                    {% else %}
-                                    <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
-                                    {% endif %}
-                                    {% endif %}
-                                    {% endfor %}
+                                    <b style="display: none" class="cell100 column2"></b>
+                                    <div class="donnees">
+                                        {% for etat in etatColonie %}
+                                        {% if etat.colonie == colonie %}
+                                        {% if etat.etat == 'Critique' %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
+                                        {% elif etat.etat == 'Normal' %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/green_circle.png' %}" alt="greenCircle">
+                                        {% elif etat.etat == 'A surveiller' %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/orange_circle.png' %}" alt="orangeCircle">
+                                        {% else %}
+                                        <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/interrogation.png' %}" alt="interrogationCircle">
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 </td>
-                                <td class="cell100 column2">{{ colonie.nom }}</td>
-                                <td class="cell100 column3">{{ colonie.rucher }}</td>
-                                <td class="cell100 column4">{{ colonie.type }}</td>
-                                <td class="cell100 column5">{{ colonie.nombre_de_cadres }}</td>
-                                <td class="cell100 column6">{{ colonie.date }}</td>
-                                <td class="cell100 column7">{{ colonie.remarque }}</td>
+                                <td class="cell100 column2">
+                                    <div>
+                                        <b style="display: none" class="cell100 column2">Nom</b>
+                                        <div class="donnees">
+                                            {{ colonie.nom }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cell100 column3">
+                                    <b style="display: none" class="cell100 column2">Rucher</b>
+                                    <div class="donnees">
+                                        {{ colonie.rucher }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column4">
+                                    <b style="display: none" class="cell100 column2">Type de ruche</b>
+                                    <div class="donnees">
+                                        {{ colonie.type }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column5">
+                                    <b style="display: none" class="cell100 column2">Nombre de cadres</b>
+                                    <div class="donnees">
+                                        {{ colonie.nombre_de_cadres }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column6">
+                                    <b style="display: none" class="cell100 column2">Date création</b>
+                                    <div class="donnees">
+                                        {{ colonie.date }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column7">
+                                    <b style="display: none" class="cell100 column2">Dernière remarque</b>
+                                    <div class="donnees">
+                                        {{ colonie.remarque }}
+                                    </div>
+                                </td>
                                 <td class="cell100 column8">
-                                    <form id="formDetailsA" method="get" style="display: inline-block"
-                                      action="{% url 'afficherColonieId' colonie.id %}">
-                                    <button type="submit" class="btn btn-primary m-0">
-                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
-                                    </button>
-                                </form>
+                                    <b style="display: none" class="cell100 column8">Actions</b>
+                                    <div class="actionForm">
+                                        <form id="formDetailsA" method="get" style="display: inline-block"
+                                              action="{% url 'afficherColonieId' colonie.id %}">
+                                            <button type="submit" class="btn btnBleuDetails m-0">
+                                                <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                            </button>
+                                            <div></div>
+                                        </form>
 
-                                <form id="formModifA" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
-                                    <button type="submit" class="btn btn-primary m-0">
-                                        <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
-                                    </button>
-                                </form>
+                                        <form id="formModifA" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
+                                            <button type="submit" class="btn btnBleuModif m-0">
+                                                <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                            </button>
+                                            <div></div>
+                                        </form>
 
-                                <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
-                                      action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger m-0">
-                                        <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
-                                    </button>
-                                </form>
+                                        <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                                              action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btnRg m-0">
+                                                <img style="width: 25px" src="{% static 'ProjetRuches/images/delete.png' %}">
+                                            </button>
+                                            <div></div>
+                                        </form>
+                                    </div>
                                 </td>
                                 <td class="cell100 column9">
-                                    <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                    <b style="display: none" class="cell100 column8">QR Code &nbsp;</b>
+                                    <div class="donnees">
+                                        <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
+                                    </div>
                                 </td>
                             </tr>
                             {% endif %}
