@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
-
 </head>
 <body>
 <div style="text-align: center">
@@ -69,16 +68,17 @@
                 <div class="titleForm">
                     {% if etape == 1 %}
                     <ul role="tablist">
-                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
-                            <p style="text-align: center">Infos principales</p>
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%;">
+                            <p style="text-align: center; font-size: 20px; padding-top: 10px">Infos principales</p>
                         </li>
                     </ul>
                     {% else %}
                     <ul role="tablist">
                         <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
-                            <p style="text-align: center">Infos complémentaires</p>
+                            <p style="text-align: center; font-size: 20px; padding-top: 10px">Infos complémentaires</p>
                         </li>
                     </ul>
+                    {% include "../../Nav/progressNavFeuilleVi.html" %}
                     {% endif %}
                 </div>
                 <form class="formVisite" method="post">
@@ -117,7 +117,9 @@
                     {{ form.as_p }}
                     {% elif etape == 3 %}
 
-                    <p>Attitude des abeilles :</p>{{ form.attitudeAbeilles }}
+                    <div style="text-align: center">
+                        <b>Attitude des abeilles :</b>{{ form.attitudeAbeilles }}
+                    </div>
 
                     <br>
                     <div class="titleForm">
@@ -132,36 +134,36 @@
                     <div style="padding-left: 5%">
                         <div style="display: inline-block; padding-left: 10%; padding-right: 20%">
                             <div>
-                                <div style="display: inline-block">Nombre de cadres : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresColonie }}</div>
+                                <b style="display: inline-block">Nombre de cadres : &nbsp;</b><div style="display: inline-block">{{ form.nombreCadresColonie }}</div>
                             </div>
                         </div>
                         <div class="parti">
                             <div>
-                                <p style="display: inline-block">Partition : </p><div style="display: inline-block">{{ form.partition }}</div>
+                                <b style="display: inline-block">Partition : </b><div style="display: inline-block">{{ form.partition }}</div>
                             </div>
                         </div>
                     </div>
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Nombre de ruelles occupées : &nbsp;</div><div style="display: inline-block">{{ form.nombreRuellesOccupees }}</div>
+                            <b style="display: inline-block">Nombre de ruelles occupées : &nbsp;</b><div style="display: inline-block">{{ form.nombreRuellesOccupees }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Nombre de cadres de couvain : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresCouvain }}</div>
+                            <b style="display: inline-block">Nombre de cadres de couvain : &nbsp;</b><div style="display: inline-block">{{ form.nombreCadresCouvain }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Nombre de cadres cire gauffrée introduit : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadreCireGauffreeIntroduit }}</div>
+                            <b style="display: inline-block">Nombre de cadres cire gauffrée introduit : &nbsp;</b><div style="display: inline-block">{{ form.nombreCadreCireGauffreeIntroduit }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Nombre de hausses : &nbsp;</div><div style="display: inline-block">{{ form.nombreHausse }}</div>
+                            <b style="display: inline-block">Nombre de hausses : &nbsp;</b><div style="display: inline-block">{{ form.nombreHausse }}</div>
                         </div>
                     </div>
 
@@ -177,31 +179,31 @@
 
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block"><b>Compact :</b> &nbsp;</div><div style="display: inline-block">{{ form.couvainCompact }} &nbsp;</div><div style="display: inline-block">(si coché oui, entraîne bonne reine)</div>
+                            <b style="display: inline-block">Compact :&nbsp;</b><div style="display: inline-block">{{ form.couvainCompact }} &nbsp;</div><div style="display: inline-block">(si coché oui, entraîne bonne reine)</div>
                         </div>
                     </div>
                     <br>
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Mosaïque : &nbsp;</div><div style="display: inline-block">{{ form.couvainMosaique }} &nbsp;</div><div style="display: inline-block">(si coché oui, risque Loque ou Varroa)</div>
+                            <b style="display: inline-block">Mosaïque : &nbsp;</b><div style="display: inline-block">{{ form.couvainMosaique }} &nbsp;</div><div style="display: inline-block">(si coché oui, risque Loque ou Varroa)</div>
                         </div>
                     </div>
                     <br>
                     <div style="padding-left: 5%">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Chauve : &nbsp;</div><div style="display: inline-block">{{ form.couvainChauve }} &nbsp;</div><div style="display: inline-block">(si coché oui, risque de teigne)</div>
+                            <b style="display: inline-block">Chauve : &nbsp;</b><div style="display: inline-block">{{ form.couvainChauve }} &nbsp;</div><div style="display: inline-block">(si coché oui, risque de teigne)</div>
                         </div>
                     </div>
                     <br>
                     <div style="padding-left: 5%">
                         <div style="display: inline-block; padding-left: 10%; padding-right: 10%">
                             <div>
-                                <div style="display: inline-block">Présence d'oeufs : </div><div style="display: inline-block">{{ form.presenceOeuf }}</div>
+                                <b style="display: inline-block">Présence d'oeufs : </b><div style="display: inline-block">{{ form.presenceOeuf }}</div>
                             </div>
                         </div>
                         <div class="parti">
                             <div>
-                                <div style="display: inline-block">Nombre de cadres (optionnel) : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresOeuf }}</div>
+                                <b style="display: inline-block">Nombre de cadres (optionnel) : &nbsp;</b><div style="display: inline-block">{{ form.nombreCadresOeuf }}</div>
                             </div>
                         </div>
                     </div>
@@ -209,12 +211,12 @@
                     <div style="padding-left: 5%">
                         <div style="display: inline-block; padding-left: 10%; padding-right: 9%">
                             <div>
-                                <div style="display: inline-block">Cadre de couvain : </div><div style="display: inline-block">{{ form.cadreCouvain }}</div>
+                                <b style="display: inline-block">Cadre de couvain : </b><div style="display: inline-block">{{ form.cadreCouvain }}</div>
                             </div>
                         </div>
                         <div class="parti">
                             <div>
-                                <div style="display: inline-block">Nombre de cadres (optionnel) : &nbsp;</div><div style="display: inline-block">{{ form.nombreCadresCouvain2 }}</div>
+                                <b style="display: inline-block">Nombre de cadres (optionnel) : &nbsp;</b><div style="display: inline-block">{{ form.nombreCadresCouvain2 }}</div>
                             </div>
                         </div>
                     </div>
@@ -233,12 +235,12 @@
                     <div style="text-align: center">
                         <div style="display: inline-block; padding-right: 9%">
                             <div>
-                                <div style="display: inline-block">Origine reine : </div><div style="display: inline-block; vertical-align: top">{{ form.origineReine }}</div>
+                                <b style="display: inline-block">Origine reine : </b><div style="display: inline-block; vertical-align: top">{{ form.origineReine }}</div>
                             </div>
                         </div>
                         <div class="parti">
                             <div>
-                                <div style="display: inline-block">Reine présente : &nbsp;</div><div style="display: inline-block; vertical-align: top">{{ form.reinePresente }}</div>
+                                <b style="display: inline-block">Reine présente : &nbsp;</b><div style="display: inline-block; vertical-align: top">{{ form.reinePresente }}</div>
                             </div>
                         </div>
                     </div>
@@ -247,13 +249,13 @@
                     <div style="padding-left: 10%">
                         <div style="display: block; padding-left: 10%; padding-right: 9%">
                             <div>
-                                <div style="display: inline-block">Reine marquée : </div><div style="display: inline-block; vertical-align: top">{{ form.reineMarquee }}</div>
+                                <b style="display: inline-block">Reine marquée : </b><div style="display: inline-block; vertical-align: top">{{ form.reineMarquee }}</div>
                             </div>
                         </div>
                         <br>
                         <div style="display: block; padding-left: 10%">
                             <div>
-                                <div style="display: inline-block">couleur (optionnel) : </div><div style="display: inline-block; vertical-align: top">{{ form.couleurReineMarque }}</div>
+                                <b style="display: inline-block">couleur (optionnel) : </b><div style="display: inline-block; vertical-align: top">{{ form.couleurReineMarque }}</div>
                             </div>
                         </div>
                     </div>
@@ -262,12 +264,12 @@
                     <div style="text-align: center">
                         <div style="display: inline-block; padding-right: 7%">
                             <div>
-                                <div style="display: inline-block">Présence cellule royale : </div><div style="display: inline-block; vertical-align: top">{{ form.presenceCelluleRoyale }}</div>
+                                <b style="display: inline-block">Présence cellule royale : </b><div style="display: inline-block; vertical-align: top">{{ form.presenceCelluleRoyale }}</div>
                             </div>
                         </div>
                         <div class="parti">
                             <div>
-                                <div style="display: inline-block">origine (optionnel) : </div><div style="display: inline-block; vertical-align: top">{{ form.presenceCelluleRoyaleOrigine }}</div>
+                                <b style="display: inline-block">origine (optionnel) : </b><div style="display: inline-block; vertical-align: top">{{ form.presenceCelluleRoyaleOrigine }}</div>
                             </div>
                         </div>
                     </div>
@@ -615,6 +617,11 @@
         $("#datetimepicker5").datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
         });
+    });
+
+    $('.wizard li').click(function() {
+        $(this).prevAll().addClass("completed");
+        $(this).nextAll().removeClass("completed")
     });
 </script>
 </body>

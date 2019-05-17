@@ -56,13 +56,13 @@ def header(apikey):
 
 
 def informationsUser(request):
-    #     apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
-    #
-    #     res = requests.get(
-    #         "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/devices",
-    #         headers=header(apikey)).json()
-    #     print(res)
-    #
+
+    headers = {'Accept': 'application/json', 'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
+    res = requests.get(
+        "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
+        headers=headers).json()
+
+    # print(res)
 
     capteurs = json.load(open("fixtures/capteurs.json"))
     for cap in capteurs:
@@ -99,77 +99,64 @@ def informationsUser(request):
 
 
 def capteurUser(request, idCapteur):
-    # apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY"
-    #
-    # res = requests.get(
-    #     "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/devices",
-    #     headers=header(apikey)).json()
-    #
-    # url = "https://api.hl2.com/panorama/v1/applications/591b3eb750e1ff001b65e816/5c2e0114bd58d4013e7919d2/hooks/5cc6f3f3619c67001743f7df/deliveries"
-    #
-    # response = requests.get(url, headers=header(apikey)).json()
-    # # payload = ""
-    # # headers = {
-    # #     'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTI0ODU5NTAsInN1YiI6IjU5MWIzZWI3NTBlMWZmMDAxYjY1ZTgxNiIsImp0aSI6Ijc1OGY1NzZkZjIyNzQxMjY3MWQyNTQyMDcyNmI4ODk4YTFiMDIyNDkifQ._pIsLsFhMHr7kkXyRRUOhuMdE08sqHuwyDm4JEVsBYY",
-    # #     'cache-control': "no-cache",
-    # #     'Postman-Token': "24bd5fd8-7fb6-47b8-9159-c288506650d5"
-    # # }
-    #
-    # # response = requests.request("GET", url, data=payload, headers=headers).json()
+    headers = {'Accept': 'application/json',
+               'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
+    response = requests.get(
+        "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
+        headers=headers).json()
     #
     dataCapteur = []
     #
-    # for resp in response:
-    #     # print(resp['deviceId'])
-    #     date = resp['createdAt']
-    #     temp = date.split('T')
-    #     temp2 = temp[1].split('Z')
-    #     temp3 = temp2[0].split('.')
-    #     dateTemp = temp3[0].split(':')
-    #     hours = (int(dateTemp[0]) + 2) % 24
-    #     hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
-    #     datef = temp[0] + " " + str(hourF)
-    #     if resp['deviceId'] == idCapteur and idCapteur == "591b3f0c50e1ff001b65e817":
-    #         dataCapteur.append([datef,
-    #                             resp['request']['payload']['record']['data']['vbat'],
-    #                             resp['request']['payload']['record']['data']['humidity'],
-    #                             resp['request']['payload']['record']['data']['temperature']])
-    #     elif resp['deviceId'] == idCapteur:
-    #         print("test")
-    #         dataCapteur.append([datef,
-    #                             resp['request']['payload']['record']['data']['battery_2'],
-    #                             resp['request']['payload']['record']['data']['humidite_2'],
-    #                             resp['request']['payload']['record']['data']['temperature_2']])
-    #
+    for resp in response:
+        # print(resp['deviceId'])
+        date = resp['time']
+        temp = date.split('T')
+        temp2 = temp[1].split('Z')
+        temp3 = temp2[0].split('.')
+        dateTemp = temp3[0].split(':')
+        hours = (int(dateTemp[0]) + 2) % 24
+        hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
+        datef = temp[0] + " " + str(hourF)
+
+        # temp
+
+        dataCapteur.append([datef,
+                            86,
+                            resp['humidity'],
+                            resp['temperature']])
+
+        # if resp['deviceId'] == idCapteur and idCapteur == "591b3f0c50e1ff001b65e817":
+        #     dataCapteur.append([datef,
+        #                         resp['request']['payload']['record']['data']['vbat'],
+        #                         resp['request']['payload']['record']['data']['humidity'],
+        #                         resp['request']['payload']['record']['data']['temperature']])
+        # elif resp['deviceId'] == idCapteur:
+        #     print("test")
+        #     dataCapteur.append([datef,
+        #                         resp['request']['payload']['record']['data']['battery_2'],
+        #                         resp['request']['payload']['record']['data']['humidite_2'],
+        #                         resp['request']['payload']['record']['data']['temperature_2']])
 
     dataCapteurJson = json.load(open("fixtures/data.json"))
 
-    for d in dataCapteurJson:
-        # print(d)
-        dataCapteur.append([d['time'],
-                            d['bat'],
-                            d['hum'],
-                            d['temp']])
+    # for d in dataCapteurJson:
+    #     # print(d)
+    #     dataCapteur.append([d['time'],
+    #                         d['bat'],
+    #                         d['hum'],
+    #                         d['temp']])
 
     # print(dataCapteur)
 
-    data = requests.get(
-        'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/data/adding-a-reference-line-data.json').text
-    schema = requests.get(
-        'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/adding-a-reference-line-schema.json').text
-
-    schema2 = json.load(open("fixtures/schema.json"))
+    schema = json.load(open("fixtures/schema.json"))
 
     # pour recuperer derniere temperature
 
-    data2 = requests.get(
-        'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/data/adding-a-reference-line-data.json').json()
+    derniereTemp = dataCapteur[len(dataCapteur) - 1][3]
+    derniereHum = dataCapteur[len(dataCapteur) - 1][2]
+    dernierBat = dataCapteur[len(dataCapteur) - 1][1]
 
-    derniereTemp = dataCapteurJson[len(dataCapteurJson) - 1]['temp']
-    derniereHum = dataCapteurJson[len(dataCapteurJson) - 1]['hum']
-    dernierBat = dataCapteurJson[len(dataCapteurJson) - 1]['bat']
-
-    fusionTable = FusionTable(schema2, dataCapteur)
+    fusionTable = FusionTable(schema, dataCapteur)
 
     # graph pour temperatures
 
