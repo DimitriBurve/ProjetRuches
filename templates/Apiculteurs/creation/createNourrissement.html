@@ -75,46 +75,46 @@
                 </div>
                 <form class="formVisite" method="post">
                     {% csrf_token %}
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Colonie : &nbsp;</div><div style="display: inline-block">{{ colonie }}</div>
-                        </div>
-                        <div style="display: inline-block;">
-                            <div style="display: inline-block">Date : </div>
-                            <div class="divDate" style="display: inline-block">
-                                <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                                    {{ form.date }}
-                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    <table class="addNour">
+                        <tr>
+                            <td class="td1C" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Colonie : &nbsp;</b><div style="display: inline-block">{{ colonie }}</div>
+                            </td>
+                            <td class="tdDate" style="float: right; text-align: right">
+                                <b style="display: inline-block">Date : </b>
+                                <div class="divDate" style="display: inline-block">
+                                    <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                        {{ form.date }}
+                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
+                            </td>
+                        </tr>
 
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Type de nourrissement : &nbsp;</div><div style="display: inline-block">{{ form.typeNourrissement }}</div>
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Type d'aliment : &nbsp;</div><div style="display: inline-block">{{ form.typeAliment }}</div>
-                        </div>
-                    </div>
-                    <br>
+                        <tr>
+                            <td class="td1T" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Type de nourrissement : &nbsp;</b><div style="display: inline-block">{{ form.typeNourrissement }}</div>
+                            </td>
+                            <td class="td2T" style="float: right; text-align: right">
+                                <b style="display: inline-block">Type d'aliment : &nbsp;</b><div style="display: inline-block">{{ form.typeAliment }}</div>
+                            </td>
+                        </tr>
 
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Produit : &nbsp;</div><div style="display: inline-block">{{ form.produit }}</div>
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Quantite : &nbsp;</div><div style="display: inline-block">{{ form.quantite }}</div>
-                        </div>
-                    </div>
+                        <tr>
+                            <td class="td1P" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Produit : &nbsp;</b><div style="display: inline-block">{{ form.produit }}</div>
+                            </td>
+                            <td class="td2Q" style="float: right; text-align: right">
+                                <b style="display: inline-block">Quantite : &nbsp;</b><div style="display: inline-block">{{ form.quantite }}</div>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
 
                     <div>
-                        <div style="display: inline-block; margin-left: 25%">Notes (optionnel) : </div>
+                        <b style="display: inline-block; margin-left: 25%">Notes (optionnel) : </b>
                         <br>
                         <div style="margin-left: 35%" class="divTextArea">
                         {{ form.note }}

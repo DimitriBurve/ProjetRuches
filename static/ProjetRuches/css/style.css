@@ -90,7 +90,7 @@ li.dropdown2 {
     display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1102px) {
     ul.navbarMenu {
         display: none;
     }
@@ -307,7 +307,7 @@ li.dropdown2 {
 .limiter {
     padding-right: 10%;
     padding-left: 5%;
-    margin: 0 0;
+    margin: 0 0 2%;
 }
 
 .container-table100 {
@@ -439,7 +439,7 @@ th, td {
     /*line-height: 1.4;*/
     text-transform: uppercase;
 
-  background-color: rgba(28, 95, 144, 0.70);
+    background-color: rgba(28, 95, 144, 0.70);
 }
 
 .table100.ver5 td {
@@ -485,7 +485,7 @@ th, td {
 
 .table100.ver5 .table100-head th {
   padding-top: 15px;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
 }
 
 /*---------------------------------------------*/
@@ -501,7 +501,8 @@ th, td {
 }
 
 .table100.ver5 .table100-body{
-  padding-right: 0px;
+    padding-right: 0;
+    margin-top: 20px;
 }
 
 .table100.ver5 .ps__rail-y {
@@ -593,6 +594,12 @@ h2 {
     padding-left: 45%;
 }
 
+.formVisite ul#id_user {
+    width: auto;
+    text-align: center !important;
+    padding-left: 0 !important;
+}
+
 form.formVisite p {
     display: block;
     text-align: center;
@@ -630,7 +637,7 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     margin-right: 15px;
 }
 
-#id_nombre_de_cadres, #id_codePostal, #id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2, #id_quantiteAlimentNourrissement, #id_nombreCadresColonie, #id_quantite {
+#id_nombre_de_cadres, #id_codePostal, #id_nombreRuellesOccupees, #id_nombreCadresCouvain, #id_nombreCadreCireGauffreeIntroduit, #id_nombreHausse, #id_nombreCadresOeuf, #id_nombreCadresCouvain2, #id_quantiteAlimentNourrissement, #id_nombreCadresColonie, #id_quantite, #id_codePostalApi, #id_codePostalGDSA, #id_codePostalVeterinaire, #id_codePostalAgentSanitaire {
     width: 75px;
 }
 
@@ -675,6 +682,8 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     max-height: 150px;
     text-align: left;
     overflow: scroll;
+    border-radius: 10px;
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.45);
 }
 
 #id_user {
@@ -731,4 +740,152 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
 
 .btnRg {
     background-color: #d7665d !important;
+}
+
+.inscription, .login, .colonieTable, .addRecolte, .addTrait, .addNour {
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.inscription td.td2 {
+    width: 430px;
+    margin-right: 2%;
+    padding-right: 0 !important;
+}
+
+.inscription td.supp {
+    width: 500px;
+    padding-right: 0 !important;
+    margin-right: 2%;
+}
+
+.inscription td.td1 {
+    width: 350px;
+    margin-left: 3%;
+    padding-right: 0 !important;
+}
+
+.inscription td.tdCodePostalLabel {
+    width: 149px;
+    margin-left: 2%;
+    padding-right: 0 !important;
+}
+
+.login {
+    width: 400px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.colonieTable td.td1 {
+    width: 350px;
+    margin-left: 75px;
+    padding-right: 0 !important;
+}
+
+.colonieTable td.td2 {
+    width: 350px;
+    margin-right: 130px;
+    padding-right: 0 !important;
+}
+
+.colonieTable td.td2C {
+    width: 350px;
+    margin-right: 152px;
+    padding-right: 0 !important;
+}
+
+.colonieTable td.tdDate {
+    width: 350px;
+    margin-left: 180px;
+}
+
+.addRecolte td.td1N {
+    width: 350px;
+    margin-left: 14px;
+    padding-right: 0 !important;
+}
+
+.addRecolte td.td1 {
+    width: 350px;
+    margin-left: 75px;
+    padding-right: 0 !important;
+}
+
+.addRecolte td.tdDate {
+    width: 310px;
+    margin-right: 89px;
+    padding-right: 0 !important;
+}
+
+.addRecolte td.td2C {
+    width: 310px;
+    margin-right: 210px;
+    padding-right: 0 !important;
+}
+
+.addTrait td.td1A {
+    width: 310px;
+    margin-left: 5px;
+    padding-right: 0 !important;
+}
+
+.addTrait td.tdDate {
+    width: 350px;
+    margin-left: 80px;
+    padding-right: 0 !important;
+}
+
+.addTrait td.td1M {
+    width: 350px;
+    margin-left: 68px;
+    padding-right: 0 !important;
+}
+
+.addTrait td.td2C {
+    width: 250px;
+    margin-right: 255px;
+    padding-right: 0 !important;
+}
+
+.addTrait td.td2M {
+    width: 350px;
+    margin-right: 80px;
+    padding-right: 0 !important;
+}
+
+.addNour td.td1C {
+    width: 210px;
+    margin-left: 80px;
+    padding-right: 0 !important;
+}
+
+.addNour td.td1T {
+    width: 350px;
+    margin-left: 33px;
+    padding-right: 0 !important;
+}
+
+.addNour td.td1P {
+    width: 350px;
+    margin-left: 115px;
+    padding-right: 0 !important;
+}
+
+.addNour td.tdDate {
+    width: 350px;
+    margin-right: 75px;
+    padding-right: 0 !important;
+}
+
+.addNour td.td2T {
+    width: 250px;
+    margin-right: 187px;
+    padding-right: 0 !important;
+}
+
+.addNour td.td2Q {
+    width: 220px;
+    margin-right: 195px;
+    padding-right: 0 !important;
 }

@@ -65,7 +65,7 @@
                     {% csrf_token %}
                     <div style="text-align: center">
                         <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Nom : &nbsp;</div><div style="display: inline-block">{{ form.nom }}</div>
+                            <b style="display: inline-block">Nom : &nbsp;</b><div style="display: inline-block">{{ form.nom }}</div>
                             {% if form.nom.errors %}
                             <p style="display: inline-block; color: red">Un rucher de ce nom existe déjà</p>
                             {% endif %}
@@ -80,26 +80,30 @@
                         </ul>
                     </div>
                     <br>
-                    <div style="margin-left: 25%">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Adresse Principale : &nbsp;</div><div style="display: inline-block">{{ form.adresseP }}</div>
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Adresse (complément) : &nbsp;</div><div style="display: inline-block">{{ form.adresseS }}</div>
-                        </div>
-                    </div>
-                    <br>
-                    <div style="margin-left: 25%">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Code Postal : &nbsp;</div><div style="display: inline-block">{{ form.codePostal }}</div>
-                            {% if form.codePostal.errors%}
-                            <p style="display: inline-block; color: red; margin-left: 0">Code postal doit être composé de 5 chiffres</p>
-                            {% endif %}
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Ville : &nbsp;</div><div style="display: inline-block">{{ form.ville }}</div>
-                        </div>
-                    </div>
+                    <table class="inscription">
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Adresse : &nbsp;</b><div style="display: inline-block">{{ form.adresseP }}</div>
+                            </td>
+                            <td class="supp" style="display: inline-block; text-align: right; float: right">
+                                <b style="display: inline-block">Supplément adresse (optionnel) : &nbsp;</b><div style="display: inline-block">{{ form.adresseS }}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdCodePostalLabel" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Code postal : &nbsp;</b>
+                            </td><!--
+                            --><td class="" style="display: inline-block; text-align: left">
+                                <div style="display: inline-block">{{ form.codePostal }}</div>
+                                {% if form.codePostal.errors%}
+                                <p style="display: inline-block; color: red; margin-left: 0">Code postal doit être composé de 5 chiffres</p>
+                                {% endif %}
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Ville : &nbsp;</b><div style="display: inline-block">{{ form.ville }}</div>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     <div>
                         <div class="titleForm">
@@ -110,8 +114,10 @@
                             </ul>
                         </div>
                         <br>
-                        <div style="margin-left: 20%; margin-right: 20%" class="divChoixUser">
-                        {{ form.user }}
+                        <div style="margin-left: auto; margin-right: auto; text-align: center">
+                            <div style="margin-left: auto; margin-right: auto; text-align: left; width: 300px" class="divChoixUser">
+                                {{ form.user }}
+                            </div>
                         </div>
                     </div>
                     <br>

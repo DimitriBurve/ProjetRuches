@@ -78,58 +78,6 @@
                         <table>
                             <tbody>
                             {% for rucher in ruchers %}
-                            {% for u in rucher.user.all %}
-                            {% if u == user %}
-                            <tr class="row100 body">
-                                <td class="cell100 column2">
-                                    <b style="display: none" class="cell100 column2">Nom</b>
-                                    <div class="donnees">
-                                        {{ rucher.nom }}
-                                    </div>
-                                </td>
-                                <td class="cell100 column8">
-                                    <b style="display: none" class="cell100 column8">localisation</b>
-                                    <div class="donnees">
-                                        {{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}
-                                    </div>
-                                </td>
-                                <td class="cell100 column2">
-                                    <b style="display: none" class="cell100 column2">Apiculteur(s)</b>
-                                    <div class="donnees">
-                                        {% for u in rucher.user.all %} {{ u }} {% endfor %}
-                                    </div>
-                                </td>
-                                <td class="cell100 column8">
-                                    <b style="display: none" class="cell100 column8">Actions</b>
-                                    <div class="actionForm">
-                                        <form id="formDetails" method="get" style="display: inline-block"
-                                            action="{% url 'afficherColoniesRucher' rucher.nom %}">
-                                            <button type="submit" class="btn btn-primary m-0">
-                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
-                                            </button>
-                                            <div></div>
-                                        </form>
-                                        <form id="formModif" method="get" style="display: inline-block">
-                                            <button type="submit" class="btn btn-primary m-0">
-                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
-                                            </button>
-                                            <div></div>
-                                        </form>
-
-                                        <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
-                                              action="{% url 'validSupprimerRucher' rucher.nom %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger m-0">
-                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
-                                            </button>
-                                            <div></div>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-
                             {% if user.is_staff%}
                             <tr class="row100 body">
                                 <td class="cell100 column2">
@@ -160,7 +108,8 @@
                                             </button>
                                             <div></div>
                                         </form>
-                                        <form id="formModifA" method="get" style="display: inline-block">
+                                        <form id="formModifA" method="get" style="display: inline-block"
+                                            action="{% url 'modifierRucherId' rucher.id %}">
                                             <button type="submit" class="btn btnBleuModif m-0">
                                                 <img style="width: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
                                             </button>
@@ -178,6 +127,60 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% else %}
+                            {% for u in rucher.user.all %}
+                            {% if u == user %}
+                            <tr class="row100 body">
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Nom</b>
+                                    <div class="donnees">
+                                        {{ rucher.nom }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column8">
+                                    <b style="display: none" class="cell100 column8">localisation</b>
+                                    <div class="donnees">
+                                        {{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}
+                                    </div>
+                                </td>
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Apiculteur(s)</b>
+                                    <div class="donnees">
+                                        {% for u in rucher.user.all %} {{ u }} {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="cell100 column8">
+                                    <b style="display: none" class="cell100 column8">Actions</b>
+                                    <div class="actionForm">
+                                        <form id="formDetails" method="get" style="display: inline-block"
+                                            action="{% url 'afficherColoniesRucher' rucher.nom %}">
+                                            <button type="submit" class="btn btnBleuDetails m-0">
+                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
+                                            </button>
+                                            <div></div>
+                                        </form>
+                                        <form id="formModif" method="get" style="display: inline-block"
+                                            action="{% url 'modifierRucherId' rucher.id %}">
+                                            <button type="submit" class="btn btnBleuModif m-0">
+                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                            </button>
+                                            <div></div>
+                                        </form>
+
+                                        <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{rucher.nom}}')" style="display: inline-block"
+                                              action="{% url 'validSupprimerRucher' rucher.nom %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btnRg m-0">
+                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                            </button>
+                                            <div></div>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+
                             {% endif %}
                             {% endfor %}
                             </tbody>

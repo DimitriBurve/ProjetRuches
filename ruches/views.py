@@ -437,10 +437,30 @@ def afficherColonies(request):
     colonies = Colonie.objects.all()
 
     feuillesObj = FeuilleVisite.objects.all()
+    nourrissementsObj = Nourrissement.objects.all()
+    peseesObj = Pesee.objects.all()
+    recoltesObj = Recolte.objects.all()
+    traitementsObj = Traitement.objects.all()
 
     for f in feuillesObj:
         if f.notes is None:
             f.delete()
+
+    for n in nourrissementsObj:
+        if n.typeNourrissement is None:
+            n.delete()
+
+    for p in peseesObj:
+        if p.poids is None:
+            p.delete()
+
+    for r in recoltesObj:
+        if r.produitRecolte is None:
+            r.delete()
+
+    for t in traitementsObj:
+        if t.maladie is None:
+            t.delete()
 
     etatFeuilles = []
     feuilles = []
@@ -610,7 +630,7 @@ def ajouterRucher(request):
             return redirect('afficherRuchers')
         else:
             print(form.errors)
-            return render(request, 'Apiculteurs/creation/createRucher.html', {'form': form})
+            # return render(request, 'Apiculteurs/creation/createRucher.html', {'form': form})
 
     else:
         form = RucherForm()
@@ -634,7 +654,7 @@ def ajouterTraitement(request, rucher, colonie):
     else:
         obj = Traitement.objects.create(colonie=colonieObj)
         traitementForm = TraitementForm(instance=obj)
-    return render(request, 'Apiculteurs/creation/createTraitement.html', {'form': traitementForm})
+    return render(request, 'Apiculteurs/creation/createTraitement.html', {'form': traitementForm, 'colonie': colonie, 'rucher': rucher})
 
 
 def modifierColonies(request):
@@ -654,11 +674,6 @@ def modifierColonieId(request, c_id):
     else:
         form = RucheForm(instance=colonie)
         return render(request, 'Apiculteurs/modification/modifierColonieId.html', {'form': form})
-
-
-def modifierRuchers(request):
-    ruchers = Rucher.objects.all()
-    return render(request, 'Apiculteurs/modification/modifierRuchers.html', {'ruchers': ruchers})
 
 
 def modifierRucherId(request, r_id):

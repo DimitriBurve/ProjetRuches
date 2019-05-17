@@ -59,7 +59,7 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2 style="color: #1C5F90">Ajouter Traitement</h2>
+    <h2 style="color: #1C5F90">Colonie {{colonie}} {{rucher}}</h2>
     {% if user.is_authenticated %}
     <div class="multipleForm">
         <div class="container-table100">
@@ -74,41 +74,43 @@
                 </div>
                 <form class="formVisite" method="post">
                     {% csrf_token %}
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Apiculteur : &nbsp;</div><div style="display: inline-block">{{ form.api }}</div>
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Colonie : &nbsp;</div><div style="display: inline-block">{{ form.colonie }}</div>
-                        </div>
-                    </div>
-                    <br>
-                    <div style="text-align: center">
-                        <div style="display: inline-block">Date : </div>
-                        <div class="divDate" style="display: inline-block; padding-right: 25px">
-                            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                                {{ form.date }}
-                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    <table class="addTrait">
+                        <tr>
+                            <td class="td1A" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Apiculteur : &nbsp;</b><div style="display: inline-block">{{ form.api }}</div>
+                            </td>
+                            <td class="td2C" style="float: right; text-align: right">
+                                <b style="display: inline-block">Colonie : &nbsp;</b><div style="display: inline-block">{{ colonie }}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdDate" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Date : </b>
+                                <div class="divDate" style="display: inline-block; padding-right: 25px">
+                                    <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                        {{ form.date }}
+                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Maladie : &nbsp;</div><div style="display: inline-block">{{ form.maladie }}</div>
-                        </div>
-                    </div>
-                    <br>
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <div style="display: inline-block">Méthode : &nbsp;</div><div style="display: inline-block">{{ form.methode }}</div>
-                        </div>
-                        <div style="display: inline-block">
-                            <div style="display: inline-block">Posologie : &nbsp;</div><div style="display: inline-block">{{ form.posologie }}</div>
-                        </div>
-                    </div>
+                            </td>
+                            <td class="td2M" style="float: right; text-align: right">
+                                <b style="display: inline-block">Maladie : &nbsp;</b><div style="display: inline-block">{{ form.maladie }}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1M" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Méthode : &nbsp;</b><div style="display: inline-block">{{ form.methode }}</div>
+                            </td>
+                            <td class="td2M" style="float: right; text-align: right">
+                                <b style="display: inline-block">Posologie : &nbsp;</b><div style="display: inline-block">{{ form.posologie }}</div>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     <div>
-                        <div style="display: inline-block; margin-left: 25%">Remarques (optionnel) : </div>
+                        <b style="display: inline-block; margin-left: 25%">Remarques (optionnel) : </b>
                         <br>
                         <div style="margin-left: 35%" class="divTextArea">
                         {{ form.remarques }}

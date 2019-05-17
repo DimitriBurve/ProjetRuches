@@ -46,7 +46,7 @@ class RucherForm(ModelForm):
     users = User.objects.all()
     UsersChoices = []
     for u in users:
-        UsersChoices.append((u.username, u.username))
+        UsersChoices.append((u.id, u.username))
     adresseS = forms.CharField(max_length=200, required=False)
     codePostal = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
     user = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=UsersChoices)

@@ -46,8 +46,17 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2 style="color: #1C5F90">Colonies de {{rucher}}</h2>
+    <h2 class="Colonies2" style="color: #1C5F90">Colonies de {{rucher}}</h2>
     {% if user.is_authenticated %}
+    <div class="ajoutColonies2" style="float: right; padding-right: 10%">
+        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
+            <button type="submit" class="btn btnBleuAjout m-0" >
+                <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                Ajouter
+            </button>
+        </form>
+    </div>
+    <br>
     <div>
         <div style="padding-left: 8%">
             <div class="etat" style="display: inline-block">
@@ -67,14 +76,6 @@
                 <p style="display:inline-block;">: Aucune Information</p>
             </div>
         </div>
-    </div>
-    <div style="position: relative">
-        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
-                <button type="submit" class="btn btn-primary m-0" style="position: absolute; right: 12%; top: 0;">
-                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
     </div>
     <br>
     <div class="limiter">
@@ -105,7 +106,7 @@
                             {% if colonie.rucher.nom == rucher %}
                             <tr class="row100 body">
                                 <td class="cell100 column1">
-                                    <b style="display: none" class="cell100 column2">Etat</b>
+                                    <b style="display: none" class="cell100 column2"></b>
                                     <div class="donnees">
                                         {% for etat in etatColonie %}
                                         {% if etat.colonie == colonie %}
@@ -163,33 +164,33 @@
                                 <td class="cell100 column8">
                                     <b style="display: none" class="cell100 column8">Actions</b>
                                     <div class="actionForm">
-                                        <form id="formDetails" method="get" style="display: inline-block"
+                                        <form id="formDetailsA" method="get" style="display: inline-block"
                                               action="{% url 'afficherColonieId' colonie.id %}">
-                                            <button type="submit" class="btn btn-primary m-0">
+                                            <button type="submit" class="btn btnBleuDetails m-0">
                                                 <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
                                             </button>
                                             <div></div>
                                         </form>
 
-                                        <form id="formModif" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
-                                            <button type="submit" class="btn btn-primary m-0">
+                                        <form id="formModifA" method="get" style="display: inline-block" action="{% url 'modifierColonieId' colonie.id %}">
+                                            <button type="submit" class="btn btnBleuModif m-0">
                                                 <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
                                             </button>
                                             <div></div>
                                         </form>
 
-                                        <form id="formDel" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
+                                        <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{colonie.nom}}')" style="display: inline-block"
                                               action="{% url 'validSupprimerColonie' colonie.nom colonie.rucher %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger m-0">
-                                                <img style="height: 15px; width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                            <button type="submit" class="btn btnRg m-0">
+                                                <img style="width: 25px" src="{% static 'ProjetRuches/images/delete.png' %}">
                                             </button>
                                             <div></div>
                                         </form>
                                     </div>
                                 </td>
                                 <td class="cell100 column9">
-                                    <b style="display: none" class="cell100 column8">QR Code</b>
+                                    <b style="display: none" class="cell100 column8">QR Code &nbsp;</b>
                                     <div class="donnees">
                                         <a href="{% url 'afficherQR' colonie.id %}"> <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/download.png' %}"></a>
                                     </div>

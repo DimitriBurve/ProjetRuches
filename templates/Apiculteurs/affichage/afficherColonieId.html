@@ -187,13 +187,15 @@
     </div>
     <div>
         <div class="divTitre">
-            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Feuilles Visite</h4>
-            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'createFeuilleVisite' c.rucher c.nom 1 %}">
-                <button type="submit" class="btn btn-primary m-0">
-                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
+            <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Feuilles de visite</h4>
+            <div class="ajoutColonies2" style="float: right; padding-right: 15%">
+                <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'createFeuilleVisite' c.rucher c.nom 1 %}">
+                    <button type="submit" class="btn btnBleuAjout m-0">
+                        <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                        Ajouter
+                    </button>
+                </form>
+            </div>
         </div>
         {% if feuilles %}
         <div class="limiter">
@@ -293,12 +295,14 @@
     <div>
         <div class="divTitre">
             <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Nourrissements</h4>
-            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterNourrissement' c.rucher c.nom %}">
-                <button type="submit" class="btn btn-primary m-0">
-                    <img style="width: 20px" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
+            <div class="ajoutColonies2" style="float: right; padding-right: 15%">
+                <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterNourrissement' c.rucher c.nom %}">
+                    <button type="submit" class="btn btnBleuAjout m-0">
+                        <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                        Ajouter
+                    </button>
+                </form>
+            </div>
         </div>
         {% if nourri %}
         <div class="limiter">
@@ -420,12 +424,14 @@
     <div>
         <div class="divTitre">
             <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Traitements</h4>
-            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterTraitement' c.rucher c.nom %}">
-                <button type="submit" class="btn btn-primary m-0">
-                    <img style="width: 20px" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
+            <div class="ajoutColonies2" style="float: right; padding-right: 15%">
+                <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterTraitement' c.rucher c.nom %}">
+                    <button type="submit" class="btn btnBleuAjout m-0">
+                        <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                        Ajouter
+                    </button>
+                </form>
+            </div>
         </div>
         {% if trait %}
         <div class="limiter">
@@ -547,12 +553,14 @@
     <div>
         <div class="divTitre">
             <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Récoltes</h4>
-            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterRecolte' c.rucher c.nom %}">
-                <button type="submit" class="btn btn-primary m-0">
-                    <img style="width: 20px" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
+            <div class="ajoutColonies2" style="float: right; padding-right: 15%">
+                <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterRecolte' c.rucher c.nom %}">
+                    <button type="submit" class="btn btnBleuAjout m-0">
+                        <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                        Ajouter
+                    </button>
+                </form>
+            </div>
         </div>
         {% if recoltes %}
         <div class="limiter">
@@ -648,12 +656,14 @@
     <div>
         <div class="divTitre">
             <h4 style="display: inline-block; color: #1C5F90; padding-right: 10px">Pesées</h4>
-            <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterPesee' c.rucher c.nom %}">
-                <button type="submit" class="btn btn-primary m-0">
-                    <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
-                    Ajouter
-                </button>
-            </form>
+            <div class="ajoutColonies2" style="float: right; padding-right: 15%">
+                <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterPesee' c.rucher c.nom %}">
+                    <button type="submit" class="btn btnBleuAjout m-0">
+                        <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                        Ajouter
+                    </button>
+                </form>
+            </div>
         </div>
         {% if pesees %}
         <div class="limiter">
