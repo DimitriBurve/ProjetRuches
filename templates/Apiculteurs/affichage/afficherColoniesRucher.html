@@ -46,10 +46,10 @@
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2 class="Colonies2" style="color: #1C5F90">Colonies de {{rucher}}</h2>
+    <h2 class="Colonies2" style="color: #1C5F90">Rucher {{rucher}}</h2>
     {% if user.is_authenticated %}
     <div class="ajoutColonies2" style="float: right; padding-right: 10%">
-        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonie' %}">
+        <form method="get" style="display: inline-block; padding-left: 10px" action="{% url 'ajouterColonieRucher' rucher %}">
             <button type="submit" class="btn btnBleuAjout m-0" >
                 <img style="width: 20px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
                 Ajouter

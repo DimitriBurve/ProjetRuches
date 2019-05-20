@@ -56,11 +56,11 @@ def header(apikey):
 
 
 def informationsUser(request):
-
-    headers = {'Accept': 'application/json', 'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
-    res = requests.get(
-        "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
-        headers=headers).json()
+    # headers = {'Accept': 'application/json',
+    #            'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
+    # response = requests.get(
+    #     "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
+    #     headers=headers).json()
 
     # print(res)
 
@@ -525,8 +525,6 @@ def afficherRuchers(request):
 
 
 def ajouterColonie(request):
-    listeRuchers = Rucher.objects.all()
-    listeTypesRuche = TypeRuche.objects.all()
     if request.method == 'POST':
         print("true post")
         rucheForm = RucheForm(request.POST)
@@ -543,7 +541,34 @@ def ajouterColonie(request):
         user = request.user
         rucheForm = RucheForm()
     return render(request, 'Apiculteurs/creation/createColonie.html',
-                  {'form': rucheForm, 'listeRuchers': listeRuchers, 'listeTypesRuche': listeTypesRuche})
+                  {'form': rucheForm})
+
+
+def ajouterColonieRucher(request, rucher):
+    rucherObj = Rucher.objects.get(nom=rucher)
+
+    if request.method == 'POST':
+        print("true post")
+        obj = Colonie.objects.create(rucher=rucherObj)
+        rucheForm = RucheRucherForm(request.POST, instance=obj)
+        if rucheForm.is_valid():
+            print("true valid")
+            rucheForm.save()
+            coloniesObj = Colonie.objects.all()
+            for c in coloniesObj:
+                if c.nombre_de_cadres is None:
+                    c.delete()
+            return redirect('afficherColoniesRucher', rucher)
+        else:
+            print("else valid")
+            form_errors = rucheForm.errors
+            print(form_errors)
+    else:
+        print("else post")
+        obj = Colonie.objects.create(rucher=rucherObj)
+        rucheForm = RucheRucherForm(instance=obj)
+    return render(request, 'Apiculteurs/creation/createColonieRucher.html',
+                  {'form': rucheForm, 'rucher': rucher})
 
 
 def ajouterNourrissement(request, rucher, colonie):
@@ -993,7 +1018,62 @@ def inscription(request):
 
 
 def monCompte(request):
-    return render(request, 'registration/myAccount.html')
+    colonies = Colonie.objects.all()
+
+    feuillesObj = FeuilleVisite.objects.all()
+    nourrissementsObj = Nourrissement.objects.all()
+    peseesObj = Pesee.objects.all()
+    recoltesObj = Recolte.objects.all()
+    traitementsObj = Traitement.objects.all()
+
+    for f in feuillesObj:
+        if f.notes is None:
+            f.delete()
+
+    for n in nourrissementsObj:
+        if n.typeNourrissement is None:
+            n.delete()
+
+    for p in peseesObj:
+        if p.poids is None:
+            p.delete()
+
+    for r in recoltesObj:
+        if r.produitRecolte is None:
+            r.delete()
+
+    for t in traitementsObj:
+        if t.maladie is None:
+            t.delete()
+
+    etatFeuilles = []
+    feuilles = []
+    for c in colonies:
+        feuillesObj = FeuilleVisite.objects.all().filter(colonie=c)
+        feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
+        for f in feuillesObj:
+            feuilles.append(f)
+            break
+
+    test = False
+    etat = ''
+    for c in colonies:
+        for f in feuilles:
+
+            if f.colonie == c:
+                test = True
+                etat = f.etatColonie
+                break
+            else:
+                test = False
+        if test:
+            etatFeuilles.append({'colonie': c, 'etat': etat})
+        else:
+            etatFeuilles.append({'colonie': c, 'etat': 'rien'})
+
+    colonies = sorted(colonies, key=lambda a: a.rucher.nom)
+
+    return render(request, 'registration/myAccount.html', {'colonies': colonies, 'etatColonie': etatFeuilles})
 
 
 def detailsMonCompte(request, user_id):

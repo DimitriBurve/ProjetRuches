@@ -24,14 +24,26 @@ class UserForm(UserCreationForm):
 
 class ApiForm(forms.ModelForm):
     adresseSApi = forms.CharField(max_length=200, required=False)
-    adresseSGDSA = forms.CharField(max_length=200, required=False)
-    adresseSVeterinaire = forms.CharField(max_length=200, required=False)
-    adresseSAgentSanitaire = forms.CharField(max_length=200, required=False)
-
     codePostalApi = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
-    codePostalGDSA = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
-    codePostalVeterinaire = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
-    codePostalAgentSanitaire = forms.CharField(max_length=5, validators=[MinLengthValidator(5)])
+    numeroSiretAgrit = forms.CharField(required=False)
+
+    adressePGDSA = forms.CharField(required=False)
+    adresseSGDSA = forms.CharField(max_length=200, required=False)
+    codePostalGDSA = forms.CharField(max_length=5, validators=[MinLengthValidator(5)], required=False)
+    villeGDSA = forms.CharField(required=False)
+    PSEGDSA = forms.CharField(required=False)
+
+    adressePVeterinaire = forms.CharField(required=False)
+    adresseSVeterinaire = forms.CharField(max_length=200, required=False)
+    codePostalVeterinaire = forms.CharField(max_length=5, validators=[MinLengthValidator(5)], required=False)
+    villeVeterinaire = forms.CharField(required=False)
+    telephoneVeterinaire = forms.CharField(required=False)
+
+    adressePAgentSanitaire = forms.CharField(required=False)
+    adresseSAgentSanitaire = forms.CharField(max_length=200, required=False)
+    codePostalAgentSanitaire = forms.CharField(max_length=5, validators=[MinLengthValidator(5)], required=False)
+    villeAgentSanitaire = forms.CharField(required=False)
+    telephoneAgentSanitaire = forms.CharField(required=False)
 
     class Meta:
         model = Apiculteur
@@ -69,6 +81,21 @@ class RucheForm(ModelForm):
     class Meta:
         model = Colonie
         fields = ['nom', 'rucher', 'type', 'nombre_de_cadres', 'date', 'remarque']
+
+
+class RucheRucherForm(ModelForm):
+    remarque = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
+    date = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=forms.DateTimeInput(attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        })
+    )
+
+    class Meta:
+        model = Colonie
+        fields = ['nom', 'type', 'nombre_de_cadres', 'date', 'remarque']
 
 
 class NourrissementForm(ModelForm):

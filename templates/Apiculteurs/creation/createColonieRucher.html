@@ -26,18 +26,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
+
 </head>
 <body>
 <div style="text-align: center">
     {% include "../../Nav/top.html" %}
 </div>
+
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
-    <li class="liNavBar"><a href="informationsUser">Informations</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/camerasUser">Caméras</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
-    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
-    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
+    <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar active"><a href="/afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
@@ -50,22 +52,22 @@
         </a>
     </li>
     {% if user.is_superuser %}
-    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar"><a href="/showUsersAdmin">Administration</a></li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
-    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    <li class="right liNavBar"><a href="/inscription">Inscription</a></li>
     {% endif %}
 </ul>
 {% include "../../Nav/navigation.html" %}
 <div>
-    <h2 style="color: #1C5F90">Colonie {{colonie}} {{rucher}}</h2>
+    <h2 style="color: #1C5F90">Rucher {{rucher}}</h2>
 
     {% if user.is_authenticated %}
     <div class="multipleForm">
         <div class="container-table100">
             <div class="container-form">
-                <p class="bigTitleForm">Ajouter Pesée</p>
+                <p class="bigTitleForm">Ajouter Colonie</p>
                 <div class="titleForm">
                     <ul role="tablist">
                         <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
@@ -75,34 +77,43 @@
                 </div>
                 <form class="formVisite" method="post">
                     {% csrf_token %}
-                    <div style="text-align: center">
-                        <div style="display: inline-block; padding-right: 25px">
-                            <b style="display: inline-block">Colonie : &nbsp;</b><div style="display: inline-block">{{ colonie }}</div>
-                        </div>
-                        <div style="display: inline-block">
-                            <b style="display: inline-block">Date : </b>
-                            <div class="divDate" style="display: inline-block;">
-                                <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                                    {{ form.date }}
-                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    <table class="colonieTable">
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Nom : &nbsp;</b><div style="display: inline-block">{{ form.nom }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Rucher : &nbsp;</b><div style="display: inline-block">{{ rucher }}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Type de Ruche : &nbsp;</b><div style="display: inline-block">{{ form.type }}</div>
+                            </td>
+                            <td class="td2C" style="float: right; text-align: right">
+                                <b style="display: inline-block">Nombre de cadres : &nbsp;</b><div style="display: inline-block">{{ form.nombre_de_cadres }}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdDate" style="display: inline-block; text-align: right">
+                                <b style="margin-left: 25%; display: inline-block">Date : </b>
+                                <div class="divDate" style="display: inline-block">
+                                    <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                        {{ form.date }}
+                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div style="text-align: center">
-                        <div style="display: inline-block">
-                            <b style="display: inline-block">Poids : &nbsp;</b><div style="display: inline-block">{{ form.poids }}</div>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     <div>
-                        <b style="display: inline-block; margin-left: 25%">Note (optionnel) : </b>
+                        <b style="display: inline-block; margin-left: 25%">Remarques (optionnel) : </b>
                         <br>
                         <div style="margin-left: 35%" class="divTextArea">
-                            {{ form.note }}
+                        {{ form.remarque }}
                         </div>
                     </div>
                     <br>
@@ -111,9 +122,10 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <p>You are not logged</p>
     {% endif %}
 </div>
-
 <script>
     $(function () {
         $("#datetimepicker1").datetimepicker({
@@ -123,3 +135,4 @@
 </script>
 </body>
 </html>
+

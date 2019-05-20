@@ -53,11 +53,8 @@
                 <div style="display: inline-block">{{ r.ville }}</div> <div onclick="show('colonies{{r.ville}}')" style="display: inline-block; cursor: pointer; color: #007bff;" id="detailsVille">details</div>
                 <div style="padding-left: 2%; display: none" id="colonies{{r.ville}}">
                 {% for cap in capteurs %}
-    <!--            {% if cap.loc.nom == r.nom %}-->
-<!--                <p>{{ cap }} <a href="{% url 'detailsUser' cap.id %}">voir</a></p>-->
-    <!--            {% endif %}-->
                 {% if cap.rucher == r.ville %}
-                <p>{{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}">voir</a></p>
+                <p>{{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id %}">Caméra</a></p>
                 {% endif %}
                 {% endfor %}
                 </div>

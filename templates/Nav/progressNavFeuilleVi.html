@@ -1,14 +1,76 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+{% if etape == 2 %}
 <div class="tabbable">
     <ul class="nav nav-tabs wizard">
-        <li class="active2"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></a></li>
-        <li><a href="#w4" data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></a></li>
-        <li><a href="#stateinfo" data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></a></li>
-        <li><a href="#companydoc" data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></a></li>
-        <li><a href="#test" data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></a></li>
-        <li><a href="#finish" data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></a></li>
+        <li class="active2"><div data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></div></li>
     </ul>
 </div>
+
+{% elif etape == 3 %}
+<div class="tabbable">
+    <ul class="nav nav-tabs wizard">
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></div></li>
+        <li class="active2"><div data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></div></li>
+    </ul>
+</div>
+
+{% elif etape == 4 %}
+<div class="tabbable">
+    <ul class="nav nav-tabs wizard">
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></div></li>
+        <li class="active2"><div data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></div></li>
+    </ul>
+</div>
+
+{% elif etape == 5 %}
+<div class="tabbable">
+    <ul class="nav nav-tabs wizard">
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></div></li>
+        <li class="active2"><div data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></div></li>
+    </ul>
+</div>
+
+{% elif etape == 6 %}
+<div class="tabbable">
+    <ul class="nav nav-tabs wizard">
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></div></li>
+        <li class="active2"><div data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></div></li>
+    </ul>
+</div>
+
+{% elif etape == 7 %}
+<div class="tabbable">
+    <ul class="nav nav-tabs wizard">
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span></div></li>
+        <li><div data-toggle="tab" aria-expanded="false"><span class="nmbr">5</span></div></li>
+        <li class="active2"><div data-toggle="tab" aria-expanded="true"><span class="nmbr">6</span></div></li>
+    </ul>
+</div>
+
+{% endif %}

@@ -129,10 +129,10 @@ li.dropdown2 {
         height: 300px !important;
     }
 
-    tbody td {
-        display: block;
-        width: 100% !important;
-    }
+    /*tbody td {*/
+    /*    display: block;*/
+    /*    width: 100% !important;*/
+    /*}*/
 
     tbody b, tbody .donnees {
         display: inline !important;
@@ -232,6 +232,49 @@ li.dropdown2 {
         display: inline-block;
         left: 50%;
     }
+
+    .addRecolte, .addTrait, .addNour, .colonieTable {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .addRecolte tr td, .addTrait tr td, .addNour tr td, .colonieTable tr td {
+        padding-left: 20%;
+        text-align: left !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .divTextArea {
+        margin-left: 25% !important;
+    }
+
+    .tabbable {
+        text-align: center;
+    }
+
+    .tabbable ul {
+        margin-bottom: 0 !important;
+    }
+
+    .tabbable ul li div {
+        text-align: center !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        border-radius: 10px !important;
+    }
+
+    .tdDate, .tdDate b {
+        margin-left: 0 !important;
+        text-align: center !important;
+    }
+
+    .preDate {
+        text-align: center !important;
+        display: block !important;
+    }
+
 }
 
 #my-menu{
@@ -799,7 +842,7 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     padding-right: 0 !important;
 }
 
-.colonieTable td.tdDate {
+.tdDate {
     width: 350px;
     margin-left: 180px;
 }
@@ -936,15 +979,9 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
   border: none;
 }
 
-.tabbable .nav-tabs.wizard > li > a {
+.tabbable .nav-tabs.wizard > li > div {
   opacity: 1;
   font-size: 14px;
-}
-
-.tabbable .nav-tabs.wizard a:hover {
-  color: #fff;
-  background-color: #2c3f4c;
-  border-color: #2c3f4c
 }
 
 .tabbable span.nmbr {
@@ -973,7 +1010,7 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
         text-align: center;
     }
 
-    .tabbable .nav-tabs.wizard li.active2 a {
+    .tabbable .nav-tabs.wizard li.active2 div {
         padding-top: 15px;
     }
 
@@ -1006,13 +1043,12 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
         border-left-color: inherit
     }
 
-    .tabbable .nav-tabs.wizard > li:nth-of-type(1) > a {
+    .tabbable .nav-tabs.wizard > li:nth-of-type(1) > div {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 3px;
     }
 
-    .tabbable .nav-tabs.wizard li:last-child a {
+    .tabbable .nav-tabs.wizard li:last-child div {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
@@ -1021,7 +1057,7 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
         margin-right: 0;
     }
 
-    .tabbable .nav-tabs.wizard li:last-child a:after,
+    .tabbable .nav-tabs.wizard li:last-child div:after,
     .tabbable .nav-tabs.wizard li:last-child:after {
         content: "";
         border: none;
@@ -1030,4 +1066,128 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
     .tabbable span.nmbr {
         display: block;
     }
+}
+
+
+.reinitialise {
+animation : none;
+animation-delay : 0;
+animation-direction : normal;
+animation-duration : 0;
+animation-fill-mode : none;
+animation-iteration-count : 1;
+animation-name : none;
+animation-play-state : running;
+animation-timing-function : ease;
+backface-visibility : visible;
+    background-clip : border-box;
+    background-origin : padding-box;
+    background-position-x : 0;
+background-position-y : 0;
+    background: transparent none repeat scroll 0 0;
+    background-size : auto auto;
+    border-collapse : separate;
+border-image : none;
+    border-spacing : 0;
+    border-radius: 0;
+    border: medium none inherit;
+    bottom : auto;
+box-shadow : none;
+box-sizing : content-box;
+caption-side : top;
+clear : none;
+clip : auto;
+color : inherit;
+columns : auto;
+column-count : auto;
+column-fill : balance;
+column-gap : normal;
+column-rule : medium none currentColor;
+column-rule-color : currentColor;
+column-rule-style : none;
+column-rule-width : none;
+column-span : 1;
+column-width : auto;
+content : normal;
+counter-increment : none;
+counter-reset : none;
+cursor : auto;
+direction : ltr;
+display : inline;
+empty-cells : show;
+float : none;
+font : normal;
+font-family : inherit;
+font-size : medium;
+font-style : normal;
+font-variant : normal;
+font-weight : normal;
+height : auto;
+hyphens : none;
+left : auto;
+letter-spacing : normal;
+line-height : normal;
+    list-style: disc outside none;
+    margin: 0;
+    max-height : none;
+max-width : none;
+min-height : 0;
+min-width : 0;
+opacity : 1;
+orphans : 0;
+    outline: invert none medium;
+    overflow : visible;
+overflow-x : visible;
+overflow-y : visible;
+    padding: 0;
+    page-break-after : auto;
+page-break-before : auto;
+page-break-inside : auto;
+perspective : none;
+perspective-origin : 50% 50%;
+position : static;
+/* Vous devrez modifier les quotes selon le langage de la page (ici il s'agit du Langage Français) */
+quotes : '201C' '201D' '2018' '2019';
+right : auto;
+tab-size : 8;
+table-layout : auto;
+text-align : inherit;
+text-align-last : auto;
+text-decoration : none;
+text-decoration-color : inherit;
+text-decoration-line : none;
+text-decoration-style : solid;
+text-indent : 0;
+text-shadow : none;
+text-transform : none;
+top : auto;
+transform : none;
+transform-style : flat;
+transition : none;
+transition-delay : 0s;
+transition-duration : 0s;
+transition-property : none;
+transition-timing-function : ease;
+unicode-bidi : normal;
+vertical-align : baseline;
+visibility : visible;
+white-space : normal;
+widows : 0;
+width : auto;
+word-spacing : normal;
+z-index : auto;
+}
+
+.reinitialise ul {
+    padding-left: 0 !important;
+    /*float: none !important;*/
+}
+
+.preDate {
+    text-align: center !important;
+}
+
+.preDate .tdDate {
+    margin-left: 0 !important;
+    text-align: center !important;
 }

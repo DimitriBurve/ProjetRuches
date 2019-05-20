@@ -18,28 +18,28 @@ class Apiculteur(models.Model):
 
     numeroApi = models.CharField(max_length=200, default='')
 
-    numeroSiretAgrit = models.CharField(max_length=200, default='')
+    numeroSiretAgrit = models.CharField(max_length=200, default='', blank=True)
 
-    adressePGDSA = models.CharField(max_length=200, default='')
-    adresseSGDSA = models.CharField(max_length=200, default='', null=True)
-    codePostalGDSA = models.CharField(max_length=5, default='')
-    villeGDSA = models.CharField(max_length=200, default='')
+    adressePGDSA = models.CharField(max_length=200, default='', blank=True)
+    adresseSGDSA = models.CharField(max_length=200, default='', null=True, blank=True)
+    codePostalGDSA = models.CharField(max_length=5, default='', blank=True)
+    villeGDSA = models.CharField(max_length=200, default='', blank=True)
 
-    PSEGDSA = models.CharField(max_length=200, default='')
+    PSEGDSA = models.CharField(max_length=200, default='', blank=True)
 
-    adressePVeterinaire = models.CharField(max_length=200, default='')
-    adresseSVeterinaire = models.CharField(max_length=200, default='', null=True)
-    codePostalVeterinaire = models.CharField(max_length=5, default='')
-    villeVeterinaire = models.CharField(max_length=200, default='')
+    adressePVeterinaire = models.CharField(max_length=200, default='', blank=True)
+    adresseSVeterinaire = models.CharField(max_length=200, default='', null=True, blank=True)
+    codePostalVeterinaire = models.CharField(max_length=5, default='', blank=True)
+    villeVeterinaire = models.CharField(max_length=200, default='', blank=True)
 
-    telephoneVeterinaire = models.CharField(max_length=200, default='')
+    telephoneVeterinaire = models.CharField(max_length=200, default='', blank=True)
 
-    adressePAgentSanitaire = models.CharField(max_length=200, default='')
-    adresseSAgentSanitaire = models.CharField(max_length=200, default='', null=True)
-    codePostalAgentSanitaire = models.CharField(max_length=5, default='')
-    villeAgentSanitaire = models.CharField(max_length=200, default='')
+    adressePAgentSanitaire = models.CharField(max_length=200, default='', blank=True)
+    adresseSAgentSanitaire = models.CharField(max_length=200, default='', null=True, blank=True)
+    codePostalAgentSanitaire = models.CharField(max_length=5, default='', blank=True)
+    villeAgentSanitaire = models.CharField(max_length=200, default='', blank=True)
 
-    telephoneAgentSanitaire = models.CharField(max_length=10, default='')
+    telephoneAgentSanitaire = models.CharField(max_length=10, default='', blank=True)
 
     def __str__(self):
         return str("{}".format(self.user))
@@ -71,9 +71,9 @@ class TypeRuche(models.Model):
 class Colonie(models.Model):
     nom = models.CharField(max_length=200)
     rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
-    type = models.ForeignKey(TypeRuche, on_delete=models.CASCADE)
-    nombre_de_cadres = models.IntegerField()
-    date = models.DateTimeField(default=datetime.datetime.now)
+    type = models.ForeignKey(TypeRuche, on_delete=models.CASCADE, null=True)
+    nombre_de_cadres = models.IntegerField(null=True)
+    date = models.DateTimeField(default=datetime.datetime.now, null=True)
     remarque = models.CharField(max_length=1024, null=True)
 
     def __str__(self):

@@ -68,7 +68,7 @@
                             <tr class="row100 head">
                                 <th class="cell100 column2">Nom</th>
                                 <th class="cell100 column8">localisation</th>
-                                <th class="cell100 column2">Apiculteur(s)</th>
+                                <th class="cell100 column8">Apiculteur(s)</th>
                                 <th class="cell100 column8">Actions</th>
                             </tr>
                             </thead>
@@ -92,8 +92,8 @@
                                         {{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}
                                     </div>
                                 </td>
-                                <td class="cell100 column2">
-                                    <b style="display: none" class="cell100 column2">Apiculteur(s)</b>
+                                <td class="cell100 column8">
+                                    <b style="display: none" class="cell100 column8">Apiculteur(s)</b>
                                     <div class="donnees">
                                         {% for u in rucher.user.all %} {{ u }} {% endfor %}
                                     </div>

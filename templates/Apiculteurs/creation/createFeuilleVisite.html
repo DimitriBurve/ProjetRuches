@@ -40,8 +40,8 @@
     <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
     <li class="liNavBar"><a class="active" href="/afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
-    <li class="right liNavBar" style="height: 52px">
-        <a href="/monCompte" style="padding-top: 0">
+    <li class="right liNavBar">
+        <a href="/monCompte" style="padding-top: 0; padding-bottom: 0">
             {% if user.is_superuser %}
             <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
             {% else %}
@@ -87,15 +87,15 @@
                     {% if etape == 1 %}
                     <div style="text-align: center">
                         <div style="display:inline-block; padding-right: 20px">
-                            <div style="display: inline-block;">Rucher : &nbsp;</div><div style="display: inline-block">{{ rucher }}</div>
+                            <b style="display: inline-block;">Rucher : &nbsp;</b><div style="display: inline-block">{{ rucher }}</div>
                         </div>
                         <div style="display: inline-block; padding-left: 20px">
-                            <div style="display:inline-block;">Colonie : &nbsp;</div><div style="display: inline-block">{{ colonie }}</div>
+                            <b style="display:inline-block;">Colonie : &nbsp;</b><div style="display: inline-block">{{ colonie }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="text-align: center">
-                        <div style="display: inline-block">Date : </div>
+                        <b style="display: inline-block">Date : </b>
                         <div class="divDate" style="display: inline-block">
                             <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
                                 {{ form.date }}
@@ -106,11 +106,14 @@
                         </div>
                     </div>
                     <br>
-                    <p>Condition climatique :</p>{{ form.conditionClimatique }}
+                    <p><b>Condition climatique</b> :</p>{{ form.conditionClimatique }}
                     <br>
-                    <div style="text-align: right; padding-right: 5%">
-                        <button type="submit" class="btn btn-primary">Suivant</button>
+                    <div>
+                        <div style="display: inline-block; padding-right: 5%; float: right">
+                            <button type="submit" class="btn btnBleuModif" style="width: 91px; height: 41px">Suivant</button>
+                        </div>
                     </div>
+                    <br>
                     {% else %}
                     {% if etape < 16 %}
                     {% if etape == 2 %}
@@ -287,12 +290,12 @@
                     <div style="text-align: center">
                         <div style="display: inline-block; padding-right: 9%">
                             <div>
-                                <div style="display: inline-block">Cellule Faux-Bourdons : </div><div style="display: inline-block; vertical-align: top">{{ form.celluleFauxBourdons }}</div>
+                                <b style="display: inline-block">Cellule Faux-Bourdons : </b><div style="display: inline-block; vertical-align: top">{{ form.celluleFauxBourdons }}</div>
                             </div>
                         </div>
                         <div style="display: inline-block;">
                             <div>
-                                <div style="display: inline-block">Présence Faux-Bourdons : </div><div style="display: inline-block; vertical-align: top">{{ form.presenceFauxBourdons }}</div>
+                                <b style="display: inline-block">Présence Faux-Bourdons : </b><div style="display: inline-block; vertical-align: top">{{ form.presenceFauxBourdons }}</div>
                             </div>
                         </div>
                     </div>
@@ -315,7 +318,7 @@
                     <br>
                     <div style="text-align: center">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Méthode (optionnel) :</div><div style="display: inline-block; vertical-align: top">{{ form.methodeUtilisee }}</div>
+                            <b style="display: inline-block">Méthode (optionnel) :</b><div style="display: inline-block; vertical-align: top">{{ form.methodeUtilisee }}</div>
                         </div>
                     </div>
                     <br>
@@ -350,12 +353,12 @@
                     <div style="text-align: center">
                         <div style="display: inline-block">
                             <div style="padding-left: 10%">
-                                <div style="display: inline-block">Récolte Propolis : &nbsp;</div><div style="display: inline-block">{{ form.recoltePropolis }}</div>
+                                <b style="display: inline-block">Récolte Propolis : &nbsp;</b><div style="display: inline-block">{{ form.recoltePropolis }}</div>
                             </div>
                         </div>
                         <div style="display: inline-block">
                             <div style="padding-left: 10%">
-                                <div style="display: inline-block">Récolte de pollen : &nbsp;</div><div style="display: inline-block">{{ form.recoltePollen }}</div>
+                                <b style="display: inline-block">Récolte de pollen : &nbsp;</b><div style="display: inline-block">{{ form.recoltePollen }}</div>
                             </div>
                         </div>
                     </div>
@@ -372,13 +375,13 @@
 
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Type aliment : </div><div style="display: inline-block; vertical-align: top">{{ form.typeAlimentNourrissement }}</div>
+                            <b style="display: inline-block">Type aliment : </b><div style="display: inline-block; vertical-align: top">{{ form.typeAlimentNourrissement }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="text-align: center">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Quantité en gramme ou litre (optionnel) :</div><div style="display: inline-block;">{{ form.quantiteAlimentNourrissement }}</div><div style="display: inline-block">{{ form.uniteNourrissement }}</div>
+                            <b style="display: inline-block">Quantité en gramme ou litre (optionnel) :</b><div style="display: inline-block;">{{ form.quantiteAlimentNourrissement }}</div><div style="display: inline-block">{{ form.uniteNourrissement }}</div>
                         </div>
                     </div>
                     <br>
@@ -401,7 +404,7 @@
                     <br>
                     <div style="text-align: center">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Provenance (optionnel) :</div><div style="display: inline-block;">{{ form.provenanceApport }}</div>
+                            <b style="display: inline-block">Provenance (optionnel) :</b><div style="display: inline-block;">{{ form.provenanceApport }}</div>
                         </div>
                     </div>
                     <br>
@@ -424,7 +427,7 @@
                     <br>
                     <div style="text-align: center">
                         <div style="padding-left: 10%">
-                            <div style="display: inline-block">Destination (optionnel) :</div><div style="display: inline-block;">{{ form.destinationPonction }}</div>
+                            <b style="display: inline-block">Destination (optionnel) :</b><div style="display: inline-block;">{{ form.destinationPonction }}</div>
                         </div>
                     </div>
                     <br>
@@ -442,37 +445,51 @@
 
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Reine marquée : </div><div style="display: inline-block; vertical-align: top">{{ form.reineMarqueeManipulation }}</div>
+                            <b style="display: inline-block">Reine marquée : </b><div style="display: inline-block; vertical-align: top">{{ form.reineMarqueeManipulation }}</div>
                         </div>
                     </div>
                     <br>
-                    <div style="text-align: center">
+                    <div style="text-align: center" class="feuilleEtape6">
                         <div>
-                            <div style="display: inline-block">Colonie déplacé : </div>
-                            <div style="display: inline-block">&nbsp; le : </div>
-                            <div class="divDate" style="display: inline-block">
-                                <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                                    {{ form.colonieDeplacee }}
-                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            <b style="display: block">Colonie déplacé : </b>
+                            <div style="display: block">
+                                <div class="preDate" style="display: inline-block">
+                                    <div class="tdDate" style="display: inline-block; text-align: right">
+                                        <b style="display: inline-block">&nbsp; le : </b>
+                                        <div class="reinitialise" style="display: inline-block">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                                            {{ form.colonieDeplacee }}
+                                                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <b style="display: inline-block">&nbsp; à</b>
+                                <div style="display: inline-block">{{ form.destinationDeplacee }}</div>
                             </div>
-                            <div style="display: inline-block">&nbsp; à</div>
-                            <div style="display: inline-block">{{ form.destinationDeplacee }}</div>
                         </div>
                     </div>
 
                     <br>
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Essaimage naturel : </div>
-                            <div style="display: inline-block">&nbsp; le : </div>
-                            <div class="divDate" style="display: inline-block">
-                                <div class="input-group" id="datetimepicker2" data-target-input="nearest" style="width: 200px">
-                                    {{ form.essaimageNaturel }}
-                                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            <b style="display: block">Essaimage naturel : </b>
+                            <div style="display: block">
+                                <b style="display: inline-block">&nbsp; le : </b>
+                                <div class="divDate" style="display: inline-block">
+                                    <div class="input-group" id="datetimepicker2" data-target-input="nearest" style="width: 200px">
+                                        {{ form.essaimageNaturel }}
+                                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -481,52 +498,88 @@
                     <br>
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Remérage : </div>
-                            <div style="display: inline-block">&nbsp; le : </div>
-                            <div class="divDate" style="display: inline-block">
-                                <div class="input-group" id="datetimepicker3" data-target-input="nearest" style="width: 200px">
-                                    {{ form.remerage }}
-                                    <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            <b style="display: block">Remérage : </b>
+                            <div style="display: block">
+                                <div class="preDate" style="display: inline-block">
+                                    <div class="tdDate" style="display: inline-block; text-align: right">
+                                        <b style="display: inline-block">&nbsp; le : </b>
+                                        <div class="reinitialise" style="display: inline-block">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="input-group" id="datetimepicker3" data-target-input="nearest" style="width: 200px">
+                                                            {{ form.remerage }}
+                                                            <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <b style="display: inline-block">&nbsp; origine : </b>
+                                <div style="display: inline-block">{{ form.origineRemerage }}</div>
                             </div>
-                            <div style="display: inline-block">&nbsp; origine : </div>
-                            <div style="display: inline-block">{{ form.origineRemerage }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Division colonie : </div>
-                            <div style="display: inline-block">&nbsp; le : </div>
-                            <div class="divDate" style="display: inline-block">
-                                <div class="input-group" id="datetimepicker4" data-target-input="nearest" style="width: 200px">
-                                    {{ form.divisionColonie }}
-                                    <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            <b style="display: block">Division colonie : </b>
+                            <div style="display: block">
+                                <div class="preDate" style="display: inline-block">
+                                    <div class="tdDate" style="display: inline-block; text-align: right">
+                                        <b style="display: inline-block">&nbsp; le : </b>
+                                        <div class="reinitialise" style="display: inline-block">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="input-group" id="datetimepicker4" data-target-input="nearest" style="width: 200px">
+                                                            {{ form.divisionColonie }}
+                                                            <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <b style="display: inline-block">&nbsp; Création ruche : </b>
+                                <div style="display: inline-block">{{ form.creationRuche }}</div>
                             </div>
-                            <div style="display: inline-block">&nbsp; Création ruche : </div>
-                            <div style="display: inline-block">{{ form.creationRuche }}</div>
                         </div>
                     </div>
                     <br>
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Réunion colonie : </div>
-                            <div style="display: inline-block">&nbsp; le : </div>
-                            <div class="divDate" style="display: inline-block">
-                                <div class="input-group" id="datetimepicker5" data-target-input="nearest" style="width: 200px">
-                                    {{ form.reunionColonie }}
-                                    <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            <b style="display: block">Réunion colonie : </b>
+                            <div style="display: block">
+                                <div class="preDate" style="display: inline-block">
+                                    <div class="tdDate" style="display: inline-block; text-align: right">
+                                        <b style="display: inline-block">&nbsp; le : </b>
+                                        <div class="reinitialise" style="display: inline-block">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="input-group" id="datetimepicker5" data-target-input="nearest" style="width: 200px">
+                                                            {{ form.reunionColonie }}
+                                                            <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
+                                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <b style="display: inline-block">&nbsp; Libération ruche : </b>
+                                <div style="display: inline-block">{{ form.liberationRuche }}</div>
                             </div>
-                            <div style="display: inline-block">&nbsp; Libération ruche : </div>
-                            <div style="display: inline-block">{{ form.liberationRuche }}</div>
                         </div>
                     </div>
                     <br>
@@ -542,7 +595,7 @@
 
                     <div style="text-align: center">
                         <div>
-                            <div style="display: inline-block">Nombre de hausses : &nbsp;</div><div style="display: inline-block;">{{ form.nombreHausseRecolte }}</div>
+                            <b style="display: inline-block">Nombre de hausses : &nbsp;</b><div style="display: inline-block;">{{ form.nombreHausseRecolte }}</div>
                         </div>
                     </div>
                     <br>
@@ -585,14 +638,14 @@
                     {% endif %}
                     <div>
                         <div style="display: inline-block; padding-left: 5%">
-                            <a href="javascript:history.back()" class="btn btnBleuModif">Précédent</a>
+                            <a href="javascript:history.back()" class="btn btnBleuModif" style="width: 91px; height: 32px">Précédent</a>
                         </div>
                         <div style="display: inline-block; padding-right: 5%; float: right">
-                            <button type="submit" class="btn btnBleuModif m-0">Suivant</button>
+                            <button type="submit" class="btn btnBleuModif" style="width: 71px; height: 32px">Suivant</button>
                         </div>
                     </div>
                     {% else %}
-                    <button type="submit" class="btn btn-warning btnFormPrec">Précédent</button>
+                    <a href="javascript:history.back()" class="btn btnBleuModif" style="width: 91px; height: 32px">Précédent</a>
                     {% endif %}
                     {% endif %}
                 </form>
@@ -604,6 +657,7 @@
     $(function () {
         $("#datetimepicker1").datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
+            locale: 'fr'
         });
         $("#datetimepicker2").datetimepicker({
             format: 'DD/MM/YYYY HH:mm',

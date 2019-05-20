@@ -92,6 +92,46 @@
                         <div class="table100-body js-pscroll">
                             <table>
                                 <tbody>
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Nom</b>
+                                        <div class="donnees">
+                                            {{ c.nom }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column3">
+                                        <b style="display: none" class="cell100 column2">Rucher</b>
+                                        <div class="donnees">
+                                            {{ c.rucher }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column4">
+                                        <b style="display: none" class="cell100 column2">Type de ruche</b>
+                                        <div class="donnees">
+                                            {{ c.type }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column5">
+                                        <b style="display: none" class="cell100 column2">Nombre de cadres</b>
+                                        <div class="donnees">
+                                            {{ c.nombre_de_cadres }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column6">
+                                        <b style="display: none" class="cell100 column2">Date création</b>
+                                        <div class="donnees">
+                                            {{ c.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column7">
+                                        <b style="display: none" class="cell100 column2">Dernière remarque</b>
+                                        <div class="donnees">
+                                            {{ c.remarque }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
                                 {% for u in c.rucher.user.all %}
                                 {% if u == user %}
                                 <tr class="row100 body">
@@ -134,45 +174,6 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                                {% if user.is_staff %}
-                                <tr class="row100 body">
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Nom</b>
-                                        <div class="donnees">
-                                            {{ c.nom }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column3">
-                                        <b style="display: none" class="cell100 column2">Rucher</b>
-                                        <div class="donnees">
-                                            {{ c.rucher }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column4">
-                                        <b style="display: none" class="cell100 column2">Type de ruche</b>
-                                        <div class="donnees">
-                                            {{ c.type }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column5">
-                                        <b style="display: none" class="cell100 column2">Nombre de cadres</b>
-                                        <div class="donnees">
-                                            {{ c.nombre_de_cadres }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column6">
-                                        <b style="display: none" class="cell100 column2">Date création</b>
-                                        <div class="donnees">
-                                            {{ c.date }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column7">
-                                        <b style="display: none" class="cell100 column2">Dernière remarque</b>
-                                        <div class="donnees">
-                                            {{ c.remarque }}
-                                        </div>
-                                    </td>
-                                </tr>
                                 {% endif %}
                                 </tbody>
                             </table>
@@ -218,6 +219,36 @@
                             <table>
                                 <tbody>
                                 {% for f in feuilles %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">
+                                        <b style="display: none" class="cell100 column2">Date</b>
+                                        <div class="donnees">
+                                            {{ f.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column8">
+                                        <b style="display: none" class="cell100 column2">Condition climatique</b>
+                                        <div class="donnees">
+                                            {{ f.conditionClimatique }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column7">
+                                        <b style="display: none" class="cell100 column2">Dernière remarque</b>
+                                        <div class="donnees">
+                                            <p style="max-height: 100px">{{ f.notes}}</p>
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column8">
+                                        <b style="display: none" class="cell100 column2">Télécharger</b>
+                                        <div class="donnees">
+                                            <a href="{% url 'afficherPDF' f.id %}">
+                                                <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px">
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
                                 {% for u in c.rucher.user.all %}
                                 {% if u == user %}
                                 <tr class="row100 body">
@@ -250,35 +281,7 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                                {% if user.is_staff %}
-                                <tr class="row100 body">
-                                    <td class="cell100 column6">
-                                        <b style="display: none" class="cell100 column2">Date</b>
-                                        <div class="donnees">
-                                            {{ f.date }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column8">
-                                        <b style="display: none" class="cell100 column2">Condition climatique</b>
-                                        <div class="donnees">
-                                            {{ f.conditionClimatique }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column7">
-                                        <b style="display: none" class="cell100 column2">Dernière remarque</b>
-                                        <div class="donnees">
-                                            <p style="max-height: 100px">{{ f.notes}}</p>
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column8">
-                                        <b style="display: none" class="cell100 column2">Télécharger</b>
-                                        <div class="donnees">
-                                            <a href="{% url 'afficherPDF' f.id %}">
-                                                <img src="{% static 'ProjetRuches/images/pdf-page.png' %}" alt="pdf" width="35px" height="35px">
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+
                                 {% endif %}
                                 {% endfor %}
                                 </tbody>
@@ -327,6 +330,46 @@
                             <table>
                                 <tbody>
                                 {% for n in nourri %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">
+                                        <b style="display: none" class="cell100 column2">Date</b>
+                                        <div class="donnees">
+                                            {{ n.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column4">
+                                        <b style="display: none" class="cell100 column2">Type de nourrissement</b>
+                                        <div class="donnees">
+                                            {{ n.typeNourrissement }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column4">
+                                        <b style="display: none" class="cell100 column2">Type d'aliment</b>
+                                        <div class="donnees">
+                                            {{ n.typeAliment }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Produit</b>
+                                        <div class="donnees">
+                                            {{ n.produit }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Quantité</b>
+                                        <div class="donnees">
+                                            {{ n.quantite }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column7">
+                                        <b style="display: none" class="cell100 column2">Note</b>
+                                        <div class="donnees">
+                                            {{ n.note }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
                                 {% for u in c.rucher.user.all %}
                                 {% if u == user %}
                                 <tr class="row100 body">
@@ -369,45 +412,7 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                                {% if user.is_staff %}
-                                <tr class="row100 body">
-                                    <td class="cell100 column6">
-                                        <b style="display: none" class="cell100 column2">Date</b>
-                                        <div class="donnees">
-                                            {{ n.date }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column4">
-                                        <b style="display: none" class="cell100 column2">Type de nourrissement</b>
-                                        <div class="donnees">
-                                            {{ n.typeNourrissement }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column4">
-                                        <b style="display: none" class="cell100 column2">Type d'aliment</b>
-                                        <div class="donnees">
-                                            {{ n.typeAliment }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Produit</b>
-                                        <div class="donnees">
-                                            {{ n.produit }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Quantité</b>
-                                        <div class="donnees">
-                                            {{ n.quantite }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column7">
-                                        <b style="display: none" class="cell100 column2">Note</b>
-                                        <div class="donnees">
-                                            {{ n.note }}
-                                        </div>
-                                    </td>
-                                </tr>
+
                                 {% endif %}
                                 {% endfor %}
                                 </tbody>
@@ -456,6 +461,46 @@
                             <table>
                                 <tbody>
                                 {% for t in trait %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Apiculteur</b>
+                                        <div class="donnees">
+                                            {{ t.api }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column6">
+                                        <b style="display: none" class="cell100 column2">Date</b>
+                                        <div class="donnees">
+                                            {{ t.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column8">
+                                        <b style="display: none" class="cell100 column2">Maladie</b>
+                                        <div class="donnees">
+                                            {{ t.maladie }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Méthode</b>
+                                        <div class="donnees">
+                                            {{ t.methode }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Posologie</b>
+                                        <div class="donnees">
+                                            {{ t.posologie }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column7">
+                                        <b style="display: none" class="cell100 column2">Note</b>
+                                        <div class="donnees">
+                                            {{ t.remarques }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
                                 {% for u in c.rucher.user.all %}
                                 {% if u == user %}
                                 <tr class="row100 body">
@@ -498,45 +543,7 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                                {% if user.is_staff %}
-                                <tr class="row100 body">
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Apiculteur</b>
-                                        <div class="donnees">
-                                            {{ t.api }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column6">
-                                        <b style="display: none" class="cell100 column2">Date</b>
-                                        <div class="donnees">
-                                            {{ t.date }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column8">
-                                        <b style="display: none" class="cell100 column2">Maladie</b>
-                                        <div class="donnees">
-                                            {{ t.maladie }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Méthode</b>
-                                        <div class="donnees">
-                                            {{ t.methode }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Posologie</b>
-                                        <div class="donnees">
-                                            {{ t.posologie }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column7">
-                                        <b style="display: none" class="cell100 column2">Note</b>
-                                        <div class="donnees">
-                                            {{ t.remarques }}
-                                        </div>
-                                    </td>
-                                </tr>
+
                                 {% endif %}
                                 {% endfor %}
                                 </tbody>
@@ -583,6 +590,34 @@
                             <table>
                                 <tbody>
                                 {% for r in recoltes %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">
+                                        <b style="display: none" class="cell100 column2">Date</b>
+                                        <div class="donnees">
+                                            {{ r.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Produit récolté</b>
+                                        <div class="donnees">
+                                            {{ r.produitRecolte }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Quantité</b>
+                                        <div class="donnees">
+                                            {{ r.quantite }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column7">
+                                        <b style="display: none" class="cell100 column2">Note</b>
+                                        <div class="donnees">
+                                            {{ r.note }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
                                 {% for u in c.rucher.user.all %}
                                 {% if u == user %}
                                 <tr class="row100 body">
@@ -613,33 +648,7 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                                {% if user.is_staff %}
-                                <tr class="row100 body">
-                                    <td class="cell100 column6">
-                                        <b style="display: none" class="cell100 column2">Date</b>
-                                        <div class="donnees">
-                                            {{ r.date }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Produit récolté</b>
-                                        <div class="donnees">
-                                            {{ r.produitRecolte }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Quantité</b>
-                                        <div class="donnees">
-                                            {{ r.quantite }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column7">
-                                        <b style="display: none" class="cell100 column2">Note</b>
-                                        <div class="donnees">
-                                            {{ r.note }}
-                                        </div>
-                                    </td>
-                                </tr>
+
                                 {% endif %}
                                 {% endfor %}
                                 </tbody>
@@ -685,6 +694,28 @@
                             <table>
                                 <tbody>
                                 {% for p in pesees %}
+                                {% if user.is_staff %}
+                                <tr class="row100 body">
+                                    <td class="cell100 column6">
+                                        <b style="display: none" class="cell100 column2">Date</b>
+                                        <div class="donnees">
+                                            {{ p.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Poids</b>
+                                        <div class="donnees">
+                                            {{ p.poids }} Kg
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column7">
+                                        <b style="display: none" class="cell100 column2">Note</b>
+                                        <div class="donnees">
+                                            {{ p.note }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
                                 {% for u in c.rucher.user.all %}
                                 {% if u == user %}
                                 <tr class="row100 body">
@@ -709,27 +740,7 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                                {% if user.is_staff %}
-                                <tr class="row100 body">
-                                    <td class="cell100 column6">
-                                        <b style="display: none" class="cell100 column2">Date</b>
-                                        <div class="donnees">
-                                            {{ p.date }}
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column2">
-                                        <b style="display: none" class="cell100 column2">Poids</b>
-                                        <div class="donnees">
-                                            {{ p.poids }} Kg
-                                        </div>
-                                    </td>
-                                    <td class="cell100 column7">
-                                        <b style="display: none" class="cell100 column2">Note</b>
-                                        <div class="donnees">
-                                            {{ p.note }}
-                                        </div>
-                                    </td>
-                                </tr>
+
                                 {% endif %}
                                 {% endfor %}
                                 </tbody>

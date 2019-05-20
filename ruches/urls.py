@@ -17,6 +17,7 @@ urlpatterns = [
     path('afficherColoniesRucher/<str:rucher>', views.affichercoloniesRucher, name='afficherColoniesRucher'),
     path('afficherRuchers', views.afficherRuchers, name='afficherRuchers'),
     path('ajouterColonie', views.ajouterColonie, name='ajouterColonie'),
+    path('ajouterColonieRucher/<str:rucher>', views.ajouterColonieRucher, name='ajouterColonieRucher'),
     path('ajouterNourrissement/<str:rucher>/<str:colonie>', views.ajouterNourrissement, name='ajouterNourrissement'),
     path('ajouterPesee/<str:rucher>/<str:colonie>', views.ajouterPesee, name='ajouterPesee'),
     path('ajouterRecolte/<str:rucher>/<str:colonie>', views.ajouterRecolte, name='ajouterRecolte'),

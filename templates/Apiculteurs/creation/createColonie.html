@@ -94,20 +94,27 @@
                                 <b style="display: inline-block">Nombre de cadres : &nbsp;</b><div style="display: inline-block">{{ form.nombre_de_cadres }}</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="tdDate" style="display: inline-block; text-align: right">
-                                <b style="margin-left: 25%; display: inline-block">Date : </b>
-                                <div class="divDate" style="display: inline-block">
-                                    <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
-                                        {{ form.date }}
-                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </table>
+                    <br>
+                    <div class="preDate">
+                        <div class="tdDate" style="display: inline-block; text-align: right">
+                            <b style="margin-left: 25%; display: inline-block">Date : </b>
+                            <div class="reinitialise" style="display: inline-block">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="input-group" id="datetimepicker1" data-target-input="nearest" style="width: 200px">
+                                                {{ form.date }}
+                                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                     <br>
                     <div>
                         <b style="display: inline-block; margin-left: 25%">Remarques (optionnel) : </b>
@@ -128,10 +135,15 @@
 </div>
 <script>
     $(function () {
-        $("#datetimepicker1").datetimepicker({
-            format: 'DD/MM/YYYY HH:mm',
-        });
+        $("#datetimepicker1").datetimepicker();
     });
+
+    window.onload = function () {
+        var elt_div = document.getElementById("datetimepicker1");
+
+        console.log(elt_div.childNodes);
+        console.log(elt_div.getElementsByTagName("div"));
+    };
 </script>
 </body>
 </html>
