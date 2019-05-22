@@ -48,6 +48,7 @@
 {% include "../Nav/navigation.html" %}
 <div>
     <h2 style="color: #1C5F90">Mon Compte</h2>
+
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
@@ -81,9 +82,15 @@
                                         </button>
                                     </form>
                                     <form id="formModifier" method="get" style="display: inline-block"
-                                          action="/modifierMonCompte">
+                                          action="{% url 'modifierMonCompte' user.id %}">
                                         <button type="submit" class="btn btnBleuModif m-0">
                                             <img style="width: 15px; height: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
+                                        </button>
+                                    </form>
+                                    <form method="get" style="display: inline-block" action="{% url 'sendMail' user.id %}">
+                                        <button type="submit" class="btn btnBleuAjout m-0">
+                                            <img style="width: 15px;" src="{% static 'ProjetRuches/images/plus.png' %}" alt="plus">
+                                            Demande
                                         </button>
                                     </form>
                                 </td>

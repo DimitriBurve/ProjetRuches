@@ -43,11 +43,14 @@ urlpatterns = [
     path('inscription', views.inscription, name='inscription'),
     path('monCompte', views.monCompte, name='monComte'),
     path('detailsMonCompte/<str:user_id>', views.detailsMonCompte, name="detailsMonCompte"),
-    path('modifierMonCompte', views.modifierMonCompte, name='modifierMonCompte'),
+    path('modifierMonCompte/<str:user_id>', views.modifierMonCompte, name='modifierMonCompte'),
     # vues admin
     path('showUsersAdmin', views.showUsersAdmin, name='showUsersAdmin'),
     path('deleteUserAdmin/<str:username>', views.deleteUserAdmin, name='deleteUserAdmin'),
     path('detailsUserAdmin/<str:username>', views.detailsUserAdmin, name='detailsUserAdmin'),
+    path('sendMail/<str:user_id>', views.envoie_mail, name='sendMail'),
+    path('registreXLS/<int:r_id>/<str:annee>/<str:user_id>', views.registreXLS, name='registreXLS'),
+    path('afficherRegistreColonieId/<int:r_id>', views.afficherRegistreColonieId, name='afficherRegistreColonieId'),
 ]
 
 

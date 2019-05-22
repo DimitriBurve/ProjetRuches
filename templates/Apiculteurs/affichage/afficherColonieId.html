@@ -84,6 +84,7 @@
                                     <th class="cell100 column4">Type de Ruche</th>
                                     <th class="cell100 column5">Nombre de cadres</th>
                                     <th class="cell100 column6">Date Création</th>
+                                    <th class="cell100 column2">Reine vue</th>
                                     <th class="cell100 column7">Dernière Remarque</th>
                                 </tr>
                                 </thead>
@@ -122,6 +123,16 @@
                                         <b style="display: none" class="cell100 column2">Date création</b>
                                         <div class="donnees">
                                             {{ c.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Reine vue</b>
+                                        <div class="donnees">
+                                            {% if etatReine == 'Vue' %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/success.png' %}" alt="vue">
+                                            {% else %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/cancel.png' %}" alt="cancel">
+                                            {% endif %}
                                         </div>
                                     </td>
                                     <td class="cell100 column7">
@@ -163,6 +174,16 @@
                                         <b style="display: none" class="cell100 column2">Date création</b>
                                         <div class="donnees">
                                             {{ c.date }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Reine vue</b>
+                                        <div class="donnees">
+                                            {% if etatReine == 'Vue' %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/success.png' %}" alt="vue">
+                                            {% else %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/cancel.png' %}" alt="cancel">
+                                            {% endif %}
                                         </div>
                                     </td>
                                     <td class="cell100 column7">
@@ -209,6 +230,7 @@
                                 <tr class="row100 head">
                                     <th class="cell100 column6">date</th>
                                     <th class="cell100 column8">conditions climatiques</th>
+                                    <th class="cell100 column2">Reine vue</th>
                                     <th class="cell100 column7">Notes</th>
                                     <th class="cell100 column8">Télécharger</th>
                                 </tr>
@@ -231,6 +253,16 @@
                                         <b style="display: none" class="cell100 column2">Condition climatique</b>
                                         <div class="donnees">
                                             {{ f.conditionClimatique }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Reine vue</b>
+                                        <div class="donnees">
+                                            {% if f.reinePresente == 'Vue' %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/success.png' %}" alt="vue">
+                                            {% else %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/cancel.png' %}" alt="cancel">
+                                            {% endif %}
                                         </div>
                                     </td>
                                     <td class="cell100 column7">
@@ -262,6 +294,16 @@
                                         <b style="display: none" class="cell100 column2">Condition climatique</b>
                                         <div class="donnees">
                                             {{ f.conditionClimatique }}
+                                        </div>
+                                    </td>
+                                    <td class="cell100 column2">
+                                        <b style="display: none" class="cell100 column2">Reine vue</b>
+                                        <div class="donnees">
+                                            {% if f.reinePresente == 'Vue' %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/success.png' %}" alt="vue">
+                                            {% else %}
+                                            <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/cancel.png' %}" alt="cancel">
+                                            {% endif %}
                                         </div>
                                     </td>
                                     <td class="cell100 column7">
@@ -607,7 +649,7 @@
                                     <td class="cell100 column2">
                                         <b style="display: none" class="cell100 column2">Quantité</b>
                                         <div class="donnees">
-                                            {{ r.quantite }}
+                                            {{ r.quantite }}&nbsp;{{ r.uniteQuantite }}
                                         </div>
                                     </td>
                                     <td class="cell100 column7">
@@ -636,7 +678,7 @@
                                     <td class="cell100 column2">
                                         <b style="display: none" class="cell100 column2">Quantité</b>
                                         <div class="donnees">
-                                            {{ r.quantite }}
+                                            {{ r.quantite }}{{ r.uniteQuantite }}
                                         </div>
                                     </td>
                                     <td class="cell100 column7">

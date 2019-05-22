@@ -15,6 +15,9 @@
 
 </head>
 <body>
+<div style="text-align: center">
+    {% include "../Nav/top.html" %}
+</div>
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
     <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
@@ -43,7 +46,224 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <h2>Mon Compte</h2>
+    <h2 style="color:#1C5F90;">Mon Compte</h2>
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm"></p>
+                <div class="titleForm">
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">Apiculteur</p>
+                        </li>
+                    </ul>
+                </div>
+                <form class="formVisite" method="post">
+                    {% csrf_token %}
+
+                    {% if errorsForm%}
+                        {% for error in errorsForm %}
+
+                            <strong>{{ error }}</strong>
+
+                        {% endfor %}
+                    {% endif %}
+
+                    <table class="inscription">
+                        <tr style="">
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Prénom : &nbsp;</b><div style="display: inline-block;">{{ user_form.first_name }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Nom : &nbsp;</b><div style="display: inline-block;">{{ user_form.last_name }}</div>
+                            </td>
+                        </tr>
+                        <tr style="">
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Username : &nbsp;</b><div style="display: inline-block;">{{ user_form.username }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Email : &nbsp;</b><div style="display: inline-block;">{{ user_form.email }}</div>
+                            </td>
+                        </tr>
+
+                        <tr style="">
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Mot de passe : &nbsp;</b><div style="display: inline-block;">{{ user_form.password1 }} {{ form.password1.errors }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Répéter le mot de passe : &nbsp;</b><div style="display: inline-block;">{{ user_form.password2 }} {{ form.password2.errors }}</div>
+                            </td>
+                        </tr>
+
+
+                        {{ api_form.user }}
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Adresse : &nbsp;</b><div style="display: inline-block;">{{ api_form.adressePApi }}</div>
+                            </td>
+                            <td class="supp" style="display: inline-block; text-align: right; float: right">
+                                <b style="display: inline-block">Supplément adresse (optionnel) : &nbsp;</b><div style="display: inline-block;">{{ api_form.adresseSApi }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdCodePostalLabel" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Code postal : &nbsp;</b>
+                            </td><!--
+                            --><td class="" style="display: inline-block; text-align: left">
+                                <div style="display: inline-block;">{{ api_form.codePostalApi }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Ville : &nbsp;</b><div style="display: inline-block;">{{ api_form.villeApi }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Téléphone : &nbsp;</b><div style="display: inline-block;">{{ api_form.telephoneApi }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">N° API : &nbsp;</b><div style="display: inline-block;">{{ api_form.numeroApi }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">N° SIRET ou Numagrit (optionnel) : &nbsp;</b><div style="display: inline-block;">{{ api_form.numeroSiretAgrit }}</div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Adhérent GDSA (optionnel)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <table class="inscription">
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Adresse : &nbsp;</b><div style="display: inline-block;">{{ api_form.adressePGDSA }}</div>
+                            </td>
+                            <td class="supp" style="float: right; text-align: right">
+                                <b style="display: inline-block">Supplément adresse (optionnel) : &nbsp;</b><div style="display: inline-block;">{{ api_form.adresseSGDSA }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdCodePostalLabel" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Code postal : &nbsp;</b>
+                            </td><!--
+                            --><td class="" style="display: inline-block; text-align: left">
+                                <div style="display: inline-block;">{{ api_form.codePostalGDSA }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Ville : &nbsp;</b><div style="display: inline-block;">{{ api_form.villeGDSA }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">PSE : &nbsp;</b><div style="display: inline-block;">{{ api_form.PSEGDSA }}</div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Vétérinaire (optionnel)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <table class="inscription">
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Adresse : &nbsp;</b><div style="display: inline-block;">{{ api_form.adressePVeterinaire }}</div>
+                            </td>
+                            <td class="supp" style="float: right; text-align: right">
+                                <b style="display: inline-block">Supplément adresse (optionnel) : &nbsp;</b><div style="display: inline-block;">{{ api_form.adresseSVeterinaire }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdCodePostalLabel" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Code postal : &nbsp;</b>
+                            </td><!--
+                            --><td class="" style="display: inline-block; text-align: left">
+                                <div style="display: inline-block;">{{ api_form.codePostalVeterinaire }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Ville : &nbsp;</b><div style="display: inline-block;">{{ api_form.villeVeterinaire }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Téléphone : &nbsp;</b><div style="display: inline-block;">{{ api_form.telephoneVeterinaire }}</div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <div class="titleForm">
+                        <ul role="tablist">
+                            <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                                <p style="text-align: center">Agent Sanitaire (optionnel)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <table class="inscription">
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Adresse : &nbsp;</b><div style="display: inline-block;">{{ api_form.adressePAgentSanitaire }}</div>
+                            </td>
+                            <td class="supp" style="float: right; text-align: right">
+                                <b style="display: inline-block">Supplément adresse (optionnel) : &nbsp;</b><div style="display: inline-block;">{{ api_form.adresseSAgentSanitaire }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdCodePostalLabel" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Code postal : &nbsp;</b>
+                            </td><!--
+                            --><td class="" style="display: inline-block; text-align: left">
+                                <div style="display: inline-block;">{{ api_form.codePostalAgentSanitaire }}</div>
+                            </td>
+                            <td class="td2" style="float: right; text-align: right">
+                                <b style="display: inline-block">Ville : &nbsp;</b><div style="display: inline-block;">{{ api_form.villeAgentSanitaire }}</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td1" style="display: inline-block; text-align: right">
+                                <b style="display: inline-block">Téléphone : &nbsp;</b><div style="display: inline-block;">{{ api_form.telephoneAgentSanitaire }}</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="text-align: center">
+                        <button class="btn btn-primary" type="submit" style="width: 200px; height: 50px">Modifier</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -403,12 +403,12 @@
                     <p style="display: inline-block; margin: auto">Non</p>
                 </div>
                 {% if f.couleurReineMarque == "Vert" %}
-                <mark style="background: green; color: black; display: inline-block; margin: auto; float: right">Vert</mark>
+                <mark style="background: yellow; color: black; display: inline-block; margin: auto; float: right">Vert</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto; float: right">&nbsp Vert &nbsp</p>
                 {% endif %}
                 {% if f.couleurReineMarque == "Rouge" %}
-                <mark style="background: red; color: black; display: inline-block; margin: auto; float: right">Rouge</mark>
+                <mark style="background: yellow; color: black; display: inline-block; margin: auto; float: right">Rouge</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto; float: right">&nbsp Rouge &nbsp</p>
                 {% endif %}
@@ -418,12 +418,12 @@
                 <p style="display: inline-block; margin: auto; float: right">&nbsp Jaune &nbsp</p>
                 {% endif %}
                 {% if f.couleurReineMarque == "Blanc" %}
-                <mark style="background: grey; color: black; display: inline-block; margin: auto; float: right">Blanc</mark>
+                <mark style="background: yellow; color: black; display: inline-block; margin: auto; float: right">Blanc</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto; float: right">&nbsp Blanc &nbsp</p>
                 {% endif %}
                 {% if f.couleurReineMarque == "Bleu" %}
-                <mark style="background: cornflowerblue; color: black; display: inline-block; margin: auto; float: right">Bleu</mark>
+                <mark style="background: yellow; color: black; display: inline-block; margin: auto; float: right">Bleu</mark>
                 {% else %}
                 <p style="display: inline-block; margin: auto; float: right">&nbsp Bleu &nbsp</p>
                 {% endif %}
@@ -880,17 +880,27 @@
                     ..............
                     {% endif %}
                     </div>
+                    <p style="display: inline-block; margin: auto"> &nbsp;à </p>
+                    <div style="display: inline-block">
+                    {% if f.destinationDeplacee %}
+                    {{ f.destinationDeplacee }}
+                    {% else %}
+                    ..............
+                    {% endif %}
+                    </div>
                 </div>
             </div>
             <div>
                 <p style="display: inline-block; margin: auto">Essaimage Naturel: </p>
                 <div style="display: inline-block">
                     <p style="display: inline-block; margin: auto">Le </p>
+                    <div style="display: inline-block">
                     {% if f.essaimageNaturel %}
                     {{ f.essaimageNaturel }}
                     {% else %}
                     ..............
                     {% endif %}
+                    </div>
                 </div>
             </div>
             <div>
@@ -963,7 +973,9 @@
             <h4>Récolte</h4>
             <div>
                 <p style="display: inline-block; margin: auto">Nombre de hausse: </p>
+                {% if f.nombreHausseRecolte %}
                 <div style="display: inline-block">{{ f.nombreHausseRecolte }}</div>
+                {% endif %}
             </div>
         </div>
         <div>

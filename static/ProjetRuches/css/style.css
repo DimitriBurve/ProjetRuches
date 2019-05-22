@@ -103,10 +103,7 @@ li.dropdown2 {
     .divDate {
         margin: 0 15px 0 0;
     }
-    #id_nom {
-
-    }
-    #id_remarque, #id_notes, #id_note, #id_remarques {
+    #id_remarque, #id_notes, #id_note, #id_remarques, #id_message {
         width: 200px;
         height: 100px;
     }
@@ -129,10 +126,10 @@ li.dropdown2 {
         height: 300px !important;
     }
 
-    /*tbody td {*/
-    /*    display: block;*/
-    /*    width: 100% !important;*/
-    /*}*/
+    tbody td {
+        display: block;
+        width: 100% !important;
+    }
 
     tbody b, tbody .donnees {
         display: inline !important;
@@ -240,10 +237,14 @@ li.dropdown2 {
     }
 
     .addRecolte tr td, .addTrait tr td, .addNour tr td, .colonieTable tr td {
-        padding-left: 20%;
+        padding-left: 15%;
         text-align: left !important;
         margin-left: auto !important;
         margin-right: auto !important;
+    }
+
+    .addRecolte td.tdDate {
+        padding-left: 10% !important;
     }
 
     .divTextArea {
@@ -867,7 +868,7 @@ ul#id_partition li, ul#id_couvainCompact li, ul#id_couvainMosaique li, ul#id_cou
 
 .addRecolte td.td2C {
     width: 310px;
-    margin-right: 210px;
+    margin-right: 160px;
     padding-right: 0 !important;
 }
 
@@ -1190,4 +1191,12 @@ z-index : auto;
 .preDate .tdDate {
     margin-left: 0 !important;
     text-align: center !important;
+}
+
+#id_ruchers {
+    padding-left: 0 !important;
+}
+
+#id_ruchers li {
+    display: inline-block;
 }

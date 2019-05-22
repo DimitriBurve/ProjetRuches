@@ -129,6 +129,12 @@ class TraitementForm(ModelForm):
 
 
 class RecolteForm(ModelForm):
+    UNITE_CHOICES = [
+        ('gr', 'gr'),
+        ('L', 'L'),
+    ]
+
+    uniteQuantite = forms.ChoiceField(choices=UNITE_CHOICES)
     note = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
     date = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
@@ -140,7 +146,7 @@ class RecolteForm(ModelForm):
 
     class Meta:
         model = Recolte
-        fields = ['date', 'produitRecolte', 'quantite', 'note']
+        fields = ['date', 'produitRecolte', 'quantite', 'uniteQuantite', 'note']
 
 
 class PeseeForm(ModelForm):
@@ -475,7 +481,7 @@ class FeuilleVisiteApresManipulationRecolteForm(ModelForm):
     ]
 
     DESTINATION_CHOICES = [
-        ('None', '------'),
+        ('', '------'),
     ]
 
     for r in Rucher.objects.all():
@@ -561,3 +567,28 @@ class FeuilleVisiteApresNotesForm(ModelForm):
     class Meta:
         model = FeuilleVisite
         fields = ['notes', 'etatColonie']
+
+
+class EmailForm(forms.Form):
+    ADMIN_CHOICES = []
+    usersObj = User.objects.all()
+    for u in usersObj:
+        if u.is_staff:
+            ADMIN_CHOICES.append((u.id, u.username))
+
+    DEMANDE_CHOICES = [
+        ('transfert dans rucher(s)', 'Mouvement apiculteur'),
+        ('suppression dans rucher(s)', 'Suppression dans rucher(s)'),
+        ('suppression de compte', 'Suppression de compte'),
+        ('Autre', 'Autre')
+    ]
+
+    ruchersObj = Rucher.objects.all()
+    RUCHERS_CHOICES = []
+    for r in ruchersObj:
+        RUCHERS_CHOICES.append((r.nom, r.nom))
+
+    demande = forms.ChoiceField(choices=DEMANDE_CHOICES)
+    admins = forms.ChoiceField(choices=ADMIN_CHOICES, required=False)
+    ruchers = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=RUCHERS_CHOICES, required=False)
+    message = forms.CharField(widget=forms.Textarea, required=False)

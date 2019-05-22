@@ -129,3 +129,10 @@ FIXTURE_DIRS = [
 LOGIN_REDIRECT_URL = '/home'
 
 LOGOUT_REDIRECT_URL = '/home'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'projetruches@gmail.com'
+EMAIL_HOST_PASSWORD = 'projetruches1!'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

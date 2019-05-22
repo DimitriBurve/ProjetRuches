@@ -38,8 +38,12 @@ from weasyprint import HTML
 
 import pyqrcode
 
+from django.core.mail import EmailMultiAlternatives
 
-# import pypng
+import xlrd
+from xlwt import Workbook, easyxf
+
+import datetime
 
 # ensemble des vues
 
@@ -247,10 +251,10 @@ def capteurUser(request, idCapteur):
     # The `colorData` dict contains key-value pairs of data for ColorRange of dial
     colorRangeData = OrderedDict()
     colorRangeData["color"] = [{
-            "minValue": "0",
-            "maxValue": "25",
-            "code": "#F2726F"
-        },
+        "minValue": "0",
+        "maxValue": "25",
+        "code": "#F2726F"
+    },
         {
             "minValue": "25",
             "maxValue": "50",
@@ -328,7 +332,7 @@ def render_png_to_pdf(request, c_id):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
+        box_size=5,
         border=4,
     )
     qr.add_data(link_to_post)
@@ -348,7 +352,7 @@ def render_png_to_pdf(request, c_id):
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    p.drawImage(filename, 0, 450)
+    p.drawImage(filename, 0, 650)
 
     # Close the PDF object cleanly, and we're done.
     p.showPage()
@@ -400,6 +404,10 @@ def afficherColonieId(request, c_id):
     test = False
     etat = ''
 
+    etatReine = ''
+    for f in feuilles:
+        etatReine = f.reinePresente
+
     for f in feuilles:
         if f.colonie == colonie:
             test = True
@@ -417,7 +425,7 @@ def afficherColonieId(request, c_id):
     return render(request, 'Apiculteurs/affichage/afficherColonieId.html',
                   {'c': colonie, 'feuilles': feuillesObj, 'nourri': nourrissementsObj,
                    'trait': traitementsObj, 'recoltes': recoltesObj, 'pesees': peseesObj,
-                   'etatColonie': etatFeuilles})
+                   'etatColonie': etatFeuilles, 'etatReine': etatReine})
 
 
 def afficherColonies(request):
@@ -460,24 +468,31 @@ def afficherColonies(request):
 
     test = False
     etat = ''
+    etat2 = ''
+
+    etatReine = []
+
     for c in colonies:
         for f in feuilles:
 
             if f.colonie == c:
                 test = True
                 etat = f.etatColonie
+                etat2 = f.reinePresente
                 break
             else:
                 test = False
         if test:
             etatFeuilles.append({'colonie': c, 'etat': etat})
+            etatReine.append({'colonie': c, 'etatReine': etat2})
         else:
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
+            etatReine.append({'colonie': c, 'etatReine': 'none'})
 
     colonies = sorted(colonies, key=lambda a: a.rucher.nom)
 
     return render(request, 'Apiculteurs/affichage/afficherColonies.html',
-                  {'colonies': colonies, 'etatColonie': etatFeuilles})
+                  {'colonies': colonies, 'etatColonie': etatFeuilles, 'etatReine': etatReine})
 
 
 def affichercoloniesRucher(request, rucher):
@@ -493,23 +508,29 @@ def affichercoloniesRucher(request, rucher):
 
     test = False
     etat = ''
+    etat2 = ''
+
+    etatReine = []
     for c in colonies:
         for f in feuilles:
 
             if f.colonie == c:
                 test = True
                 etat = f.etatColonie
+                etat2 = f.reinePresente
                 break
             else:
                 test = False
         if test:
             etatFeuilles.append({'colonie': c, 'etat': etat})
+            etatReine.append({'colonie': c, 'etatReine': etat2})
         else:
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
+            etatReine.append({'colonie': c, 'etatReine': 'none'})
     print(etatFeuilles)
 
     return render(request, 'Apiculteurs/affichage/afficherColoniesRucher.html',
-                  {'colonies': colonies, 'rucher': rucher, 'etatColonie': etatFeuilles})
+                  {'colonies': colonies, 'rucher': rucher, 'etatColonie': etatFeuilles, 'etatReine': etatReine})
 
 
 def afficherRuchers(request):
@@ -611,7 +632,8 @@ def ajouterPesee(request, rucher, colonie):
     else:
         obj = Pesee.objects.create(colonie=colonieObj)
         peseeForm = PeseeForm(instance=obj)
-    return render(request, 'Apiculteurs/creation/createPesee.html', {'form': peseeForm, 'colonie': colonie, 'rucher': rucher})
+    return render(request, 'Apiculteurs/creation/createPesee.html',
+                  {'form': peseeForm, 'colonie': colonie, 'rucher': rucher})
 
 
 def ajouterRecolte(request, rucher, colonie):
@@ -631,7 +653,8 @@ def ajouterRecolte(request, rucher, colonie):
     else:
         obj = Recolte.objects.create(colonie=colonieObj)
         recolteForm = RecolteForm(instance=obj)
-    return render(request, 'Apiculteurs/creation/createRecolte.html', {'form': recolteForm, 'colonie': colonie, 'rucher': rucher})
+    return render(request, 'Apiculteurs/creation/createRecolte.html',
+                  {'form': recolteForm, 'colonie': colonie, 'rucher': rucher})
 
 
 def ajouterRucher(request):
@@ -666,7 +689,8 @@ def ajouterTraitement(request, rucher, colonie):
     else:
         obj = Traitement.objects.create(colonie=colonieObj)
         traitementForm = TraitementForm(instance=obj)
-    return render(request, 'Apiculteurs/creation/createTraitement.html', {'form': traitementForm, 'colonie': colonie, 'rucher': rucher})
+    return render(request, 'Apiculteurs/creation/createTraitement.html',
+                  {'form': traitementForm, 'colonie': colonie, 'rucher': rucher})
 
 
 def modifierColonies(request):
@@ -982,8 +1006,236 @@ def export_pdf_Feuille(request, f_id):
     return response
 
 
-# partie inscription et mon compte
+def afficherRegistreColonieId(request, r_id):
+    rucher = Rucher.objects.get(pk=r_id)
+    colonies = Colonie.objects.all().filter(rucher=rucher)
+    annees = []
+    anneeToDay = datetime.date.today().year
+    anneeColonieCrea = 999999
+    for colonie in colonies:
+        if colonie.date.year < anneeColonieCrea:
+            anneeColonieCrea = colonie.date.year
+    print(anneeToDay)
+    print(anneeColonieCrea)
+    for i in range(anneeColonieCrea, anneeToDay+1):
+        annees.append(i)
+    return render(request, 'Apiculteurs/affichage/afficherRegistres.html', {'annees': annees, 'r_id': r_id, 'rucher': rucher})
 
+
+def registreXLS(request, r_id, annee, user_id):
+    userObj = User.objects.get(pk=user_id)
+    api = Apiculteur.objects.get(user=userObj)
+    feuillesVisites = FeuilleVisite.objects.all()
+    feuillesVisites = sorted(feuillesVisites, key=lambda a: a.date, reverse=False)
+    rucher = Rucher.objects.get(pk=r_id)
+    colonies = Colonie.objects.all().filter(rucher=rucher)
+
+    path = "/tmp/mycla.xls"
+
+    styleT = easyxf(
+        'font: height 440, bold 1; alignment: horizontal center, vertical center')
+    styleP1T = easyxf('font: height 320, bold 1; alignment: vertical center')
+    styleP1 = easyxf('font: height 280, bold 1; alignment: vertical center')
+    styleP2 = easyxf('font: height 240; alignment: vertical center')
+
+    classeur = Workbook()
+
+    feuillePGarde = classeur.add_sheet("Page de garde")
+    feuillePGarde.portrait = False
+
+    feuillePGarde.write_merge(0, 2, 0, 11, str("REGISTRE D'ÉLEVAGE {}".format(annee)), styleT)
+
+    feuillePGarde.write_merge(4, 5, 0, 3, str("Nom prénom apiculteur :"), styleP1)
+    feuillePGarde.write_merge(4, 5, 4, 11, str("{} {} ".format(userObj.last_name, userObj.first_name)), styleP2)
+
+    feuillePGarde.write_merge(6, 7, 0, 3, str("Adresse :"), styleP1)
+    feuillePGarde.write_merge(6, 7, 4, 11, str("{} {} - {} {}".format(api.adressePApi, api.adresseSApi, api.codePostalApi, api.villeApi)), styleP2)
+
+    feuillePGarde.write_merge(8, 9, 0, 3, str("Rucher :"), styleP1)
+    feuillePGarde.write_merge(8, 9, 4, 11, str(
+        "{}".format(rucher.nom)), styleP2)
+
+    feuillePGarde.write_merge(10, 11, 0, 3, str("N°API :"), styleP1)
+    feuillePGarde.write_merge(10, 11, 4, 11, str(
+        "{}".format(api.numeroApi)), styleP2)
+
+    feuillePGarde.write_merge(12, 13, 0, 3, str("N°SIRET ou Numagrit :"), styleP1)
+    feuillePGarde.write_merge(12, 13, 4, 11, str(
+        "{}".format(api.numeroSiretAgrit)), styleP2)
+
+    feuillePGarde.write_merge(15, 16, 0, 3, str("Adherent GDSA"), styleP1T)
+
+    feuillePGarde.write_merge(17, 18, 0, 3, str("Adresse :"), styleP1)
+    feuillePGarde.write_merge(17, 18, 4, 11, str(
+        "{} {} - {} {}".format(api.adressePGDSA, api.adresseSGDSA, api.codePostalGDSA, api.villeGDSA)), styleP2)
+
+    feuillePGarde.write_merge(19, 20, 0, 3, str("PSE :"), styleP1)
+    feuillePGarde.write_merge(19, 20, 4, 11, str(
+        "{}".format(api.PSEGDSA)), styleP2)
+
+    feuillePGarde.write_merge(22, 23, 0, 3, str("Veterinaire"), styleP1T)
+
+    feuillePGarde.write_merge(24, 25, 0, 3, str("Adresse :"), styleP1)
+    feuillePGarde.write_merge(24, 25, 4, 11, str(
+        "{} {} - {} {}".format(api.adressePVeterinaire, api.adresseSVeterinaire, api.codePostalVeterinaire, api.villeVeterinaire)), styleP2)
+
+    feuillePGarde.write_merge(26, 27, 0, 3, str("Téléphone :"), styleP1)
+    feuillePGarde.write_merge(26, 27, 4, 11, str(
+        "{}".format(api.telephoneVeterinaire)), styleP2)
+
+    feuillePGarde.write_merge(29, 30, 0, 3, str("Agent sanitaire"), styleP1T)
+
+    feuillePGarde.write_merge(31, 32, 0, 3, str("Adresse :"), styleP1)
+    feuillePGarde.write_merge(31, 32, 4, 11, str(
+        "{} {} - {} {}".format(api.adressePAgentSanitaire, api.adresseSAgentSanitaire, api.codePostalAgentSanitaire, api.villeAgentSanitaire)), styleP2)
+
+    feuillePGarde.write_merge(33, 34, 0, 3, str("Téléphone :"), styleP1)
+    feuillePGarde.write_merge(33, 34, 4, 11, str(
+        "{}".format(api.telephoneAgentSanitaire)), styleP2)
+
+    feuillePGarde.write_merge(36, 37, 0, 3, str("Nombre de colonies au printemps :"), styleP1)
+    feuillePGarde.write_merge(36, 37, 4, 11, str(
+        ""), styleP2)
+
+    feuillePGarde.write_merge(38, 39, 0, 3, str("Nombre de colonies hivernées :"), styleP1)
+    feuillePGarde.write_merge(38, 39, 4, 11, str(
+        ""), styleP2)
+
+    feuilleMouv = classeur.add_sheet("Mouvements des colonies")
+    feuilleMouv.portrait = False
+
+    styleT2 = easyxf('font: height 300; alignment: horizontal center, vertical center; borders: left thin, right thin, top thin, bottom thin; pattern: pattern solid, fore_color gray25')
+    styleP1T2 = easyxf('font: height 260; alignment: horizontal center, vertical center; borders: left thin, right thin, top thin, bottom thin; pattern: pattern solid, fore_color gray25')
+    feuilleMouv.write_merge(0, 0, 0, 11, "Mouvements des colonies", styleT2)
+
+    feuilleMouv.write_merge(1, 1, 0, 1, "Identification colonie", styleP1T2)
+    feuilleMouv.write_merge(1, 1, 2, 3, "Date", styleP1T2)
+    feuilleMouv.write_merge(1, 1, 4, 5, "Rucher d'origine", styleP1T2)
+    feuilleMouv.write_merge(1, 1, 6, 7, "Rucher d'accueil", styleP1T2)
+    feuilleMouv.write_merge(1, 1, 8, 11, "Remarques", styleP1T2)
+
+    feuilleOri = classeur.add_sheet("Manipulations des colonies")
+    feuilleOri.portrait = False
+    styleT3 = easyxf(
+        'font: height 240; alignment: horizontal center, vertical center; borders: left thin, right thin, top thin, bottom thin; pattern: pattern solid, fore_color gray25')
+    feuilleOri.col(0).width = 3500
+    feuilleOri.col(2).width = 3200
+    feuilleOri.col(5).width = 3200
+    styleP1T3 = easyxf(
+        'font: height 160; alignment: horizontal center, vertical center; borders: left thin, right thin, top thin, bottom thin; pattern: pattern solid, fore_color gray25')
+
+    feuilleOri.write_merge(0, 0, 0, 11, "Origines colonies et manipulations", styleT3)
+
+    feuilleOri.write_merge(1, 2, 0, 0, "Identification colonie", styleP1T3)
+    feuilleOri.write_merge(1, 2, 1, 1, "Reine marquée", styleP1T3)
+    feuilleOri.write_merge(1, 2, 2, 2, "Essaimage naturel", styleP1T3)
+
+    feuilleOri.write_merge(1, 1, 3, 4, "Remérage", styleP1T3)
+    feuilleOri.write_merge(2, 2, 3, 3, "Date", styleP1T3)
+    feuilleOri.write_merge(2, 2, 4, 4, "Origine", styleP1T3)
+
+    feuilleOri.write_merge(1, 2, 5, 5, "Division colonie le", styleP1T3)
+    feuilleOri.write_merge(1, 2, 6, 6, "Création ruche", styleP1T3)
+
+    feuilleOri.write_merge(1, 1, 7, 8, "Reine", styleP1T3)
+    feuilleOri.write_merge(2, 2, 7, 7, "Ruche origine", styleP1T3)
+    feuilleOri.write_merge(2, 2, 8, 8, "Ruche crée", styleP1T3)
+
+    feuilleOri.write_merge(1, 1, 9, 10, "Réunion Colonies", styleP1T3)
+    feuilleOri.write_merge(2, 2, 9, 9, "Date", styleP1T3)
+    feuilleOri.write_merge(2, 2, 10, 10, "Ruche libre", styleP1T3)
+
+    feuilleOri.write_merge(1, 2, 11, 11, "remarques", styleP1T3)
+
+    feuilleTraitVa = classeur.add_sheet("Traitement varroase")
+    feuilleTraitVa.portrait = False
+
+    feuilleTraitVa.col(0).width = 6000
+    feuilleTraitVa.col(1).width = 3500
+    feuilleTraitVa.col(2).width = 8000
+    feuilleTraitVa.col(3).width = 7000
+    feuilleTraitVa.col(4).width = 10000
+
+    feuilleTraitVa.write_merge(0, 0, 0, 4, "Traitement Varroase", styleT2)
+
+    feuilleTraitVa.write_merge(1, 1, 0, 0, "Identification colonie", styleP1T2)
+    feuilleTraitVa.write_merge(1, 1, 1, 1, "Date", styleP1T2)
+    feuilleTraitVa.write_merge(1, 1, 2, 2, "Méthode", styleP1T2)
+    feuilleTraitVa.write_merge(1, 1, 3, 3, "Posologie", styleP1T2)
+    feuilleTraitVa.write_merge(1, 1, 4, 4, "Remarques", styleP1T2)
+
+    feuilleMal = classeur.add_sheet("Maladies et traitements")
+    feuilleMal.portrait = False
+
+    feuilleMal.col(0).width = 6000
+    feuilleMal.col(1).width = 3500
+    feuilleMal.col(2).width = 8000
+    feuilleMal.col(3).width = 7000
+    feuilleMal.col(4).width = 10000
+
+    feuilleMal.write_merge(0, 0, 0, 4, "Maladies et traitements (à l'exception de la varroase)", styleT2)
+
+    feuilleMal.write_merge(1, 1, 0, 0, "Identification colonie", styleP1T2)
+    feuilleMal.write_merge(1, 1, 1, 1, "Date", styleP1T2)
+    feuilleMal.write_merge(1, 1, 2, 2, "Maladies", styleP1T2)
+    feuilleMal.write_merge(1, 1, 3, 3, "Traitements", styleP1T2)
+    feuilleMal.write_merge(1, 1, 4, 4, "Remarques", styleP1T2)
+
+    feuilleNour = classeur.add_sheet("Nourrissements")
+    feuilleNour.portrait = False
+
+    feuilleNour.col(0).width = 6000
+    feuilleNour.col(1).width = 3500
+    feuilleNour.col(2).width = 8000
+    feuilleNour.col(3).width = 7000
+    feuilleNour.col(4).width = 10000
+
+    feuilleNour.write_merge(0, 0, 0, 4, "Nourrissements", styleT2)
+
+    feuilleNour.write_merge(1, 1, 0, 0, "Identification colonie", styleP1T2)
+    feuilleNour.write_merge(1, 1, 1, 1, "Date", styleP1T2)
+    feuilleNour.write_merge(1, 1, 2, 2, "produits", styleP1T2)
+    feuilleNour.write_merge(1, 1, 3, 3, "Quantité", styleP1T2)
+    feuilleNour.write_merge(1, 1, 4, 4, "Remarques", styleP1T2)
+
+    feuilleVis = classeur.add_sheet("Visite agent sanitaire")
+    feuilleVis.portrait = False
+
+    feuilleVis.col(0).width = 6000
+    feuilleVis.col(1).width = 1000
+    feuilleVis.col(3).width = 3500
+    feuilleVis.col(4).width = 8000
+    feuilleVis.col(5).width = 12000
+
+    feuilleVis.write_merge(0, 0, 0, 5, "VISITE AGENT SANITAIRE", styleT2)
+
+    feuilleVis.write_merge(1, 1, 0, 0, "Identification colonie", styleP1T2)
+    feuilleVis.write_merge(1, 1, 1, 2, "Date", styleP1T2)
+    feuilleVis.write_merge(1, 1, 3, 4, "Remarques", styleP1T2)
+    for i in range(2, 37, 3):
+        feuilleVis.write_merge(i, i+2, 0, 0, "", style=easyxf('borders: left thin, right thin, top thin, bottom thin;'))
+        feuilleVis.write_merge(i, i+2, 1, 2, "", style=easyxf('borders: left thin, right thin, top thin, bottom thin;'))
+        feuilleVis.write_merge(i, i+2, 3, 4, "", style=easyxf('borders: left thin, right thin, top thin, bottom thin;'))
+
+    feuilleVis.write_merge(1, 1, 5, 5, "Remarques générales", styleP1T2)
+    feuilleVis.write_merge(2, 8, 5, 5, "Représentant du rucher à la visite le :", style=easyxf('alignment: vertical top; borders: left thin, right thin, top thin, bottom thin;'))
+    feuilleVis.write_merge(9, 17, 5, 5, "Nom, date et signature agent sanitaire :", style=easyxf('alignment: vertical top; borders: left thin, right thin, top thin, bottom thin;'))
+    feuilleVis.write_merge(18, 37, 5, 5, "Remarques générales :", style=easyxf('alignment: vertical top; borders: left thin, right thin, top thin, bottom thin;'))
+
+    classeur.save(path)
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('mycla.xls') as xls:
+        response = HttpResponse(xls, content_type='application/vnd.ms-excel')
+        name = str("registre elevage {}-{}.xls".format(rucher.nom, annee))
+        print(name)
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(name)
+        return response
+
+    return response
+
+
+# partie inscription et mon compte
 def inscription(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -1082,8 +1334,39 @@ def detailsMonCompte(request, user_id):
     return render(request, 'registration/detailsAccount.html', {'user': user})
 
 
-def modifierMonCompte(request):
-    return render(request, 'registration/modifyAccount.html')
+def modifierMonCompte(request, user_id):
+    userObj = User.objects.get(pk=user_id)
+    api = Apiculteur.objects.get(user=userObj)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=userObj)
+        if user_form.is_valid():
+            user_form.save()
+            username = user_form.cleaned_data.get('username')
+            raw_password = user_form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            # obj = Apiculteur.objects.create(user=user)
+            api_form = ApiForm(request.POST, instance=api)
+            if api_form.is_valid():
+                api_form.save()
+                login(request, user)
+                return redirect('detailsMonCompte', user_id)
+        else:
+            print("test invalid form")
+            form_errors = user_form.errors
+            print(form_errors)
+            erreurs = []
+            for error in form_errors:
+                if error == "password2":
+                    erreurs.append("Erreur mot de passe")
+                if error == "username":
+                    erreurs.append("Erreur Username")
+            return render(request, 'registration/inscription.html',
+                          {'user_form': user_form, 'errorsForm': erreurs})
+    else:
+        print("test error post")
+        user_form = UserForm(instance=userObj)
+        api_form = ApiForm(instance=api)
+        return render(request, 'registration/modifyAccount.html', {'user_form': user_form, 'api_form': api_form})
 
 
 # partie admin
@@ -1144,3 +1427,65 @@ def detailsUserAdmin(request, username):
 
     return render(request, 'Admin/detailsUserAdmin.html',
                   {'userEdit': userEdit, 'colonies': colonies, 'etatColonie': etatFeuilles})
+
+
+# partie mail
+def envoie_mail(request, user_id):
+    global user, rucher
+    if request.method == 'POST':
+        print('post')
+        email_form = EmailForm(request.POST)
+        if email_form.is_valid():
+            demande = email_form.cleaned_data.get('demande')
+            admin = email_form.cleaned_data.get('admins')
+            rucher = email_form.cleaned_data.get('ruchers')
+            message = email_form.cleaned_data.get('message')
+            print(demande)
+            print(admin)
+            print(rucher)
+            user = User.objects.get(pk=user_id)
+            adminObj = User.objects.get(pk=admin)
+            html_content = ""
+            if demande == 'transfert dans rucher(s)':
+                html_content = "Bonjour,<br>" \
+                               "L'apiculteur <strong>{}</strong> souhaite " \
+                               "intégrer le(s) rucher(s) : <strong>{}</strong>. <br>" \
+                               "Message supplémentaire : <br> {} <br>" \
+                               "Cordialement,<br>" \
+                               "Le site des Ruches".format(user.username, rucher, message)
+            elif demande == 'Autre':
+                html_content = "Bonjour,<br>" \
+                               "L'apiculteur <strong>{}</strong> vous écrit ceci : <br> " \
+                               "{}. <br>" \
+                               "Cordialement,<br>" \
+                               "Le site des Ruches".format(user.username, message)
+            elif demande == 'suppression dans rucher(s)':
+                html_content = "Bonjour,<br>" \
+                               "L'apiculteur <strong>{}</strong> souhaite " \
+                               "ne plus être dans le(s) rucher(s) : <strong>{}</strong>.<br>" \
+                               "Message supplémentaire : <br> {} <br>" \
+                               "Cordialement,<br>" \
+                               "Le site des Ruches".format(user.username, rucher, message)
+            else:
+                html_content = "Bonjour,<br>" \
+                               "L'apiculteur <strong>{}</strong> souhaite " \
+                               "supprimer son compte.<br>" \
+                               "Message supplémentaire : <br> {} <br>" \
+                               "Cordialement,<br>" \
+                               "Le site des Ruches".format(user.username, message)
+            print(user.email)
+            msg = EmailMultiAlternatives(
+                demande,
+                html_content,
+                "projetruches@gmail.com",
+                [adminObj.email],
+            )
+            msg.content_subtype = "html"
+            msg.send()
+            return redirect('home')
+        else:
+            print(email_form.errors)
+    else:
+        print("test error post")
+        email_form = EmailForm()
+        return render(request, 'Apiculteurs/creation/createMessage.html', {'form': email_form})

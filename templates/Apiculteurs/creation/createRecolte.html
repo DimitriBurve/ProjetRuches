@@ -37,7 +37,7 @@
     <li class="liNavBar"><a href="informationsUser">Informations</a></li>
     {% if user.is_authenticated %}
     <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
-    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
+    <li class="liNavBar active"><a href="afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
@@ -98,7 +98,7 @@
                                 <b style="display: inline-block">Produit récolté : &nbsp;</b><div style="display: inline-block">{{ form.produitRecolte }}</div>
                             </td>
                             <td class="td2C" style="float: right; text-align: right">
-                                <b style="display: inline-block">Quantite : &nbsp;</b><div style="display: inline-block">{{ form.quantite }}</div>
+                                <b style="display: inline-block">Quantite : &nbsp;</b><div style="display: inline-block">{{ form.quantite }}</div><div style="display: inline-block">{{ form.uniteQuantite }}</div>
                             </td>
                         </tr>
                     </table>

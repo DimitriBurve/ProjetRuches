@@ -92,9 +92,10 @@
                                 <th class="cell100 column2">Identification</th>
                                 <th class="cell100 column3">Rucher</th>
                                 <th class="cell100 column4">Type de Ruche</th>
-                                <th class="cell100 column5">Nombre de cadres</th>
+                                <th class="cell100 column2">Nombre de cadres</th>
                                 <th class="cell100 column6">Date création</th>
-                                <th class="cell100 column7">Dernière remarque</th>
+                                <th class="cell100 column2">Reine vue</th>
+                                <th class="cell100 column8">Dernière remarque</th>
                                 <th class="cell100 column8">Actions</th>
                                 <th class="cell100 column9">QR Code</th>
                             </tr>
@@ -145,7 +146,7 @@
                                         {{ colonie.type }}
                                     </div>
                                 </td>
-                                <td class="cell100 column5">
+                                <td class="cell100 column2">
                                     <b style="display: none" class="cell100 column2">Nombre de cadres</b>
                                     <div class="donnees">
                                         {{ colonie.nombre_de_cadres }}
@@ -157,7 +158,21 @@
                                         {{ colonie.date }}
                                     </div>
                                 </td>
-                                <td class="cell100 column7">
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Reine vue</b>
+                                    <div class="donnees">
+                                        {% for etat in etatReine %}
+                                        {% if etat.colonie == colonie %}
+                                        {% if etat.etatReine == 'Vue' %}
+                                        <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/success.png' %}" alt="vue">
+                                        {% else %}
+                                        <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/cancel.png' %}" alt="cancel">
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="cell100 column8">
                                     <b style="display: none" class="cell100 column2">Dernière remarque</b>
                                     <div class="donnees">
                                         {{ colonie.remarque }}
@@ -252,7 +267,17 @@
                                         {{ colonie.date }}
                                     </div>
                                 </td>
-                                <td class="cell100 column7">
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Reine vue</b>
+                                    <div class="donnees">
+                                        {% if f.reinePresente == 'Vue' %}
+                                        <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/success.png' %}" alt="vue">
+                                        {% else %}
+                                        <img style="width: 30px; display: inline-block" src="{% static 'ProjetRuches/images/cancel.png' %}" alt="cancel">
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="cell100 column8">
                                     <b style="display: none" class="cell100 column2">Dernière remarque</b>
                                     <div class="donnees">
                                         {{ colonie.remarque }}
