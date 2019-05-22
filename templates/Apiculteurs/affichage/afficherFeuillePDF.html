@@ -882,11 +882,13 @@
                     </div>
                     <p style="display: inline-block; margin: auto"> &nbsp;à </p>
                     <div style="display: inline-block">
-                    {% if f.destinationDeplacee %}
-                    {{ f.destinationDeplacee }}
-                    {% else %}
-                    ..............
-                    {% endif %}
+                        {% if f.destinationDeplacee != 'None' and f.destinationDeplacee != '' %}
+                        {{ f.destinationDeplacee }}
+                        {% elif f.destinationDeplacee == 'None' %}
+                        ..............
+                        {% else %}
+                        ..............
+                        {% endif %}
                     </div>
                 </div>
             </div>

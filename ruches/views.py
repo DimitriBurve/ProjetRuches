@@ -1114,6 +1114,17 @@ def registreXLS(request, r_id, annee, user_id):
     feuilleMouv.write_merge(1, 1, 6, 7, "Rucher d'accueil", styleP1T2)
     feuilleMouv.write_merge(1, 1, 8, 11, "Remarques", styleP1T2)
 
+    indiceMouv = 2
+    for f in feuillesVisites:
+        if f.destinationDeplacee != '' and f.destinationDeplacee != 'None' and f.destinationDeplacee is not None:
+            print(f.destinationDeplacee)
+            feuilleMouv.write_merge(indiceMouv, indiceMouv, 0, 1, str("{}".format(f.colonie.nom)))
+            feuilleMouv.write_merge(indiceMouv, indiceMouv, 2, 3, str("{}".format(f.colonieDeplacee)))
+            feuilleMouv.write_merge(indiceMouv, indiceMouv, 4, 5, str("{}".format(rucher.nom)))
+            feuilleMouv.write_merge(indiceMouv, indiceMouv, 6, 7, str("{}".format(f.destinationDeplacee)))
+            feuilleMouv.write_merge(indiceMouv, indiceMouv, 8, 11, str("{}".format(f.notes)))
+            indiceMouv += 1
+
     feuilleOri = classeur.add_sheet("Manipulations des colonies")
     feuilleOri.portrait = False
     styleT3 = easyxf(
@@ -1147,6 +1158,38 @@ def registreXLS(request, r_id, annee, user_id):
 
     feuilleOri.write_merge(1, 2, 11, 11, "remarques", styleP1T3)
 
+    indiceOri = 3
+    for f in feuillesVisites:
+        test = False
+        if f.reineMarqueeManipulation is not None or f.essaimageNaturel is not None or f.origineRemerage is not None or f.divisionColonie is not None or f.creationRuche is not None or f.liberationRuche is not None:
+            if f.reineMarqueeManipulation is not None and f.reineMarqueeManipulation != '':
+                feuilleOri.write_merge(indiceOri, indiceOri, 1, 1, str("{}".format(f.reineMarqueeManipulation)))
+                test = True
+            if f.essaimageNaturel is not None and f.essaimageNaturel != '':
+                feuilleOri.write_merge(indiceOri, indiceOri, 2, 2, str("{}".format(f.essaimageNaturel)))
+                test = True
+            if f.origineRemerage is not None and f.origineRemerage != '':
+                feuilleOri.write_merge(indiceOri, indiceOri, 3, 3, str("{}".format(f.remerage)))
+                feuilleOri.write_merge(indiceOri, indiceOri, 4, 4, str("{}".format(f.origineRemerage)))
+                test = True
+            if f.divisionColonie is not None and f.divisionColonie != '':
+                feuilleOri.write_merge(indiceOri, indiceOri, 5, 5, str("{}".format(f.divisionColonie)))
+                test = True
+            if f.creationRuche is not None and f.creationRuche != '':
+                feuilleOri.write_merge(indiceOri, indiceOri, 6, 6, str("{}".format(f.creationRuche)))
+                test = True
+            if f.liberationRuche is not None and f.liberationRuche != '':
+                feuilleOri.write_merge(indiceOri, indiceOri, 9, 9, str("{}".format(f.reunionColonie)))
+                feuilleOri.write_merge(indiceOri, indiceOri, 10, 10, str("{}".format(f.liberationRuche)))
+                test = True
+        if f.reineMarqueeManipulation != '' and f.essaimageNaturel != '' and f.origineRemerage != '' and f.divisionColonie != '' and f.creationRuche != '' and f.liberationRuche != '' and f.reineMarqueeManipulation is not None and f.essaimageNaturel is not None and f.origineRemerage is not None and f.divisionColonie is not None and f.creationRuche is not None and f.liberationRuche is not None:
+            feuilleOri.write_merge(indiceOri, indiceOri, 0, 0, str("{}".format(f.colonie.nom)))
+            feuilleOri.write_merge(indiceOri, indiceOri, 7, 7, str(""))
+            feuilleOri.write_merge(indiceOri, indiceOri, 8, 8, str(""))
+            feuilleOri.write_merge(indiceOri, indiceOri, 11, 11, str("{}".format(f.notes)))
+        if test is True:
+            indiceOri += 1
+
     feuilleTraitVa = classeur.add_sheet("Traitement varroase")
     feuilleTraitVa.portrait = False
 
@@ -1163,6 +1206,16 @@ def registreXLS(request, r_id, annee, user_id):
     feuilleTraitVa.write_merge(1, 1, 2, 2, "Méthode", styleP1T2)
     feuilleTraitVa.write_merge(1, 1, 3, 3, "Posologie", styleP1T2)
     feuilleTraitVa.write_merge(1, 1, 4, 4, "Remarques", styleP1T2)
+
+    indiceTraitVa = 2
+    for f in feuillesVisites:
+        if f.maladieTraitement == 'Varroa':
+            feuilleTraitVa.write_merge(indiceTraitVa, indiceTraitVa, 0, 0, str("{}".format(f.colonie.nom)))
+            feuilleTraitVa.write_merge(indiceTraitVa, indiceTraitVa, 1, 1, str("{}".format(f.date)))
+            feuilleTraitVa.write_merge(indiceTraitVa, indiceTraitVa, 2, 2, str("{}".format(f.methodeUtilisee)))
+            feuilleTraitVa.write_merge(indiceTraitVa, indiceTraitVa, 3, 3, str(""))
+            feuilleTraitVa.write_merge(indiceTraitVa, indiceTraitVa, 3, 3, str("{}").format(f.notes))
+        indiceTraitVa += 1
 
     feuilleMal = classeur.add_sheet("Maladies et traitements")
     feuilleMal.portrait = False
@@ -1181,6 +1234,16 @@ def registreXLS(request, r_id, annee, user_id):
     feuilleMal.write_merge(1, 1, 3, 3, "Traitements", styleP1T2)
     feuilleMal.write_merge(1, 1, 4, 4, "Remarques", styleP1T2)
 
+    indiceMal = 2
+    for f in feuillesVisites:
+        if f.maladieTraitement != 'Varroa' and f.maladieTraitement != 'Rien':
+            feuilleMal.write_merge(indiceMal, indiceMal, 0, 0, str("{}".format(f.colonie.nom)))
+            feuilleMal.write_merge(indiceMal, indiceMal, 1, 1, str("{}".format(f.date)))
+            feuilleMal.write_merge(indiceMal, indiceMal, 2, 2, str("{}".format(f.maladieTraitement)))
+            feuilleMal.write_merge(indiceMal, indiceMal, 3, 3, str("{}".format(f.methodeUtilisee)))
+            feuilleMal.write_merge(indiceMal, indiceMal, 4, 4, str("{}").format(f.notes))
+        indiceMal += 1
+
     feuilleNour = classeur.add_sheet("Nourrissements")
     feuilleNour.portrait = False
 
@@ -1197,6 +1260,16 @@ def registreXLS(request, r_id, annee, user_id):
     feuilleNour.write_merge(1, 1, 2, 2, "produits", styleP1T2)
     feuilleNour.write_merge(1, 1, 3, 3, "Quantité", styleP1T2)
     feuilleNour.write_merge(1, 1, 4, 4, "Remarques", styleP1T2)
+
+    indiceNour = 2
+    for f in feuillesVisites:
+        if f.typeAlimentNourrissement != 'Rien':
+            feuilleNour.write_merge(indiceNour, indiceNour, 0, 0, str("{}".format(f.colonie.nom)))
+            feuilleNour.write_merge(indiceNour, indiceNour, 1, 1, str("{}".format(f.date)))
+            feuilleNour.write_merge(indiceNour, indiceNour, 2, 2, str("{}".format(f.typeAlimentNourrissement)))
+            feuilleNour.write_merge(indiceNour, indiceNour, 3, 3, str("{} {}".format(f.quantiteAlimentNourrissement, f.uniteNourrissement)))
+            feuilleNour.write_merge(indiceNour, indiceNour, 4, 4, str("{}").format(f.notes))
+        indiceNour += 1
 
     feuilleVis = classeur.add_sheet("Visite agent sanitaire")
     feuilleVis.portrait = False
