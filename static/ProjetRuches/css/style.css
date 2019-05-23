@@ -1200,3 +1200,8 @@ z-index : auto;
 #id_ruchers li {
     display: inline-block;
 }
+
+#map {
+    height: 300px;
+    width: 500px;
+}

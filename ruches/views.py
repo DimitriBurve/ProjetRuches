@@ -1562,3 +1562,36 @@ def envoie_mail(request, user_id):
         print("test error post")
         email_form = EmailForm()
         return render(request, 'Apiculteurs/creation/createMessage.html', {'form': email_form})
+
+
+def contactAdmin(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            nom = form.cleaned_data.get('nomContact')
+            prenom = form.cleaned_data.get('prenomContact')
+            adresseMail = form.cleaned_data.get('adresseMailContact')
+            message = form.cleaned_data.get('message')
+            users = User.objects.all()
+            admins = []
+            for u in users:
+                if u.is_staff:
+                    admins.append(u.email)
+            html_content = "Bonjour,<br>" \
+                           "{} {} vous envoie ce message : <br> {} <br>" \
+                           "Vous pouvez lui repondre à cette adrresse : {} <br>" \
+                           "Cordialement,<br>" \
+                           "Le site des Ruches".format(nom, prenom, message, adresseMail)
+            print(admins)
+            msg = EmailMultiAlternatives(
+                "Demande de renseignements",
+                html_content,
+                "projetruches@gmail.com",
+                admins,
+            )
+            msg.content_subtype = "html"
+            msg.send()
+            return redirect('home')
+    else:
+        form = ContactForm()
+    return render(request, 'User/affichageContact.html', {'form': form})

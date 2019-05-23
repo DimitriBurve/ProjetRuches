@@ -51,6 +51,7 @@ urlpatterns = [
     path('sendMail/<str:user_id>', views.envoie_mail, name='sendMail'),
     path('registreXLS/<int:r_id>/<str:annee>/<str:user_id>', views.registreXLS, name='registreXLS'),
     path('afficherRegistreColonieId/<int:r_id>', views.afficherRegistreColonieId, name='afficherRegistreColonieId'),
+    path('contactAdmin', views.contactAdmin, name='contactAdmin')
 ]
 
 

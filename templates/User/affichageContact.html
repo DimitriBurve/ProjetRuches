@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ruches</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'ProjetRuches/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superslides/0.6.2/jquery.superslides.js"></script>
+
+</head>
+<body>
+
+<div style="text-align: center">
+    {% include "../Nav/top.html" %}
+</div>
+
+<ul class="navbarMenu" id="mynavbarMenu">
+    <li class="liNavBar"><a class="active" href="home">Accueil</a></li>
+    <li class="liNavBar"><a href="informationsUser">Gestion capteurs</a></li>
+    {% if user.is_authenticated %}
+    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
+    <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="right liNavBar" style="height: 52px">
+        <a href="/monCompte" style="padding-top: 0">
+            {% if user.is_superuser %}
+            <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
+            {% else %}
+            <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }}</p>
+            {% endif %}
+            Mon Compte
+        </a>
+    </li>
+    {% if user.is_superuser %}
+    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    {% endif %}
+    {% else %}
+    <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
+    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    {% endif %}
+</ul>
+{% include "../Nav/navigation.html" %}
+<div>
+    <h2 style="color: #1C5F90">Contact</h2>
+
+    {% if user.is_authenticated %}
+    <div class="multipleForm">
+        <div class="container-table100">
+            <div class="container-form">
+                <p class="bigTitleForm">Demande</p>
+                <div class="titleForm">
+                    <ul role="tablist">
+                        <li class="first active" role="tab" aria-disabled="false" aria-selected="true" style="width: 100%">
+                            <p style="text-align: center">&nbsp;</p>
+                        </li>
+                    </ul>
+                </div>
+                <form class="formVisite" method="post" action="{% url 'contactAdmin' %}">
+                    {% csrf_token %}
+                    <div style="text-align: center;">
+
+                        <div style="text-align: right; width: 340px;margin-left: auto; margin-right: auto">
+                            <b style="display: inline-block">Nom :</b>
+                            <div style="display: inline-block">
+                                {{ form.nomContact }}
+                            </div>
+                        </div>
+                        <br>
+                        <div style="text-align: right; width: 340px;margin-left: auto; margin-right: auto">
+                            <b style="display: inline-block">Prénom :</b>
+                            <div style="display: inline-block">
+                                {{ form.prenomContact }}
+                            </div>
+                        </div>
+                        <br>
+                        <div style="text-align: right; width: 340px; margin-left: auto; margin-right: auto">
+                            <b style="display: inline-block">adresse e-mail :</b>
+                            <div style="display: inline-block;">
+                                {{ form.adresseMailContact }}
+                            </div>
+                        </div>
+                        <br>
+                        <div>
+                            <b style="display: inline-block">Message :</b>
+                            <div style="display: inline-block; vertical-align: top">
+                                {{ form.message }}
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

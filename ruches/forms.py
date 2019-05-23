@@ -592,3 +592,10 @@ class EmailForm(forms.Form):
     admins = forms.ChoiceField(choices=ADMIN_CHOICES, required=False)
     ruchers = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=RUCHERS_CHOICES, required=False)
     message = forms.CharField(widget=forms.Textarea, required=False)
+
+
+class ContactForm(forms.Form):
+    nomContact = forms.CharField()
+    prenomContact = forms.CharField()
+    adresseMailContact = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)

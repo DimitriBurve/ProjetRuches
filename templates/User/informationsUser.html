@@ -12,6 +12,16 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+            integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+            crossorigin=""></script>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+
 </head>
 <body>
 <div style="text-align: center">
@@ -19,8 +29,7 @@
 </div>
 <ul class="navbarMenu">
     <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="camerasUser">Caméras</a></li>
-    <li class="liNavBar"><a class="active" href="informationsUser">Informations</a></li>
+    <li class="liNavBar"><a class="active" href="informationsUser">Gestion capteurs</a></li>
     {% if user.is_authenticated %}
     <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
     <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
@@ -46,15 +55,16 @@
 {% include "../Nav/navigation.html" %}
 <div>
     <h2 style="color: #1C5F90">Liste Villes</h2>
+    <br>
     <div style="padding-left: 7%;">
         <ul style="list-style-type: none">
             {% for r in ruchers %}
             <li>
-                <div style="display: inline-block">{{ r.ville }}</div> <div onclick="show('colonies{{r.ville}}')" style="display: inline-block; cursor: pointer; color: #007bff;" id="detailsVille">details</div>
-                <div style="padding-left: 2%; display: none" id="colonies{{r.ville}}">
+                <div style="display: inline-block; font-size: 20pt"><img style="width: 30px" src="{% static 'ProjetRuches/images/placeholder.png' %}" alt="geoloc">&nbsp;{{ r.ville }}</div> <div onclick="show('colonies{{r.ville}}')" style="display: inline-block; cursor: pointer; color: #007bff;" id="detailsVille">details</div>
+                <div style="padding-left: 2%; display: none;" id="colonies{{r.ville}}">
                 {% for cap in capteurs %}
                 {% if cap.rucher == r.ville %}
-                <p>{{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id %}">Caméra</a></p>
+                <p>● {{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id %}">Caméra</a></p>
                 {% endif %}
                 {% endfor %}
                 </div>
@@ -63,8 +73,19 @@
             {% endfor %}
         </ul>
     </div>
+    <div id='map'></div>
 </div>
 <script type="text/javascript">
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGJ1cnZlbmkiLCJhIjoiY2p3MHJ6NHNvMDJuaTN5bHVybjN5ZjZsMSJ9.sUb-dIskcJ9PA7u0wb638g';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        zoom: 11.15,
+        center: [2.2683334350585938, 48.815130004502386]
+    });
+    map.addControl(new mapboxgl.NavigationControl());
+
+
     function show(indice)
     {
         if (document.getElementById(indice).style.display==="none")		// Si la zone indiqué par indice est est invisible
@@ -72,6 +93,19 @@
         else									// Sinon (elle est donc visible)
             document.getElementById(indice).style.display="none";		//On la crend invisible
     }
+    var marker = new mapboxgl.Marker({
+        draggable: true
+    })
+    .setLngLat([0, 0])
+    .addTo(map);
+
+    function onDragEnd() {
+        var lngLat = marker.getLngLat();
+        coordinates.style.display = 'block';
+        coordinates.innerHTML = 'Longitude: ' + lngLat.lng + '<br />Latitude: ' + lngLat.lat;
+    }
+
+marker.on('dragend', onDragEnd);
 </script>
 </body>
 </html>
