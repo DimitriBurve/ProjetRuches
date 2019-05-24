@@ -276,6 +276,11 @@ li.dropdown2 {
         display: block !important;
     }
 
+    #map {
+        width: 350px !important;
+        height: 300px !important;
+    }
+
 }
 
 #my-menu{
@@ -1202,6 +1207,6 @@ z-index : auto;
 }
 
 #map {
-    height: 300px;
-    width: 500px;
+    height: 600px;
+    width: 1200px;
 }

@@ -21,6 +21,14 @@
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.1/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.1/mapbox-gl-geocoder.css' type='text/css' />
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.43.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.43.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src='https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js'></script>
 
 </head>
 <body>
@@ -56,34 +64,26 @@
 <div>
     <h2 style="color: #1C5F90">Liste Villes</h2>
     <br>
-    <div style="padding-left: 7%;">
+    <div style="padding-left: 7%; display: inline-block">
         <ul style="list-style-type: none">
             {% for r in ruchers %}
             <li>
-                <div style="display: inline-block; font-size: 20pt"><img style="width: 30px" src="{% static 'ProjetRuches/images/placeholder.png' %}" alt="geoloc">&nbsp;{{ r.ville }}</div> <div onclick="show('colonies{{r.ville}}')" style="display: inline-block; cursor: pointer; color: #007bff;" id="detailsVille">details</div>
-                <div style="padding-left: 2%; display: none;" id="colonies{{r.ville}}">
+                <div style="display: inline-block; font-size: 20pt"><img style="width: 30px" src="{% static 'ProjetRuches/images/placeholder.png' %}" alt="geoloc">&nbsp;{{ r.ville }}</div> <div onclick="show('colonies{{r.ville}}'); showMap('{{r.ville}}','{{r.adresseP}}')" style="display: inline-block; cursor: pointer; color: #007bff;" id="detailsVille">details</div>
+                <div style="padding-left: 10%; display: none;" id="colonies{{r.ville}}">
                 {% for cap in capteurs %}
                 {% if cap.rucher == r.ville %}
-                <p>● {{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id %}">Caméra</a></p>
+                <p style="display: inline-block">● {{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}" style="display: inline-block">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id %}" style="display: inline-block">Caméra</a></p>
                 {% endif %}
                 {% endfor %}
                 </div>
             </li>
-            <br>
             {% endfor %}
         </ul>
     </div>
-    <div id='map'></div>
+    <div id='map' style="display: inline-block; padding-left: 5%; vertical-align: top"></div>
 </div>
 <script type="text/javascript">
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZGJ1cnZlbmkiLCJhIjoiY2p3MHJ6NHNvMDJuaTN5bHVybjN5ZjZsMSJ9.sUb-dIskcJ9PA7u0wb638g';
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        zoom: 11.15,
-        center: [2.2683334350585938, 48.815130004502386]
-    });
-    map.addControl(new mapboxgl.NavigationControl());
+
 
 
     function show(indice)
@@ -93,19 +93,40 @@
         else									// Sinon (elle est donc visible)
             document.getElementById(indice).style.display="none";		//On la crend invisible
     }
-    var marker = new mapboxgl.Marker({
-        draggable: true
-    })
-    .setLngLat([0, 0])
-    .addTo(map);
 
-    function onDragEnd() {
-        var lngLat = marker.getLngLat();
-        coordinates.style.display = 'block';
-        coordinates.innerHTML = 'Longitude: ' + lngLat.lng + '<br />Latitude: ' + lngLat.lat;
+    function showMap(city, addressP) {
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGF3aXgxMCIsImEiOiJjamJlOGE1bmcyZ2V5MzNtcmlyaWRzcDZlIn0.ZRQ73zzVxwcADIPvsqB6mg';
+        console.log(mapboxgl.accessToken);
+        var client = new MapboxClient(mapboxgl.accessToken);
+        console.log(client);
+
+        var address = addressP+', '+city;
+        var test = client.geocodeForward(address, function (err, data, res) {
+            // data is the geocoding result as parsed JSON
+            // res is the http response, including: status, headers and entity properties
+
+            console.log(res);
+            console.log(res.url);
+            console.log(data);
+
+            var coordinates = data.features[0].center;
+
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v10',
+                center: coordinates,
+                zoom: 13
+            });
+            new mapboxgl.Marker()
+                .setLngLat(coordinates)
+                .addTo(map);
+
+
+        });
     }
 
-marker.on('dragend', onDragEnd);
+    // map.addControl(new mapboxgl.NavigationControl());
 </script>
 </body>
 </html>
