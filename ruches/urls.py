@@ -7,10 +7,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('home', views.home, name='homeUser'),
     path('informationsUser', views.informationsUser, name='infosUser'),
-    path('detailCapteurUser/<str:idCapteur>', views.capteurUser, name='detailsUser'),
+    path('detailCapteurUser/<str:idCapteur>/<str:rucher>/<str:colonie>', views.capteurUser, name='detailsUser'),
     path('json', views.jsonView, name="json"),
-    path('camerasUser', views.camerasUser, name='camerasUser'),
-    path('videoCameraUser/<int:c_id>', views.videoCamerasUser, name='videoCameraUser'),
+    path('videoCameraUser/<int:c_id>/<str:rucher>/<str:colonie>', views.videoCamerasUser, name='videoCameraUser'),
     # vues apiculteurs
     path('afficherColonieId/<int:c_id>', views.afficherColonieId, name='afficherColonieId'),
     path('afficherColonies', views.afficherColonies, name='afficherColonies'),
@@ -37,7 +36,7 @@ urlpatterns = [
     path('createFeuilleVisite/<str:rucher>/<str:colonie>/<int:etape>', views.createFeuillevisite, name='createFeuilleVisite'),
     path('afficherFeuilles', views.afficherFeuilles, name='afficherFeuilles'),
     path('afficherPDF/<int:f_id>', views.export_pdf_Feuille, name='afficherPDF'),
-    #qr
+    # qr
     path('afficherQR/<int:c_id>', views.render_png_to_pdf, name='afficherQR'),
     # vues inscription et mon compte
     path('inscription', views.inscription, name='inscription'),

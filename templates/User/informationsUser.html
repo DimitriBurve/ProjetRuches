@@ -44,12 +44,15 @@
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
-            {% if user.is_superuser %}
-            <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
-            {% else %}
-            <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }}</p>
-            {% endif %}
-            Mon Compte
+            <img style="width: 30px; display: inline-block; vertical-align: 1%" src="{% static 'ProjetRuches/images/compte.png'%}" alt="compte">
+            <div style="display: inline-block">
+                {% if user.is_superuser %}
+                <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
+                {% else %}
+                <p style="margin-bottom: 0; font-size: 11pt;">Bonjour {{ user.username }}</p>
+                {% endif %}
+                Mon Compte
+            </div>
         </a>
     </li>
     {% if user.is_superuser %}
@@ -72,7 +75,7 @@
                 <div style="padding-left: 10%; display: none;" id="colonies{{r.ville}}">
                 {% for cap in capteurs %}
                 {% if cap.rucher == r.ville %}
-                <p style="display: inline-block">● {{ cap.colonie }} <a href="{% url 'detailsUser' cap.id %}" style="display: inline-block">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id %}" style="display: inline-block">Caméra</a></p>
+                <p style="display: inline-block">● {{ cap.colonie }} <a href="{% url 'detailsUser' cap.id r.ville cap.colonie %}" style="display: inline-block">Capteurs</a>&nbsp;<a href="{% url 'videoCameraUser' cap.id r.ville cap.colonie %}" style="display: inline-block">Caméra</a></p>
                 {% endif %}
                 {% endfor %}
                 </div>
@@ -86,12 +89,14 @@
 
 
 
-    function show(indice)
-    {
-        if (document.getElementById(indice).style.display==="none")		// Si la zone indiqué par indice est est invisible
-            document.getElementById(indice).style.display="block";		// On l'affiche
-        else									// Sinon (elle est donc visible)
-            document.getElementById(indice).style.display="none";		//On la crend invisible
+    function show(indice) {
+        if (document.getElementById(indice).style.display === "none") {		// Si la zone indiqué par indice est est invisible
+            document.getElementById(indice).style.display = "block";		// On l'affiche
+            document.getElementById('map').style.display = 'inline-block';
+        } else {								// Sinon (elle est donc visible)
+            document.getElementById(indice).style.display = "none";		//On la crend invisible
+            document.getElementById('map').style.display = "none";
+        }
     }
 
     function showMap(city, addressP) {
@@ -101,7 +106,7 @@
         var client = new MapboxClient(mapboxgl.accessToken);
         console.log(client);
 
-        var address = addressP+', '+city;
+        var address = addressP+', '+city+', France';
         var test = client.geocodeForward(address, function (err, data, res) {
             // data is the geocoding result as parsed JSON
             // res is the http response, including: status, headers and entity properties

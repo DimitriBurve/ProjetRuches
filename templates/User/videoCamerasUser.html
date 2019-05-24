@@ -26,12 +26,15 @@
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
+            <img style="width: 30px; display: inline-block; vertical-align: 1%" src="{% static 'ProjetRuches/images/compte.png'%}" alt="compte">
+            <div style="display: inline-block">
             {% if user.is_superuser %}
             <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
             {% else %}
             <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }}</p>
             {% endif %}
             Mon Compte
+            </div>
         </a>
     </li>
     {% if user.is_superuser %}
@@ -44,14 +47,16 @@
 </ul>
 {% include "../Nav/navigation.html" %}
 <div>
-    <h2 style="color: #1C5F90">Caméra Capteur</h2>
-    <p>video camera capteur {{ nameCapteur }}</p>
+    <h2 style="color: #1C5F90">Caméra Capteur {{ colonie }} {{ rucher }}</h2>
+    <br>
 <!--    <video autoplay="" src="" controls="true">-->
-    <video>
-      Your browser doesn't support HTML5 videos.
-    </video>
+    <div style="text-align: center">
+        <video src="{% static 'ProjetRuches/video/Bees.mp4' %}" controls="true" autoplay="" type="video">
+            Your browser doesn't support HTML5 videos.
+        </video>
+    </div>
 
-    <video autoplay="" src="http://localhost:8080/" controls="true" type="video">Your browser does not support the VIDEO tag and/or RTP streams.</video>
+<!--    <video autoplay="" src="http://localhost:8080/" controls="true" type="video">Your browser does not support the VIDEO tag and/or RTP streams.</video>-->
 </div>
 </body>
 </html>

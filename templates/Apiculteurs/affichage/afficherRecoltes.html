@@ -23,12 +23,15 @@
     <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
+            <img style="width: 30px; display: inline-block; vertical-align: 1%" src="{% static 'ProjetRuches/images/compte.png'%}" alt="compte">
+            <div style="display: inline-block">
             {% if user.is_superuser %}
             <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }} (superuser)</p>
             {% else %}
             <p style="margin-bottom: 0; font-size: 11pt">Bonjour {{ user.username }}</p>
             {% endif %}
             Mon Compte
+            </div>
         </a>
     </li>
     {% if user.is_superuser %}

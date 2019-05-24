@@ -69,8 +69,8 @@ def informationsUser(request):
     # print(res)
 
     capteurs = json.load(open("fixtures/capteurs.json"))
-    for cap in capteurs:
-        print(cap['rucher'])
+    # for cap in capteurs:
+    #     print(cap['rucher'])
 
     localisationsCapteurs = []
 
@@ -102,53 +102,56 @@ def informationsUser(request):
     return render(request, 'User/informationsUser.html', {'ruchers': localisationsCapteurs, 'capteurs': capteurs})
 
 
-def capteurUser(request, idCapteur):
-    headers = {'Accept': 'application/json',
-               'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
-    response = requests.get(
-        "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
-        headers=headers).json()
+def capteurUser(request, idCapteur, rucher, colonie):
+    # headers = {'Accept': 'application/json',
+    #            'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
     #
+    # response = requests.get(
+    #     "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
+    #     headers=headers).json()
+
     dataCapteur = []
+
+    # en commentaire si pas de lien pour recuperer donnees capteurs
+
+    # for resp in response:
+    #     # print(resp['deviceId'])
+    #     date = resp['time']
+    #     temp = date.split('T')
+    #     temp2 = temp[1].split('Z')
+    #     temp3 = temp2[0].split('.')
+    #     dateTemp = temp3[0].split(':')
+    #     hours = (int(dateTemp[0]) + 2) % 24
+    #     hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
+    #     datef = temp[0] + " " + str(hourF)
     #
-    for resp in response:
-        # print(resp['deviceId'])
-        date = resp['time']
-        temp = date.split('T')
-        temp2 = temp[1].split('Z')
-        temp3 = temp2[0].split('.')
-        dateTemp = temp3[0].split(':')
-        hours = (int(dateTemp[0]) + 2) % 24
-        hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
-        datef = temp[0] + " " + str(hourF)
-
-        # temp
-
-        dataCapteur.append([datef,
-                            86,
-                            resp['humidity'],
-                            resp['temperature']])
-
-        # if resp['deviceId'] == idCapteur and idCapteur == "591b3f0c50e1ff001b65e817":
-        #     dataCapteur.append([datef,
-        #                         resp['request']['payload']['record']['data']['vbat'],
-        #                         resp['request']['payload']['record']['data']['humidity'],
-        #                         resp['request']['payload']['record']['data']['temperature']])
-        # elif resp['deviceId'] == idCapteur:
-        #     print("test")
-        #     dataCapteur.append([datef,
-        #                         resp['request']['payload']['record']['data']['battery_2'],
-        #                         resp['request']['payload']['record']['data']['humidite_2'],
-        #                         resp['request']['payload']['record']['data']['temperature_2']])
+    #     # temp
+    #
+    #     dataCapteur.append([datef,
+    #                         86,
+    #                         resp['humidity'],
+    #                         resp['temperature']])
+    #
+    #     # if resp['deviceId'] == idCapteur and idCapteur == "591b3f0c50e1ff001b65e817":
+    #     #     dataCapteur.append([datef,
+    #     #                         resp['vbat'],
+    #     #                         resp['humidity'],
+    #     #                         resp['temperature']])
+    #     # elif resp['deviceId'] == idCapteur:
+    #     #     print("test")
+    #     #     dataCapteur.append([datef,
+    #     #                         resp['request']['payload']['record']['data']['battery_2'],
+    #     #                         resp['request']['payload']['record']['data']['humidite_2'],
+    #     #                         resp['request']['payload']['record']['data']['temperature_2']])
 
     dataCapteurJson = json.load(open("fixtures/data.json"))
 
-    # for d in dataCapteurJson:
-    #     # print(d)
-    #     dataCapteur.append([d['time'],
-    #                         d['bat'],
-    #                         d['hum'],
-    #                         d['temp']])
+    for d in dataCapteurJson:
+        # print(d)
+        dataCapteur.append([d['time'],
+                            d['bat'],
+                            d['hum'],
+                            d['temp']])
 
     # print(dataCapteur)
 
@@ -296,7 +299,7 @@ def capteurUser(request, idCapteur):
                   {'nameCapteur': idCapteur, 'graphTemp': fcChartTemp.render(), 'graphHum': fcChartHum.render(),
                    'graphPoids': fcChartPoids.render(),
                    'derniereTemp': derniereTemp, 'derniereHum': derniereHum, 'dernierBat': dernierBat,
-                   'batGraph': angulargaugeWidget.render()})
+                   'batGraph': angulargaugeWidget.render(), 'rucher': rucher, 'colonie': colonie})
 
 
 def jsonView(request):
@@ -305,22 +308,8 @@ def jsonView(request):
     return render(request, 'User/testjson.html', {'test': received_json_data})
 
 
-def camerasUser(request):
-    capteurs = json.load(open("fixtures/capteurs.json"))
-    for cap in capteurs:
-        print(cap['rucher'])
-
-    localisationsCapteurs = []
-
-    ruchers = Rucher.objects.all()
-    for r in ruchers:
-        localisationsCapteurs.append(r)
-
-    return render(request, 'User/camerasUser.html', {"capteurs": capteurs, "ruchers": localisationsCapteurs})
-
-
-def videoCamerasUser(request, c_id):
-    return render(request, 'User/videoCamerasUser.html', {'nameCapteur': c_id})
+def videoCamerasUser(request, c_id, rucher, colonie):
+    return render(request, 'User/videoCamerasUser.html', {'nameCapteur': c_id, 'rucher': rucher, 'colonie': colonie})
 
 
 # partie apiculteur
