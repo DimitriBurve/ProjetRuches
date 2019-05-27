@@ -25,7 +25,12 @@
     {% if user.is_authenticated %}
     <li class="liNavBar"><a class="active" href="afficherRuchers">Gestion Ruchers</a></li>
     <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
-    <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="right liNavBar" style="height: 52px">
+        <a href="{% url 'logout' %}">
+            <img style="width: 25px; display: inline-block;" src="{% static 'ProjetRuches/images/logout.png'%}" alt="compte">
+            <div style="display: inline-block">Déconnexion</div>
+        </a>
+    </li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
             <img style="width: 30px; display: inline-block; vertical-align: 1%" src="{% static 'ProjetRuches/images/compte.png'%}" alt="compte">
@@ -69,8 +74,9 @@
                             <thead>
                             <tr class="row100 head">
                                 <th class="cell100 column1">Nom</th>
-                                <th class="cell100 column6">localisation</th>
-                                <th class="cell100 column6">Apiculteur(s)</th>
+                                <th class="cell100 column11">localisation</th>
+                                <th class="cell100 column12">Apiculteur(s)</th>
+                                <th class="cell100 column1">Nombre colonies</th>
                                 <th class="cell100 column6">Actions</th>
                                 <th class="cell100 column1">Registres</th>
                             </tr>
@@ -89,16 +95,22 @@
                                         {{ rucher.nom }}
                                     </div>
                                 </td>
-                                <td class="cell100 column8">
+                                <td class="cell100 column13">
                                     <b style="display: none" class="cell100 column8">localisation</b>
                                     <div class="donnees">
                                         {{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}
                                     </div>
                                 </td>
-                                <td class="cell100 column8">
-                                    <b style="display: none" class="cell100 column8">Apiculteur(s)</b>
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Apiculteur(s)</b>
                                     <div class="donnees">
                                         {% for u in rucher.user.all %} {{ u }} {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Nombre colonies</b>
+                                    <div class="donnees">
+                                        {% for n in nombreColo %} {% if n.rucher == rucher %} {{ n.nombre }} {% endif %} {% endfor %}
                                     </div>
                                 </td>
                                 <td class="cell100 column8">
@@ -146,7 +158,7 @@
                                         {{ rucher.nom }}
                                     </div>
                                 </td>
-                                <td class="cell100 column8">
+                                <td class="cell100 column13">
                                     <b style="display: none" class="cell100 column8">localisation</b>
                                     <div class="donnees">
                                         {{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}
@@ -156,6 +168,12 @@
                                     <b style="display: none" class="cell100 column2">Apiculteur(s)</b>
                                     <div class="donnees">
                                         {% for u in rucher.user.all %} {{ u }} {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="cell100 column2">
+                                    <b style="display: none" class="cell100 column2">Nombre colonies</b>
+                                    <div class="donnees">
+                                        {% for n in nombreColo %} {% if n.rucher == rucher %} {{ n.nombre }} {% endif %} {% endfor %}
                                     </div>
                                 </td>
                                 <td class="cell100 column8">

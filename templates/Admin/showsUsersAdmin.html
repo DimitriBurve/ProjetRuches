@@ -20,12 +20,17 @@
 </div>
 
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="informationsUser">Gestion capteurs</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Gestion capteurs</a></li>
     {% if user.is_authenticated %}
-    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
-    <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
-    <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar"><a href="/afficherColonies">Gestion Colonies</a></li>
+    <li class="right liNavBar" style="height: 52px">
+        <a href="{% url 'logout' %}">
+            <img style="width: 25px; display: inline-block;" src="{% static 'ProjetRuches/images/logout.png'%}" alt="compte">
+            <div style="display: inline-block">Déconnexion</div>
+        </a>
+    </li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
             <img style="width: 30px; display: inline-block; vertical-align: 1%" src="{% static 'ProjetRuches/images/compte.png'%}" alt="compte">
@@ -40,11 +45,11 @@
         </a>
     </li>
     {% if user.is_superuser %}
-    <li class="right liNavBar"><a class="active" href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar"><a class="active" href="/showUsersAdmin">Administration</a></li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
-    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    <li class="right liNavBar"><a href="/inscription">Inscription</a></li>
     {% endif %}
 </ul>
 {% include "../Nav/navigation.html" %}
@@ -82,13 +87,13 @@
                                 <td class="cell100 column8">
                                     <form id="formDetailsA" method="get" style="display: inline-block"
                                           action="{% url 'detailsUserAdmin' u.username %}">
-                                        <button type="submit" class="btn btn-primary m-0">
+                                        <button type="submit" class="btn m-0 btnBleuDetails">
                                             <img style="width: 15px" src="{% static 'ProjetRuches/images/detail.png' %}"> Détails
                                         </button>
                                     </form>
 
                                     <form id="formModifA" method="get" style="display: inline-block">
-                                        <button type="submit" class="btn btn-primary m-0">
+                                        <button type="submit" class="btn m-0 btnBleuModif">
                                             <img style="width: 15px" src="{% static 'ProjetRuches/images/modify.png' %}"> Modifier
                                         </button>
                                     </form>
@@ -96,8 +101,8 @@
                                     <form id="formDelA" method="post" onsubmit="return validateUser(this,'{{u.username}}')" style="display: inline-block"
                                           action="{% url 'deleteUserAdmin' u.username %}">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger m-0">
-                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}"> Supprimer
+                                        <button type="submit" class="btn m-0 btnRg">
+                                            <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}">
                                         </button>
                                     </form>
                                 </td>

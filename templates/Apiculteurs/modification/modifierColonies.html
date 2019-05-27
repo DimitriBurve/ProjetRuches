@@ -19,7 +19,12 @@
     {% if user.is_authenticated %}
     <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
     <li class="liNavBar"><a href="afficherColonies">Gestion Colonies</a></li>
-    <li class="right liNavBar"><a href="{% url 'logout' %}">Déconnexion</a></li>
+    <li class="right liNavBar" style="height: 52px">
+        <a href="{% url 'logout' %}">
+            <img style="width: 25px; display: inline-block;" src="{% static 'ProjetRuches/images/logout.png'%}" alt="compte">
+            <div style="display: inline-block">Déconnexion</div>
+        </a>
+    </li>
     <li class="right liNavBar" style="height: 52px">
         <a href="/monCompte" style="padding-top: 0">
             <img style="width: 30px; display: inline-block; vertical-align: 1%" src="{% static 'ProjetRuches/images/compte.png'%}" alt="compte">

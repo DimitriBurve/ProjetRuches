@@ -531,7 +531,19 @@ def afficherRuchers(request):
         for f in feuillesObj:
             if f.notes is None:
                 f.delete()
-    return render(request, 'Apiculteurs/affichage/afficherRuchers.html', {'ruchers': ruchers})
+    nombreColoRuchers = []
+
+    nombre = 0
+    for r in ruchers:
+        for c in colonies:
+            if c.rucher == r:
+                nombre += 1
+        nombreColoRuchers.append({'rucher': r, 'nombre': nombre})
+        nombre = 0
+
+    print(nombreColoRuchers)
+
+    return render(request, 'Apiculteurs/affichage/afficherRuchers.html', {'ruchers': ruchers, 'nombreColo': nombreColoRuchers})
 
 
 def ajouterColonie(request):
@@ -942,11 +954,6 @@ def createFeuillevisite(request, rucher, colonie, etape):
 
         return render(request, 'Apiculteurs/creation/createFeuilleVisite.html',
                       {'form': form, 'rucher': rucher, 'colonie': colonie, 'etape': etape})
-
-
-def afficherFeuilles(request):
-    feuilles = FeuilleVisite.objects.all()
-    return render(request, 'Apiculteurs/affichage/afficherFeuillesVisite.html', {'feuilles': feuilles})
 
 
 def feuillePDF(request, f_id):
