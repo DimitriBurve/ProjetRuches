@@ -460,7 +460,6 @@ def afficherColonies(request):
     etat2 = ''
 
     etatReine = []
-
     for c in colonies:
         for f in feuilles:
 
@@ -477,6 +476,7 @@ def afficherColonies(request):
         else:
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
             etatReine.append({'colonie': c, 'etatReine': 'none'})
+    print(etatReine)
 
     colonies = sorted(colonies, key=lambda a: a.rucher.nom)
 
