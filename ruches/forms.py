@@ -99,6 +99,12 @@ class RucheRucherForm(ModelForm):
 
 
 class NourrissementForm(ModelForm):
+    UNITE_CHOICES = [
+        ('gr', 'gr'),
+        ('L', 'L'),
+    ]
+
+    uniteQuantite = forms.ChoiceField(choices=UNITE_CHOICES)
     note = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
     date = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
@@ -110,7 +116,7 @@ class NourrissementForm(ModelForm):
 
     class Meta:
         model = Nourrissement
-        fields = ['date', 'typeNourrissement', 'typeAliment', 'produit', 'quantite', 'note']
+        fields = ['date', 'typeNourrissement', 'typeAliment', 'produit', 'uniteQuantite', 'quantite', 'note']
 
 
 class TraitementForm(ModelForm):

@@ -101,6 +101,7 @@ class Nourrissement(models.Model):
     typeAliment = models.ForeignKey(TypeAliment, on_delete=models.CASCADE, null=True)
     produit = models.CharField(max_length=200, null=True)
     quantite = models.DecimalField(max_digits=12, decimal_places=3, null=True)
+    uniteQuantite = models.CharField(max_length=2, null=True)
     note = models.CharField(max_length=1024, null=True)
 
     def __str__(self):
