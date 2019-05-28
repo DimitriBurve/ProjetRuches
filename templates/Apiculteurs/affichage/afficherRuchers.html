@@ -78,7 +78,9 @@
                                 <th class="cell100 column12">Apiculteur(s)</th>
                                 <th class="cell100 column1">Nombre colonies</th>
                                 <th class="cell100 column6">Actions</th>
+                                {% if not user.is_staff %}
                                 <th class="cell100 column1">Registres</th>
+                                {% endif %}
                             </tr>
                             </thead>
                         </table>
@@ -89,19 +91,19 @@
                             {% for rucher in ruchers %}
                             {% if user.is_staff%}
                             <tr class="row100 body">
-                                <td class="cell100 column2">
+                                <td class="cell100 column11">
                                     <b style="display: none" class="cell100 column2">Nom</b>
                                     <div class="donnees">
                                         {{ rucher.nom }}
                                     </div>
                                 </td>
-                                <td class="cell100 column13">
+                                <td class="cell100 column8">
                                     <b style="display: none" class="cell100 column8">localisation</b>
                                     <div class="donnees">
                                         {{ rucher.adresseP }} {% if rucher.adresseS|length %}, {{ rucher.adresseS }} {% endif %} - {{ rucher.codePostal }} {{ rucher.ville }}
                                     </div>
                                 </td>
-                                <td class="cell100 column2">
+                                <td class="cell100 column6">
                                     <b style="display: none" class="cell100 column2">Apiculteur(s)</b>
                                     <div class="donnees">
                                         {% for u in rucher.user.all %} {{ u }} {% endfor %}
@@ -141,12 +143,12 @@
                                         </form>
                                     </div>
                                 </td>
-                                <td class="cell100 column2">
-                                    <b style="display: none" class="cell100 column2">Registres</b>
-                                    <div class="donnees">
-                                        <a href="{% url 'afficherRegistreColonieId' rucher.id %}">Voir</a>
-                                    </div>
-                                </td>
+<!--                                <td class="cell100 column2">-->
+<!--                                    <b style="display: none" class="cell100 column2">Registres</b>-->
+<!--                                    <div class="donnees">-->
+<!--                                        <a href="{% url 'afficherRegistreColonieId' rucher.id %}">Voir</a>-->
+<!--                                    </div>-->
+<!--                                </td>-->
                             </tr>
                             {% else %}
                             {% for u in rucher.user.all %}
