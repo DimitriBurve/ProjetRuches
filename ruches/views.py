@@ -394,6 +394,9 @@ def afficherColonieId(request, c_id):
     etat = ''
 
     etatReine = ''
+    remarque = ''
+    remarques = []
+
     for f in feuilles:
         etatReine = f.reinePresente
 
@@ -401,13 +404,16 @@ def afficherColonieId(request, c_id):
         if f.colonie == colonie:
             test = True
             etat = f.etatColonie
+            remarque = f.notes
             break
         else:
             test = False
     if test:
         etatFeuilles.append({'colonie': colonie, 'etat': etat})
+        remarques.append({'colonie': colonie, 'remarque': remarque})
     else:
         etatFeuilles.append({'colonie': colonie, 'etat': 'rien'})
+        remarques.append({'colonie': colonie, 'remarque': ''})
 
     print(etatFeuilles)
 
@@ -448,6 +454,7 @@ def afficherColonies(request):
 
     etatFeuilles = []
     feuilles = []
+
     for c in colonies:
         feuillesObj = FeuilleVisite.objects.all().filter(colonie=c)
         feuillesObj = sorted(feuillesObj, key=lambda a: a.date, reverse=True)
@@ -458,8 +465,11 @@ def afficherColonies(request):
     test = False
     etat = ''
     etat2 = ''
+    remarque = ''
 
     etatReine = []
+    remarques = []
+
     for c in colonies:
         for f in feuilles:
 
@@ -467,21 +477,24 @@ def afficherColonies(request):
                 test = True
                 etat = f.etatColonie
                 etat2 = f.reinePresente
+                remarque = f.notes
                 break
             else:
                 test = False
         if test:
             etatFeuilles.append({'colonie': c, 'etat': etat})
             etatReine.append({'colonie': c, 'etatReine': etat2})
+            remarques.append({'colonie': c, 'remarque': remarque})
         else:
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
             etatReine.append({'colonie': c, 'etatReine': 'none'})
-    print(etatReine)
+            remarques.append({'colonie': c, 'remarque': ''})
+    print(remarques)
 
     colonies = sorted(colonies, key=lambda a: a.rucher.nom)
 
     return render(request, 'Apiculteurs/affichage/afficherColonies.html',
-                  {'colonies': colonies, 'etatColonie': etatFeuilles, 'etatReine': etatReine})
+                  {'colonies': colonies, 'etatColonie': etatFeuilles, 'etatReine': etatReine, 'remarques': remarques})
 
 
 def affichercoloniesRucher(request, rucher):
@@ -498,8 +511,11 @@ def affichercoloniesRucher(request, rucher):
     test = False
     etat = ''
     etat2 = ''
+    remarque = ''
 
     etatReine = []
+    remarques = []
+
     for c in colonies:
         for f in feuilles:
 
@@ -507,15 +523,18 @@ def affichercoloniesRucher(request, rucher):
                 test = True
                 etat = f.etatColonie
                 etat2 = f.reinePresente
+                remarque = f.notes
                 break
             else:
                 test = False
         if test:
             etatFeuilles.append({'colonie': c, 'etat': etat})
             etatReine.append({'colonie': c, 'etatReine': etat2})
+            remarques.append({'colonie': c, 'remarque': remarque})
         else:
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
             etatReine.append({'colonie': c, 'etatReine': 'none'})
+            remarques.append({'colonie': c, 'remarque': ''})
     print(etatFeuilles)
 
     return render(request, 'Apiculteurs/affichage/afficherColoniesRucher.html',

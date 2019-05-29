@@ -145,7 +145,11 @@
                                     <td class="cell100 column7">
                                         <b style="display: none" class="cell100 column2">Dernière remarque</b>
                                         <div class="donnees">
-                                            {{ c.remarque }}
+                                            {% for r in remarques %}
+                                            {% if r.colonie == c %}
+                                            {{ r.remarque }}
+                                            {% endif %}
+                                            {% endfor %}
                                         </div>
                                     </td>
                                 </tr>
@@ -196,7 +200,11 @@
                                     <td class="cell100 column7">
                                         <b style="display: none" class="cell100 column2">Dernière remarque</b>
                                         <div class="donnees">
-                                            {{ c.remarque }}
+                                            {% for r in remarques %}
+                                            {% if r.colonie == c %}
+                                            {{ r.remarque }}
+                                            {% endif %}
+                                            {% endfor %}
                                         </div>
                                     </td>
                                 </tr>
