@@ -993,12 +993,6 @@ def render_to_pdf(template_src, context_dict):
 
 def export_pdf_Feuille(request, f_id):
     fPDF = FeuilleVisite.objects.get(pk=f_id)
-    # return render_to_pdf(
-    #     'Apiculteurs/affichage/afficherFeuillePDF.html',
-    #     {
-    #         'f': fPDF,
-    #     }
-    # )
 
     html_string = render_to_string('Apiculteurs/affichage/afficherFeuillePDF.html', {'f': fPDF})
 
