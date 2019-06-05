@@ -22,10 +22,10 @@
 </div>
 
 <ul class="navbarMenu">
-    <li class="liNavBar"><a href="home">Accueil</a></li>
-    <li class="liNavBar"><a href="informationsUser">Gestion capteurs</a></li>
+    <li class="liNavBar"><a href="/home">Accueil</a></li>
+    <li class="liNavBar"><a href="/informationsUser">Gestion capteurs</a></li>
     {% if user.is_authenticated %}
-    <li class="liNavBar"><a href="afficherRuchers">Gestion Ruchers</a></li>
+    <li class="liNavBar"><a href="/afficherRuchers">Gestion Ruchers</a></li>
     <li class="liNavBar"><a class="active" href="/afficherColonies">Gestion Colonies</a></li>
     <li class="right liNavBar" style="height: 52px">
         <a href="{% url 'logout' %}">
@@ -47,11 +47,11 @@
         </a>
     </li>
     {% if user.is_superuser %}
-    <li class="right liNavBar"><a href="showUsersAdmin">Administration</a></li>
+    <li class="right liNavBar"><a href="/showUsersAdmin">Administration</a></li>
     {% endif %}
     {% else %}
     <li class="right liNavBar"><a href="{% url 'login' %}">Connexion</a></li>
-    <li class="right liNavBar"><a href="inscription">Inscription</a></li>
+    <li class="right liNavBar"><a href="/inscription">Inscription</a></li>
     {% endif %}
 </ul>
 {% include "../../Nav/navigation.html" %}

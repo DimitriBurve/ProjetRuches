@@ -8,7 +8,7 @@ from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur,
 from projet import settings
 
 
-#permet de créer des formulaires
+# permet de créer des formulaires
 
 class UserForm(UserCreationForm):
     email = forms.EmailField(max_length=254, required=True)
