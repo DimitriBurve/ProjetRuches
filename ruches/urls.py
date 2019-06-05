@@ -9,7 +9,7 @@ urlpatterns = [
     path('informationsUser', views.informationsUser, name='infosUser'),
     path('detailCapteurUser/<str:idCapteur>/<str:rucher>/<str:colonie>', views.capteurUser, name='detailsUser'),
     path('json', views.jsonView, name="json"),
-    path('videoCameraUser/<int:c_id>/<str:rucher>/<str:colonie>', views.videoCamerasUser, name='videoCameraUser'),
+    path('videoCameraUser/<str:c_id>', views.videoCamerasUser, name='videoCameraUser'),
     # vues apiculteurs
     path('afficherColonieId/<int:c_id>', views.afficherColonieId, name='afficherColonieId'),
     path('afficherColonies', views.afficherColonies, name='afficherColonies'),
@@ -22,7 +22,6 @@ urlpatterns = [
     path('ajouterRecolte/<str:rucher>/<str:colonie>', views.ajouterRecolte, name='ajouterRecolte'),
     path('ajouterRucher', views.ajouterRucher, name='ajouterRucher'),
     path('ajouterTraitement/<str:rucher>/<str:colonie>', views.ajouterTraitement, name='ajouterTraitement'),
-    path('modifierColonies', views.modifierColonies, name='modifierColonies'),
     path('modifierColonieId/<int:c_id>', views.modifierColonieId, name='modifierColonieId'),
     path('modifierRucherId/<int:r_id>', views.modifierRucherId, name='modifierRucherId'),
     path('supprimerColonies', views.supprimerColonies, name='supprimerColonies'),
@@ -49,7 +48,10 @@ urlpatterns = [
     path('sendMail/<str:user_id>', views.envoie_mail, name='sendMail'),
     path('registreXLS/<int:r_id>/<str:annee>/<str:user_id>', views.registreXLS, name='registreXLS'),
     path('afficherRegistreColonieId/<int:r_id>', views.afficherRegistreColonieId, name='afficherRegistreColonieId'),
-    path('contactAdmin', views.contactAdmin, name='contactAdmin')
+    path('contactAdmin', views.contactAdmin, name='contactAdmin'),
+    path('ajouterCapCam', views.ajouterCapCam, name='ajouterCapCam'),
+    path('modifierCapCam/<str:cap_id>', views.modifCapCam, name="modifierCapCam"),
+    path('deleteCapCam/<str:cap_id>', views.validSupprimerCapCam, name="deleteCapCam")
 ]
 
 

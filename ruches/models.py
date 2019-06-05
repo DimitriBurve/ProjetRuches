@@ -45,15 +45,11 @@ class Apiculteur(models.Model):
         return str("{}".format(self.user))
 
 
-class Capteurs(models.Model):
-    localisation = models.CharField(max_length=200)
-
-
 class Rucher(models.Model):
     nom = models.CharField(max_length=200, unique=True)
     user = models.ManyToManyField(User, null=True)
     adresseP = models.CharField(max_length=200, default='')
-    adresseS = models.CharField(max_length=200, null=True, default='')
+    adresseS = models.CharField(max_length=200, null=True, default='', blank=True)
     codePostal = models.CharField(max_length=5, default='')
     ville = models.CharField(max_length=200, default='')
 
@@ -77,7 +73,16 @@ class Colonie(models.Model):
     remarque = models.CharField(max_length=1024, null=True)
 
     def __str__(self):
-        return self.nom
+        return str('{} - {}'.format(self.nom, self.rucher))
+
+
+class Capteurs(models.Model):
+    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE, null=True)
+    idCapteur = models.CharField(max_length=200, null=True, blank=True)
+    idCamera = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return str('capteur {}'.format(self.colonie))
 
 
 class TypeNourrissement(models.Model):

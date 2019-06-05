@@ -130,9 +130,18 @@ LOGIN_REDIRECT_URL = '/home'
 
 LOGOUT_REDIRECT_URL = '/home'
 
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'projetruches@gmail.com'
 EMAIL_HOST_PASSWORD = 'projetruches1!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+DATE_INPUT_FORMATS = ['%Y-%m-%d %H:%M:%S',  # '2006-10-25 14:30:59'
+                      '%Y-%m-%d %H:%M',  # '2006-10-25 14:30'
+                      '%Y-%m-%d',  # '2006-10-25'
+                      '%m/%d/%Y %H:%M:%S',  # '10/25/2006 14:30:59'
+                      '%m/%d/%Y %H:%M',  # '10/25/2006 14:30'
+                      '%m/%d/%Y',  # '10/25/2006'
+                      '%m/%d/%y %H:%M:%S',  # '10/25/06 14:30:59'
+                      '%m/%d/%y %H:%M',  # '10/25/06 14:30'
+                      '%m/%d/%y']  # '10/25/06'

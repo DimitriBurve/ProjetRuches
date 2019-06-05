@@ -4,8 +4,8 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur, Nourrissement, Traitement, \
-    Recolte, Pesee
-
+    Recolte, Pesee, Capteurs
+from projet import settings
 
 class UserForm(UserCreationForm):
     email = forms.EmailField(max_length=254, required=True)
@@ -71,7 +71,7 @@ class RucherForm(ModelForm):
 class RucheForm(ModelForm):
     remarque = forms.CharField(widget=forms.Textarea, max_length=1024, required=False)
     date = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
+        input_formats=settings.DATE_INPUT_FORMATS,
         widget=forms.DateTimeInput(attrs={
             'class': 'form-control datetimepicker-input',
             'data-target': '#datetimepicker1'
@@ -333,7 +333,8 @@ class FeuilleVisiteApresReineBourdonsMaladieForm(ModelForm):
 
     origineReine = forms.CharField(
         label="Origine reine ",
-        widget=forms.RadioSelect(choices=ORIGINE_CHOICES)
+        widget=forms.RadioSelect(choices=ORIGINE_CHOICES),
+        required=False
     )
 
     reinePresente = forms.CharField(
@@ -343,7 +344,8 @@ class FeuilleVisiteApresReineBourdonsMaladieForm(ModelForm):
 
     reineMarquee = forms.CharField(
         label="Reine marquée ",
-        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES)
+        widget=forms.RadioSelect(choices=BOOLEAN_CHOICES),
+        required=False
     )
 
     couleurReineMarque = forms.CharField(
@@ -605,3 +607,12 @@ class ContactForm(forms.Form):
     prenomContact = forms.CharField()
     adresseMailContact = forms.EmailField()
     message = forms.CharField(widget=forms.Textarea)
+
+
+class AjouterCapCamForm(ModelForm):
+    idCapteur = forms.CharField(required=False)
+    idCamera = forms.CharField(required=False)
+
+    class Meta:
+        model = Capteurs
+        fields = ['colonie', 'idCapteur', 'idCamera']

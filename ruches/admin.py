@@ -15,4 +15,5 @@ admin.site.register(models.ProduitRecolte)
 admin.site.register(models.Recolte)
 admin.site.register(models.Pesee)
 admin.site.register(models.FeuilleVisite)
+admin.site.register(models.Capteurs)
 

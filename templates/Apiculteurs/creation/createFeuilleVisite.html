@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ruches</title>
+    <link rel="icon" type="image/png" href="{% static 'ProjetRuches/images/logo.png' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'ProjetRuches/css/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -245,7 +246,7 @@
                     <div style="text-align: center">
                         <div style="display: inline-block; padding-right: 9%">
                             <div>
-                                <b style="display: inline-block">Origine reine : </b><div style="display: inline-block; vertical-align: top">{{ form.origineReine }}</div>
+                                <b style="display: inline-block">Origine reine (optionnel) : </b><div style="display: inline-block; vertical-align: top">{{ form.origineReine }}</div>
                             </div>
                         </div>
                         <div class="parti">
@@ -259,7 +260,7 @@
                     <div style="padding-left: 10%">
                         <div style="display: block; padding-left: 10%; padding-right: 9%">
                             <div>
-                                <b style="display: inline-block">Reine marquée : </b><div style="display: inline-block; vertical-align: top">{{ form.reineMarquee }}</div>
+                                <b style="display: inline-block">Reine marquée (optionnel) : </b><div style="display: inline-block; vertical-align: top">{{ form.reineMarquee }}</div>
                             </div>
                         </div>
                         <br>

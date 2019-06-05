@@ -1,77 +1,48 @@
-import subprocess
+import datetime
+import json
+from cgi import escape
 from collections import OrderedDict
+from io import BytesIO
 
 import qrcode as qrcode
+import requests
 from PIL import Image
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.shortcuts import render, redirect
-import json
-import requests
 from django.contrib.auth import login, authenticate
-# from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from reportlab.pdfgen.canvas import Canvas
-
-from .forms import *
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-# from django.core.urlresolvers import reverse
+from django.core.files.storage import FileSystemStorage
+from django.core.mail import EmailMultiAlternatives
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.template.loader import get_template
+from django.template.loader import render_to_string
+from reportlab.pdfgen import canvas
+from weasyprint import HTML
+from xhtml2pdf import pisa
+from xlwt import Workbook, easyxf
+
+from ruches.models import Rucher, Colonie, Capteurs, TypeAliment, TypeNourrissement, \
+    Nourrissement, FeuilleVisite
 from static.fusioncharts import FusionCharts
 from static.fusioncharts import FusionTable
 from static.fusioncharts import TimeSeries
-
-from ruches.models import Rucher, Colonie, Capteurs, TypeRuche, TypeAliment, TypeNourrissement, \
-    Nourrissement, FeuilleVisite
-
-from io import StringIO, BytesIO
-from xhtml2pdf import pisa
-from django.template.loader import get_template
-from cgi import escape
-from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-
-from weasyprint import HTML
-
-import pyqrcode
-
-from django.core.mail import EmailMultiAlternatives
-
-import xlrd
-from xlwt import Workbook, easyxf
-
-import datetime
+from .forms import *
 
 
 # ensemble des vues
 
 
 # vues communes
-
+# page d'accueil
 def home(request):
     return render(request, 'User/home.html')
-    # return HttpResponse("Hello,world")
 
-
-def header(apikey):
-    return {'Authorization': 'Bearer {}'.format(apikey)}
-
-
+# affichage des capteurs par ruchers
 def informationsUser(request):
-    # headers = {'Accept': 'application/json',
-    #            'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
-    # response = requests.get(
-    #     "https://ruche_thib.data.thethingsnetwork.org/api/v2/query",
-    #     headers=headers).json()
 
-    # print(res)
-
-    capteurs = json.load(open("fixtures/capteurs.json"))
-    # for cap in capteurs:
-    #     print(cap['rucher'])
+    # capteurs = json.load(open("fixtures/capteurs.json"))
+    capteurs = Capteurs.objects.all()
 
     localisationsCapteurs = []
 
@@ -79,30 +50,11 @@ def informationsUser(request):
     for r in ruchers:
         localisationsCapteurs.append(r)
 
-    #     coloniesObj = Colonie.objects.all()
-    #
-    #     capteurs = []
-    #
-    #     for rep in res:
-    #         nom = rep["name"]
-    #         temp = nom.split(" ")
-    #         for w in temp:
-    #             for c in coloniesObj:
-    #                 for l in localisationsCapteurs:
-    #                     capteurs.append({'loc': l, 'id': rep['id'], 'name': rep['name']})
-    #                     # if w == l and c.rucher == l:
-    #                     # print("true, ", l)
-    #                 break
-    #             break
-    #
-    #     print(capteurs)
-    #
-    #     # data_str = json.dumps(data_dict)
-    #     # print(data_str)
-
     return render(request, 'User/informationsUser.html', {'ruchers': localisationsCapteurs, 'capteurs': capteurs})
 
 
+# affichage des données du capteur, on appelle sur un an les données,
+# on augmente l'heure de 2h puis on crée les graphes
 def capteurUser(request, idCapteur, rucher, colonie):
     headers = {'Accept': 'application/json',
                'Authorization': 'key ttn-account-v2.Qtqp9AOEIJf5PYahJkhIt1mthIlpIbUz2iIj32DXTYY'}
@@ -115,44 +67,32 @@ def capteurUser(request, idCapteur, rucher, colonie):
 
     # en commentaire si pas de lien pour recuperer donnees capteurs
 
-    # for resp in response:
-    #     # print(resp['deviceId'])
-    #     date = resp['time']
-    #     temp = date.split('T')
-    #     temp2 = temp[1].split('Z')
-    #     temp3 = temp2[0].split('.')
-    #     dateTemp = temp3[0].split(':')
-    #     hours = (int(dateTemp[0]) + 2) % 24
-    #     hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
-    #     datef = temp[0] + " " + str(hourF)
-    #
-    #     # temp
-    #
-    #     dataCapteur.append([datef,
-    #                         86,
-    #                         resp['humidity'],
-    #                         resp['temperature']])
-    #
-    #     # if resp['deviceId'] == idCapteur and idCapteur == "591b3f0c50e1ff001b65e817":
-    #     #     dataCapteur.append([datef,
-    #     #                         resp['vbat'],
-    #     #                         resp['humidity'],
-    #     #                         resp['temperature']])
-    #     # elif resp['deviceId'] == idCapteur:
-    #     #     print("test")
-    #     #     dataCapteur.append([datef,
-    #     #                         resp['request']['payload']['record']['data']['battery_2'],
-    #     #                         resp['request']['payload']['record']['data']['humidite_2'],
-    #     #                         resp['request']['payload']['record']['data']['temperature_2']])
+    for resp in response:
+        if resp['device_id'] == idCapteur:
+            date = resp['time']
+            temp = date.split('T')
+            temp2 = temp[1].split('Z')
+            temp3 = temp2[0].split('.')
+            dateTemp = temp3[0].split(':')
+            hours = (int(dateTemp[0]) + 2) % 24
+            hourF = str(hours) + ":" + dateTemp[1] + ":" + dateTemp[2]
+            datef = temp[0] + " " + str(hourF)
 
-    dataCapteurJson = json.load(open("fixtures/data.json"))
+            # temp
 
-    for d in dataCapteurJson:
-        # print(d)
-        dataCapteur.append([d['time'],
-                            d['bat'],
-                            d['hum'],
-                            d['temp']])
+            dataCapteur.append([datef,
+                                86,
+                                resp['humidity'],
+                                resp['temperature']])
+
+    # dataCapteurJson = json.load(open("fixtures/data.json"))
+    #
+    # for d in dataCapteurJson:
+    #     # print(d)
+    #     dataCapteur.append([d['time'],
+    #                         d['bat'],
+    #                         d['hum'],
+    #                         d['temp']])
 
     # print(dataCapteur)
 
@@ -310,14 +250,74 @@ def jsonView(request):
     return render(request, 'User/testjson.html', {'test': received_json_data})
 
 
-def videoCamerasUser(request, c_id, rucher, colonie):
-    return render(request, 'User/videoCamerasUser.html', {'nameCapteur': c_id, 'rucher': rucher, 'colonie': colonie})
+# permet de récupérer l'url de la vidéo et de l'afficher
+def videoCamerasUser(request, c_id):
+    col = Colonie.objects.get(pk=c_id)
+    capteur = Capteurs.objects.get(colonie=col)
+    return render(request, 'User/videoCamerasUser.html', {'nameCapteur': capteur.idCamera, 'rucher': col.rucher, 'colonie': col})
 
+
+# permet d'ajouter le nom du capteur et l'url de la vidéo
+@login_required(login_url='/auth/login/')
+def ajouterCapCam(request):
+    if request.method == 'POST':
+        print("true post")
+        capCamForm = AjouterCapCamForm(request.POST)
+        if capCamForm.is_valid():
+            print("true valid")
+            capCamForm.save()
+            return redirect('infosUser')
+        else:
+            print("else valid")
+            form_errors = capCamForm.errors
+            print(form_errors)
+    else:
+        print("else post")
+        capCamForm = AjouterCapCamForm()
+    return render(request, 'Apiculteurs/creation/createCapCam.html',
+                  {'form': capCamForm})
+
+
+# permet de modifer le nom du capteur et l'url de la vidéo
+@login_required(login_url='/auth/login/')
+def modifCapCam(request,cap_id):
+    capteur = Capteurs.objects.get(pk=cap_id)
+    if request.method == 'POST':
+        print("true post")
+        capCamForm = AjouterCapCamForm(request.POST, instance=capteur)
+        if capCamForm.is_valid():
+            print("true valid")
+            capCamForm.save()
+            return redirect('infosUser')
+        else:
+            print("else valid")
+            form_errors = capCamForm.errors
+            print(form_errors)
+    else:
+        print("else post")
+        capCamForm = AjouterCapCamForm(instance=capteur)
+    return render(request, 'Apiculteurs/modification/modifierCapCam.html',
+                  {'form': capCamForm})
+
+
+# permet de supprimer un capteur et caméra
+@login_required(login_url='/auth/login/')
+def validSupprimerCapCam(request, cap_id):
+    if request.method == 'POST':
+        try:
+            cap = Capteurs.objects.get(pk=cap_id)
+            cap.delete()
+        except Capteurs.DoesNotExist:
+            print("not exist")
+        except Exception as e:
+            print(e)
+
+    return redirect('infosUser')
 
 # partie apiculteur
 
 
-# qrcode
+# permet de générer un qrcode
 @login_required(login_url='/auth/login/')
 def render_png_to_pdf(request, c_id):
     link_to_post = "127.0.0.1:8000/afficherColonieId/{}".format(c_id)
@@ -352,6 +352,9 @@ def render_png_to_pdf(request, c_id):
     return response
 
 
+# permet d'afficher la page d'une colonie avec toutes ses infos
+# on supprime les objets vide de la base de données afin de ne pas tromper l'utilisateur
+# on trie tout par ordre déchronologique puis on récupère les dernières infos
 @login_required(login_url='/auth/login/')
 def afficherColonieId(request, c_id):
     colonie = Colonie.objects.get(pk=c_id)
@@ -427,6 +430,8 @@ def afficherColonieId(request, c_id):
                    'etatColonie': etatFeuilles, 'etatReine': etatReine, 'remarques': remarques})
 
 
+# on affiche toutes les colonies avec les infos principales le tout trié comme pour une seule colonie
+# on supprime aussi les objets incomplets de la base de données
 @login_required(login_url='/auth/login/')
 def afficherColonies(request):
     colonies = Colonie.objects.all()
@@ -494,7 +499,7 @@ def afficherColonies(request):
             etatFeuilles.append({'colonie': c, 'etat': 'rien'})
             etatReine.append({'colonie': c, 'etatReine': 'none'})
             remarques.append({'colonie': c, 'remarque': ''})
-    print(remarques)
+    print(etatFeuilles)
 
     colonies = sorted(colonies, key=lambda a: a.rucher.nom)
 
@@ -502,6 +507,7 @@ def afficherColonies(request):
                   {'colonies': colonies, 'etatColonie': etatFeuilles, 'etatReine': etatReine, 'remarques': remarques})
 
 
+# on affiche les colonies du rucher sélectionné comme précédemment
 @login_required(login_url='/auth/login/')
 def affichercoloniesRucher(request, rucher):
     colonies = Colonie.objects.all()
@@ -548,18 +554,21 @@ def affichercoloniesRucher(request, rucher):
                    'remarques': remarques})
 
 
+# on affiche les ruchers en selectionant leurs infos à afficher
 @login_required(login_url='/auth/login/')
 def afficherRuchers(request):
     ruchers = Rucher.objects.all()
     colonies = Colonie.objects.all()
     for c in colonies:
-        colonieObj = Colonie.objects.get(nom=c, rucher=c.rucher)
+        print(c)
+        colonieObj = Colonie.objects.get(nom=c.nom, rucher=c.rucher)
         feuillesObj = FeuilleVisite.objects.all().filter(colonie=colonieObj)
         for f in feuillesObj:
             if f.notes is None:
                 f.delete()
     nombreColoRuchers = []
 
+    # on compte le nombre de colonies par rucher
     nombre = 0
     for r in ruchers:
         for c in colonies:
@@ -574,6 +583,7 @@ def afficherRuchers(request):
                   {'ruchers': ruchers, 'nombreColo': nombreColoRuchers})
 
 
+# on appelle le formulaire et on ajoute une colonie à la bdd
 @login_required(login_url='/auth/login/')
 def ajouterColonie(request):
     if request.method == 'POST':
@@ -595,6 +605,7 @@ def ajouterColonie(request):
                   {'form': rucheForm})
 
 
+# on ajoute ici aussi une colonie mais avec le rucher déjà prérempli
 @login_required(login_url='/auth/login/')
 def ajouterColonieRucher(request, rucher):
     rucherObj = Rucher.objects.get(nom=rucher)
@@ -623,12 +634,11 @@ def ajouterColonieRucher(request, rucher):
                   {'form': rucheForm, 'rucher': rucher})
 
 
+# pareil avec l'ajout de nourrissements
 @login_required(login_url='/auth/login/')
 def ajouterNourrissement(request, rucher, colonie):
     rucherObj = Rucher.objects.get(nom=rucher)
     colonieObj = Colonie.objects.get(rucher=rucherObj, nom=colonie)
-    listeTypeNourrissement = TypeNourrissement.objects.all()
-    listeTypeAliment = TypeAliment.objects.all()
 
     if request.method == 'POST':
         obj = Nourrissement.objects.create(colonie=colonieObj)
@@ -729,12 +739,7 @@ def ajouterTraitement(request, rucher, colonie):
                   {'form': traitementForm, 'colonie': colonie, 'rucher': rucher})
 
 
-@login_required(login_url='/auth/login/')
-def modifierColonies(request):
-    colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/modification/modifierColonies.html', {'colonies': colonies})
-
-
+# permet de modifier une colonie
 @login_required(login_url='/auth/login/')
 def modifierColonieId(request, c_id):
     colonie = Colonie.objects.get(pk=c_id)
@@ -750,6 +755,7 @@ def modifierColonieId(request, c_id):
         return render(request, 'Apiculteurs/modification/modifierColonieId.html', {'form': form})
 
 
+# permet de modifier un rucher
 @login_required(login_url='/auth/login/')
 def modifierRucherId(request, r_id):
     rucher = Rucher.objects.get(pk=r_id)
@@ -763,12 +769,7 @@ def modifierRucherId(request, r_id):
     return render(request, 'Apiculteurs/modification/modifierRucherId.html', {'form': form})
 
 
-@login_required(login_url='/auth/login/')
-def supprimerColonies(request):
-    colonies = Colonie.objects.all()
-    return render(request, 'Apiculteurs/suppression/supprimerColonies.html', {'colonies': colonies})
-
-
+# permet de supprimer une colonie
 @login_required(login_url='/auth/login/')
 def validSupprimerColonie(request, colonie, rucher):
     if request.method == 'POST':
@@ -834,12 +835,6 @@ def validSupprimerRecolte(request, r_id):
 
 
 @login_required(login_url='/auth/login/')
-def supprimerRuchers(request):
-    ruchers = Rucher.objects.all()
-    return render(request, 'Apiculteurs/suppression/supprimerRuchers.html', {'ruchers': ruchers})
-
-
-@login_required(login_url='/auth/login/')
 def validSupprimerRucher(request, rucher):
     if request.method == 'POST':
         try:
@@ -877,8 +872,6 @@ def createFeuillevisite(request, rucher, colonie, etape):
     rucherObj = Rucher.objects.get(nom=rucher)
     colonieObj = Colonie.objects.get(nom=colonie, rucher=rucherObj)
 
-    # feuille = FeuilleVisite.objects.all()
-    # print(feuille)
     if request.method == 'POST':
         if etape == 1:
             print("post 1")
@@ -889,21 +882,9 @@ def createFeuillevisite(request, rucher, colonie, etape):
                 form.save()
                 dateForm = form.cleaned_data.get('date')
                 feuillesObj = FeuilleVisite.objects.all().filter(date=dateForm)
-                feuilleObj = None
-                # indice = 0
-                # for f in feuillesObj:
-                #     if indice == 0:
-                #         feuilleObj = f
-                #         indice = 1
-                #     else:
-                #         f.delete()
-
-                # print(feuilleObj)
                 feuille = feuillesObj[len(feuillesObj) - 1]
                 print(feuille.conditionClimatique)
-                # feuille = FeuilleVisite.objects.get(date=dateForm, rucher=rucherObj, colonie=colonieObj)
                 print("feuille 2: ", feuille)
-                # obj.delete()
                 etape += 1
                 print("etape : ", etape)
             else:
@@ -1230,11 +1211,12 @@ def registreXLS(request, r_id, annee, user_id):
                 feuilleOri.write_merge(indiceOri, indiceOri, 9, 9, str("{}".format(f.reunionColonie)))
                 feuilleOri.write_merge(indiceOri, indiceOri, 10, 10, str("{}".format(f.liberationRuche)))
                 test = True
-        if f.reineMarqueeManipulation != '' and f.essaimageNaturel != '' and f.origineRemerage != '' and f.divisionColonie != '' and f.creationRuche != '' and f.liberationRuche != '' and f.reineMarqueeManipulation is not None and f.essaimageNaturel is not None and f.origineRemerage is not None and f.divisionColonie is not None and f.creationRuche is not None and f.liberationRuche is not None:
+        if (f.reineMarqueeManipulation != '' or f.essaimageNaturel != '' or f.origineRemerage != '' or f.divisionColonie != '' or f.creationRuche != '' or f.liberationRuche != '') and (f.reineMarqueeManipulation is not None or f.essaimageNaturel is not None or f.origineRemerage is not None or f.divisionColonie is not None or f.creationRuche is not None or f.liberationRuche is not None):
             feuilleOri.write_merge(indiceOri, indiceOri, 0, 0, str("{}".format(f.colonie.nom)))
             feuilleOri.write_merge(indiceOri, indiceOri, 7, 7, str(""))
             feuilleOri.write_merge(indiceOri, indiceOri, 8, 8, str(""))
             feuilleOri.write_merge(indiceOri, indiceOri, 11, 11, str("{}".format(f.notes)))
+            test = True
         if test is True:
             indiceOri += 1
 
@@ -1318,7 +1300,7 @@ def registreXLS(request, r_id, annee, user_id):
             feuilleNour.write_merge(indiceNour, indiceNour, 3, 3,
                                     str("{} {}".format(f.quantiteAlimentNourrissement, f.uniteNourrissement)))
             feuilleNour.write_merge(indiceNour, indiceNour, 4, 4, str("{}").format(f.notes))
-        indiceNour += 1
+            indiceNour += 1
 
     feuilleVis = classeur.add_sheet("Visite agent sanitaire")
     feuilleVis.portrait = False
@@ -1488,7 +1470,6 @@ def modifierMonCompte(request, user_id):
             username = user_form.cleaned_data.get('username')
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            # obj = Apiculteur.objects.create(user=user)
             api_form = ApiForm(request.POST, instance=api)
             if api_form.is_valid():
                 api_form.save()
