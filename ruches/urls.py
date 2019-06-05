@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+# urls avec méthodes associées
 urlpatterns = [
     # vues communes
     path('', views.home, name='home'),
@@ -24,8 +25,6 @@ urlpatterns = [
     path('ajouterTraitement/<str:rucher>/<str:colonie>', views.ajouterTraitement, name='ajouterTraitement'),
     path('modifierColonieId/<int:c_id>', views.modifierColonieId, name='modifierColonieId'),
     path('modifierRucherId/<int:r_id>', views.modifierRucherId, name='modifierRucherId'),
-    path('supprimerColonies', views.supprimerColonies, name='supprimerColonies'),
-    path('supprimerRuchers', views.supprimerRuchers, name='supprimerRuchers'),
     path('validSupprimerColonie/<str:colonie>/<str:rucher>', views.validSupprimerColonie, name='validSupprimerColonie'),
     path('validSupprimerNourrissement/<int:n_id>', views.validSupprimerNourrissement, name='validSupprimerNourrissement'),
     path('validSupprimerPesee/<int:p_id>', views.validSupprimerPesee, name="validSupprimerPesee"),

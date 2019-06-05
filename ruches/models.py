@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+# modeles pour la base de données
 
 class Apiculteur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -203,8 +204,8 @@ class FeuilleVisite(models.Model):
     recoltePollen = models.CharField(max_length=200, null=True)
 
     typeAlimentNourrissement = models.CharField(max_length=200, null=True)
-    quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True)
-    uniteNourrissement = models.CharField(max_length=2, null=True)
+    quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True, default='', blank=True)
+    uniteNourrissement = models.CharField(max_length=2, null=True, default='', blank=True)
 
     apport = models.CharField(max_length=200, null=True)
     provenanceApport = models.CharField(max_length=200, null=True)

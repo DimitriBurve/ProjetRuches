@@ -866,6 +866,7 @@ def validSupprimerTraitement(request, t_id):
 
 
 # partie feuille visite
+# on déroule en plusieurs étapes le formulaire
 @login_required(login_url='/auth/login/')
 def createFeuillevisite(request, rucher, colonie, etape):
     global feuille
@@ -984,24 +985,7 @@ def createFeuillevisite(request, rucher, colonie, etape):
                       {'form': form, 'rucher': rucher, 'colonie': colonie, 'etape': etape})
 
 
-@login_required(login_url='/auth/login/')
-def feuillePDF(request, f_id):
-    fPDF = FeuilleVisite.objects.get(pk=f_id)
-    return render(request, 'Apiculteurs/affichage/afficherFeuillePDF.html', {'f': fPDF})
-
-
-@login_required(login_url='/auth/login/')
-def render_to_pdf(template_src, context_dict):
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    result = BytesIO()
-
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
-
-
+# permet d'exporter en pdf un HTML
 @login_required(login_url='/auth/login/')
 def export_pdf_Feuille(request, f_id):
     fPDF = FeuilleVisite.objects.get(pk=f_id)
@@ -1027,6 +1011,7 @@ def export_pdf_Feuille(request, f_id):
     return response
 
 
+# permet d'aaficher une liste des registres/années pour un rucher
 @login_required(login_url='/auth/login/')
 def afficherRegistreColonieId(request, r_id):
     rucher = Rucher.objects.get(pk=r_id)
@@ -1045,6 +1030,7 @@ def afficherRegistreColonieId(request, r_id):
                   {'annees': annees, 'r_id': r_id, 'rucher': rucher})
 
 
+# permet d'écrire et d'exporter le registre voulu en fichier XLS
 @login_required(login_url='/auth/login/')
 def registreXLS(request, r_id, annee, user_id):
     userObj = User.objects.get(pk=user_id)
@@ -1067,6 +1053,7 @@ def registreXLS(request, r_id, annee, user_id):
     feuillePGarde = classeur.add_sheet("Page de garde")
     feuillePGarde.portrait = False
 
+    # write_merge permet d'écrire sur une ou plusieurs lignes et colonnes
     feuillePGarde.write_merge(0, 2, 0, 11, str("REGISTRE D'ÉLEVAGE {}".format(annee)), styleT)
 
     feuillePGarde.write_merge(4, 5, 0, 3, str("Nom prénom apiculteur :"), styleP1)
@@ -1379,6 +1366,7 @@ def inscription(request):
     return render(request, 'registration/inscription.html', {'user_form': user_form, 'api_form': api_form})
 
 
+# permet d'afficher le compte et ses infos principales sur le même principe del'affciahge de colonies
 @login_required(login_url='/auth/login/')
 def monCompte(request):
     colonies = Colonie.objects.all()
@@ -1452,6 +1440,7 @@ def monCompte(request):
                   {'colonies': colonies, 'etatColonie': etatFeuilles, 'etatReine': etatReine, 'remarques': remarques})
 
 
+# on affiche les informations propre à notre compte
 @login_required(login_url='/auth/login/')
 def detailsMonCompte(request, user_id):
     user = User.objects.get(pk=user_id)
@@ -1495,13 +1484,14 @@ def modifierMonCompte(request, user_id):
 
 
 # partie admin
-
+# permet de voir tous les apiculteurs
 @staff_member_required
 def showUsersAdmin(request):
     users = User.objects.all()
     return render(request, 'Admin/showsUsersAdmin.html', {'users': users})
 
 
+# supprime un utilisateur
 @staff_member_required
 def deleteUserAdmin(request, username):
     if request.method == 'POST':
@@ -1519,6 +1509,7 @@ def deleteUserAdmin(request, username):
     return redirect('showUsersAdmin')
 
 
+# permet de voir un utilisateur en détails
 @staff_member_required
 def detailsUserAdmin(request, username):
     userEdit = User.objects.get(username=username)
@@ -1568,6 +1559,7 @@ def detailsUserAdmin(request, username):
 
 
 # partie mail
+# envoie un mail avec un texte sous forme HTLM
 @login_required(login_url='/auth/login/')
 def envoie_mail(request, user_id):
     global user, rucher
@@ -1630,6 +1622,7 @@ def envoie_mail(request, user_id):
         return render(request, 'Apiculteurs/creation/createMessage.html', {'form': email_form})
 
 
+# idem mais pour contacter les administrateurs
 def contactAdmin(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)

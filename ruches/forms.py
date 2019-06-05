@@ -7,11 +7,15 @@ from ruches.models import Colonie, Rucher, TypeRuche, FeuilleVisite, Apiculteur,
     Recolte, Pesee, Capteurs
 from projet import settings
 
+
+#permet de créer des formulaires
+
 class UserForm(UserCreationForm):
     email = forms.EmailField(max_length=254, required=True)
     first_name = forms.CharField(max_length=254, required=True)
     last_name = forms.CharField(max_length=254, required=True)
 
+    # class meta permet de lier un formulaire à un modèle de la bdd
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
@@ -602,6 +606,7 @@ class EmailForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea, required=False)
 
 
+# formulaire sans utilisation de modèle de la bdd
 class ContactForm(forms.Form):
     nomContact = forms.CharField()
     prenomContact = forms.CharField()

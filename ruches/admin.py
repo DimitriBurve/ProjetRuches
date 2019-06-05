@@ -2,7 +2,7 @@ from django.contrib import admin
 from . import models
 
 # Register your models here.
-
+# permet d'avoir accès à la bdd dans la partie admin de Django
 admin.site.register(models.Rucher)
 admin.site.register(models.Colonie)
 admin.site.register(models.Apiculteur)
