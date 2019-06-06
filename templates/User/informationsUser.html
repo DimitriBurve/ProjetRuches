@@ -95,13 +95,15 @@
                     {% if cap.idCapteur %}<a href="{% url 'detailsUser' cap.idCapteur r.ville cap.colonie.nom %}" style="display: inline-block">Capteurs</a>&nbsp;{%endif%}
                     {% if cap.idCamera %}<a href="{% url 'videoCameraUser' cap.colonie.id %}" style="display: inline-block">Caméra</a>&nbsp;{%endif%}
                     {% if user.is_authenticated %} <a href="{% url 'modifierCapCam' cap.id %}" style="display: inline-block">Modifier</a> &nbsp; {%endif%}
-                    {% if user.is_authenticated %} <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{cap.colonie}}')" style="display: inline-block"
-                                              action="{% url 'deleteCapCam' cap.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btnRg m-0">
-                                                <img style="width: 15px" src="{% static 'ProjetRuches/images/delete.png' %}">
-                                            </button>
-                                        </form> {%endif%}
+                    {% if user.is_authenticated %}
+                    <form id="formDelA" method="post" onsubmit="return validateRucher(this,'{{cap.colonie}}')" style="display: inline-block"
+                          action="{% url 'deleteCapCam' cap.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btnRg">
+                            <p style="margin-bottom: 0 !important;">Supprimer</p>
+                        </button>
+                    </form>
+                    {%endif%}
                 </p>
                 {% endif %}
                 {% endfor %}

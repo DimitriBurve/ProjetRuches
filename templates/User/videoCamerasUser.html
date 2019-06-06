@@ -55,14 +55,13 @@
 <div>
     <h2 style="color: #1C5F90">Caméra Capteur {{ colonie }} {{ rucher }}</h2>
     <br>
-<!--    <video autoplay="" src="" controls="true">-->
     <div style="text-align: center">
-        <video src="{% static 'ProjetRuches/video/Bees.mp4' %}" controls="true" autoplay="" type="video">
-            Your browser doesn't support HTML5 videos.
-        </video>
+<!--        <video src="{% static 'ProjetRuches/video/Bees.mp4' %}" controls="true" autoplay="" type="video">-->
+<!--            Your browser doesn't support HTML5 videos.-->
+<!--        </video>-->
+        <img src="{{nameCapteur}}" id="streamimage" class="xform" alt="video">
     </div>
-
-<!--    <video autoplay="" src="{{nameCapteur}}" controls="true" type="video">Your browser does not support the VIDEO tag and/or RTP streams.</video>-->
 </div>
+<br>
 </body>
 </html>
