@@ -1284,8 +1284,9 @@ def registreXLS(request, r_id, annee, user_id):
             feuilleNour.write_merge(indiceNour, indiceNour, 0, 0, str("{}".format(f.colonie.nom)))
             feuilleNour.write_merge(indiceNour, indiceNour, 1, 1, str("{}".format(f.date)))
             feuilleNour.write_merge(indiceNour, indiceNour, 2, 2, str("{}".format(f.typeAlimentNourrissement)))
-            feuilleNour.write_merge(indiceNour, indiceNour, 3, 3,
-                                    str("{} {}".format(f.quantiteAlimentNourrissement, f.uniteNourrissement)))
+            if f.quantiteAlimentNourrissement is not None and f.quantiteAlimentNourrissement != '':
+                feuilleNour.write_merge(indiceNour, indiceNour, 3, 3,
+                                        str("{} {}".format(f.quantiteAlimentNourrissement, f.uniteNourrissement)))
             feuilleNour.write_merge(indiceNour, indiceNour, 4, 4, str("{}").format(f.notes))
             indiceNour += 1
 
