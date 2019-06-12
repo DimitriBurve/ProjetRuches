@@ -502,6 +502,7 @@ def afficherColonies(request):
     print(etatFeuilles)
 
     colonies = sorted(colonies, key=lambda a: a.rucher.nom)
+    print(colonies)
 
     return render(request, 'Apiculteurs/affichage/afficherColonies.html',
                   {'colonies': colonies, 'etatColonie': etatFeuilles, 'etatReine': etatReine, 'remarques': remarques})

@@ -233,7 +233,7 @@
                                     <b style="display: none" class="cell100 column2">Etat</b>
                                     <div class="donnees">
                                         {% for etat in etatColonie %}
-                                        {% if etat.colonie == colonie.nom %}
+                                        {% if etat.colonie == colonie %}
                                         {% if etat.etat == 'Critique' %}
                                         <img style="width: 30px; height: 30px" src="{% static 'ProjetRuches/images/red_circle.png' %}" alt="redCircle">
                                         {% elif etat.etat == 'Normal' %}
