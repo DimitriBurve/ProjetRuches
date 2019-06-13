@@ -599,7 +599,6 @@ def ajouterColonie(request):
             print(form_errors)
     else:
         print("else post")
-        user = request.user
         rucheForm = RucheForm()
     return render(request, 'Apiculteurs/creation/createColonie.html',
                   {'form': rucheForm})
@@ -776,14 +775,12 @@ def validSupprimerColonie(request, colonie, rucher):
         print(rucher)
         try:
             u = Colonie.objects.filter(nom=colonie)
-            # u = u.filter(rucher=rucher)
             for colonie in u:
                 print("colonie : ", colonie.rucher)
                 if colonie.rucher.nom == rucher:
                     print("test")
                     colonie.delete()
                     break
-            # u.delete()
         except Rucher.DoesNotExist:
             print("not exist")
         except Exception as e:
@@ -1008,7 +1005,7 @@ def export_pdf_Feuille(request, f_id):
         response['Content-Disposition'] = 'attachment; filename="{}"'.format(name)
         return response
 
-    return response
+    # return response
 
 
 # permet d'aaficher une liste des registres/années pour un rucher
