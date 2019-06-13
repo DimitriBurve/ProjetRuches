@@ -157,10 +157,10 @@ class Pesee(models.Model):
 
 
 class FeuilleVisite(models.Model):
-    date = models.DateTimeField(default=datetime.datetime.now)
-    rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE)
-    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE)
-    typeRuche = models.ForeignKey(TypeRuche, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=datetime.datetime.now, null=True)
+    rucher = models.ForeignKey(Rucher, on_delete=models.CASCADE, null=True)
+    colonie = models.ForeignKey(Colonie, on_delete=models.CASCADE, null=True)
+    typeRuche = models.ForeignKey(TypeRuche, on_delete=models.CASCADE, null=True)
     conditionClimatique = models.CharField(max_length=200, null=True)
 
     traficEntreeRuche = models.CharField(max_length=200, null=True)
@@ -204,7 +204,7 @@ class FeuilleVisite(models.Model):
     recoltePollen = models.CharField(max_length=200, null=True)
 
     typeAlimentNourrissement = models.CharField(max_length=200, null=True)
-    quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True, default='', blank=True)
+    quantiteAlimentNourrissement = models.DecimalField(max_digits=12, decimal_places=3, null=True, blank=True)
     uniteNourrissement = models.CharField(max_length=2, null=True, default='', blank=True)
 
     apport = models.CharField(max_length=200, null=True)
@@ -230,4 +230,4 @@ class FeuilleVisite(models.Model):
     etatColonie = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return str("Visite sur {} {} {} le {}".format(self.rucher, self.colonie, self.typeRuche, self.date))
+        return str("Visite sur {} le {}".format(self.colonie, self.date))

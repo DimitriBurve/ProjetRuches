@@ -961,9 +961,7 @@ def createFeuillevisite(request, rucher, colonie, etape):
         form = FeuilleVisiteDebutForm()
         if etape == 1:
             print("else etape 1")
-            obj = FeuilleVisite.objects.create(rucher=rucherObj, colonie=colonieObj, typeRuche=colonieObj.type)
-            form = FeuilleVisiteDebutForm(instance=obj)
-            obj.delete()
+            form = FeuilleVisiteDebutForm()
         elif etape == 2:
             print("else etape 2")
             form = FeuilleVisiteAvantForm()
