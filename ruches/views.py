@@ -333,7 +333,6 @@ def render_png_to_pdf(request, c_id):
     img = qr.make_image()
     img.save('static/ProjetRuches/images/qrcode.png')
 
-    image_data = Image.open("static/ProjetRuches/images/qrcode.png")
     filename = 'static/ProjetRuches/images/qrcode.png'
 
     response = HttpResponse(content_type='application/pdf')
